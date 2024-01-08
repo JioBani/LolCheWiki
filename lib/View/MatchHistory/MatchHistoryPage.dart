@@ -6,7 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class MatchHistoryPage extends StatelessWidget {
-  MatchHistoryPage({super.key});
+  MatchHistoryPage({super.key, required this.puuid, required this.name});
+  final String puuid;
+  final String name;
 
   final MatchHistoryController controller = Get.put(MatchHistoryController());
 

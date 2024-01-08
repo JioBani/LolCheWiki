@@ -145,6 +145,24 @@ class TestPage extends StatelessWidget {
                     ),
                   )
               ),
+              ElevatedButton(
+                  onPressed: ()async{
+                    /*Map<String , dynamic> result = await RiotApiService.getPuuid('보타쿠리', "KR1");
+                    if(result["status"]! == 200){
+                      Logger().i(result["value"]!);
+                    }
+                    else{
+                      Logger().e(result["value"]!);
+                    }*/
+                  },
+                  child: Text(
+                    "이름 검색",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
             ],
           ),
         ),
