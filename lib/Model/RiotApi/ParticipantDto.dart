@@ -82,6 +82,26 @@ class ParticipantDto {
     );
   }
 
+  factory ParticipantDto.none() {
+    return ParticipantDto(
+      companion: CompanionDto.none(),
+      goldLeft: 0,
+      lastRound: 0,
+      level: 0,
+      placement: 0,
+      playersEliminated: 0,
+      puuid: "none",
+      timeEliminated: 0,
+      totalDamageToPlayers: 0,
+      traits: [
+
+      ],
+      units: [
+
+      ],
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'companion': companion.toJson(),

@@ -1,7 +1,8 @@
 
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/DataStoreService.dart';
-import 'package:app/Service/RiotApiService.dart';
+import 'package:app/Service/Riot/RiotApiResponse.dart';
+import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:logger/logger.dart';
 
 class MatchDataService{
@@ -17,12 +18,15 @@ class MatchDataService{
   }
 
   Future<void> setMatchIdList(int count) async{
-    matchIdList = await RiotApiService.getMatchIds(_puuid, count);
-    if(matchIdList.isEmpty){
-      logger.i("[MatchDataService.setMatchIdList()] 전적이 없음");
-    }
-    else{
-      await DataStoreService.saveMatchIdList(RiotApiService.puuid  ,matchIdList);
+    RiotApiResponse<List<String>> apiResponse = await RiotApiService.getMatchIds(_puuid, count);
+    if(apiResponse.isSuccess){
+      matchIdList = apiResponse.response!;
+      if(matchIdList.isEmpty){
+        logger.i("[MatchDataService.setMatchIdList()] 전적이 없음");
+      }
+      else{
+        await DataStoreService.saveMatchIdList(RiotApiService.puuid  ,matchIdList);
+      }
     }
   }
 
@@ -62,11 +66,17 @@ class MatchDataService{
         logger.i("[MatchDataService._getMatchDto()] 로컬에서 로드함 ($matchId)");
     }
     else{
-        matchDto = await RiotApiService.getMatch(matchId);
-        logger.i("[MatchDataService._getMatchDto()] 네트워크에서 로드함 ($matchId)");
+        RiotApiResponse<MatchDto> matchRes = await RiotApiService.getMatch(matchId);
+        if(matchRes.isSuccess){
+          matchDto = matchRes.response!;
+          logger.i("[MatchDataService._getMatchDto()] 네트워크에서 로드함 ($matchId)");
 
-        await DataStoreService.saveMatchDto(RiotApiService.puuid ,matchDto);
-        logger.i("[MatchDataService._getMatchDto()] 매치 데이터 저장 ($matchId)");
+          await DataStoreService.saveMatchDto(RiotApiService.puuid ,matchDto);
+          logger.i("[MatchDataService._getMatchDto()] 매치 데이터 저장 ($matchId)");
+        }
+        else{
+          matchDto = MatchDto.none();
+        }
     }
     return matchDto;
   }
@@ -76,7 +86,14 @@ class MatchDataService{
     matchDtoList = [];
     _nextMatchIndex = 0;
 
-    matchIdList = await RiotApiService.getMatchIds(_puuid, 100);
+    RiotApiResponse<List<String>> apiResponse = await RiotApiService.getMatchIds(_puuid, 100);
+
+    if(!apiResponse.isSuccess){
+      logger.e("[MatchDataService.refresh()] 매치 아이디 리스트 가져오기 실패(${apiResponse.exception!.exceptionCode})");
+      return;
+    }
+
+    matchIdList = apiResponse.response!;
 
     await DataStoreService.resetData(RiotApiService.puuid );
     await DataStoreService.saveMatchIdList(RiotApiService.puuid ,matchIdList);

@@ -1,7 +1,7 @@
 import 'package:app/Controller/MatchHistoryController.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
-import 'package:app/Service/RiotApiService.dart';
+import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/View/MatchHistory/Match/MatchWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

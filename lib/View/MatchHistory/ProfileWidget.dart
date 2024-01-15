@@ -1,13 +1,26 @@
+import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Style/Images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
+import 'RankTabViewWidget.dart';
+
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({super.key});
+  const ProfileWidget({super.key, required this.summonerProfile});
+  final SummonerProfile summonerProfile;
 
   @override
   Widget build(BuildContext context) {
+    final String name;
+    if(summonerProfile.tag != null){
+      name = "${summonerProfile.name}#${summonerProfile.tag}";
+    }
+    else{
+      name = summonerProfile.name;
+    }
+
     return Padding(
       padding: EdgeInsets.only(left: 20.w),
       child: Row(
@@ -25,51 +38,42 @@ class ProfileWidget extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 15.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "LV. 22",
-                  style: TextStyle(
-                    color: Color(0xff949494),
-                    fontSize: 13.sp,
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 15.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "LV. ${summonerProfile.summonerDTO.summonerLevel}",
+                    style: TextStyle(
+                      color: Color(0xff949494),
+                      fontSize: 13.sp,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.h,),
-                Text(
-                  "JIOBANI",
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.bold
+                  SizedBox(height: 10.h,),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.h,)
-              ],
+                  SizedBox(height: 10.h,)
+                ],
+              ),
             ),
           ),
-          Expanded(child: SizedBox()),
-          Column(
-            children: [
-              SizedBox(
-                height: 65.h,
-                width: 65.h,
-                child: Image.asset(
-                  Images.tierTest,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Text(
-                "MASTER",
-                style: TextStyle(
-                  color: Color(0xff949494),
-                  fontSize: 13.sp,
-                ),
-              ),
-            ],
+         /* SizedBox(
+            width: 80.w,
+            child: RankTabViewWidget(
+              leagueEntryDTOMap: summonerProfile.leagueEntryDTOMap,
+            ),
           ),
-          SizedBox(width: 20.w,)
+          SizedBox(width: 15.w,)*/
         ],
       ),
     );

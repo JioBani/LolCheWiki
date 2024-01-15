@@ -1,4 +1,6 @@
-import 'package:app/Service/RiotApiService.dart';
+import 'package:app/Model/RiotApi/SummonerProfile.dart';
+import 'package:app/Service/Riot/RiotApiResponse.dart';
+import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/MatchHistoryPage.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +44,13 @@ class CustomSearchBar extends StatelessWidget {
                 tag = "KR1";
               }
 
-              RiotApiResponse<String> apiResponse = await RiotApiService.getPuuid(name, tag);
+              RiotApiResponse<SummonerProfile> apiResponse = await RiotApiService.getSummonerProfileByName(name, tag);
 
-              if(apiResponse.statusCode == 200){
-                Get.to(MatchHistoryPage(puuid: apiResponse.response! , name: name,));
+              if(apiResponse.isSuccess){
+                Get.to(MatchHistoryPage(summonerProfile: apiResponse.response!,));
               }
               else{
-                Fluttertoast.showToast(msg: apiResponse.message!);
+                Fluttertoast.showToast(msg: apiResponse.exception!.msg);
               }
             },
           ),

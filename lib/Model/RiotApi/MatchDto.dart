@@ -28,6 +28,14 @@ class MatchDto {
     );
   }
 
+  factory MatchDto.none(){
+    return MatchDto(
+      matchId: "none",
+      metadata: MetadataDto.none(),
+      info: InfoDto.none(),
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'metadata': metadata.toJson(),
@@ -44,5 +52,9 @@ class MatchDto {
     } else {
       return 0;
     }
+  }
+
+  bool isNone(){
+    return matchId == "none";
   }
 }

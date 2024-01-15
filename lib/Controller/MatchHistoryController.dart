@@ -1,7 +1,7 @@
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
 import 'package:app/Service/MatchDataService.dart';
-import 'package:app/Service/RiotApiService.dart';
+import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -41,21 +41,6 @@ class MatchHistoryController extends GetxController{
   }
 
   Future<void> fetchData(String puuid) async{
-   /* if(RiotApiService.matchDtoMap.isEmpty){
-        isLoading = true;
-        RiotApiService.resetData();
-
-        int idResult = await RiotApiService.loadNextMatchIdList(100);
-
-        Logger().i("[MatchHistoryController.fetchData()] loadNextMatchIdList : $idResult");
-
-        int result = await RiotApiService.loadNextMatch(5);
-        Logger().i("[MatchHistoryController.fetchData()] loadNextMatch : $result");
-        isLoading = false;
-
-
-    }*/
-
     MatchDataService matchDataService;
 
     if(matchDataServiceMap[puuid] == null){
@@ -67,67 +52,28 @@ class MatchHistoryController extends GetxController{
 
     if(matchDataService.matchDtoList.isEmpty){
       isLoading = true;
-      //RiotApiService.resetData();
-
-      //int idResult = await RiotApiService.loadNextMatchIdList(100);
-
-      //Logger().i("[MatchHistoryController.fetchData()] loadNextMatchIdList : $idResult");
-
-      //int result = await RiotApiService.loadNextMatch(5);
-      //Logger().i("[MatchHistoryController.fetchData()] loadNextMatch : $result");
-
       await matchDataService.getNextMatchDtoList(20);
       isLoading = false;
     }
+    _loadDataFromService(matchDataService);
 
-    _loadDataFromService(puuid);
   }
 
-  void _loadDataFromService(String puuid){
+  void _loadDataFromService(MatchDataService matchDataService){
     matches.clear();
     for (var element in QueueType.values) {
       matches[element] = [];
     }
-
-    MatchDataService matchDataService;
-
-    if(matchDataServiceMap[puuid] == null){
-      Logger().i("[MatchHistoryController._loadDataFromService2()] 매치 데이터 서비스가 없음");
-      return;
-    }
-
-    matchDataService = matchDataServiceMap[puuid]!;
-
-    List<MatchDto> matchDtoList = [];
 
     allMatches.assignAll(matchDataService.matchDtoList);
 
-    for (var match in matchDtoList) {
+    for (var match in allMatches) {
       matches[QueueTypeExtension.getTypeByQueueId(match.info.queueId)]!.add(match);
     }
 
     refreshTabText();
     update();
   }
-
-  /*void _loadDataFromService(){
-    matches.clear();
-    for (var element in QueueType.values) {
-      matches[element] = [];
-    }
-
-    List<MatchDto> matchDtoList = [];
-    RiotApiService.matchDtoMap.forEach((key, value) { matchDtoList.add(value);});
-
-    allMatches.assignAll(matchDtoList);
-
-    for (var match in matchDtoList) {
-      matches[QueueTypeExtension.getTypeByQueueId(match.info.queueId)]!.add(match);
-    }
-
-    refreshTabText();
-    update();
-  }*/
 
   Future<void> loadMoreData(String puuid , int count)async{
 
@@ -141,7 +87,7 @@ class MatchHistoryController extends GetxController{
     isLoading = true;
     await matchDataService!.getNextMatchDtoList(count);
     isLoading = false;
-    _loadDataFromService(puuid);
+    _loadDataFromService(matchDataService);
   }
 
   void refreshTabText(){

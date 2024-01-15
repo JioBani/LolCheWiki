@@ -50,4 +50,21 @@ extension QueueTypeExtension on QueueType {
   static String getStringByIndex(int index){
     return getTypeByIndex(index).getGameName();
   }
+
+  static QueueType fromString(String queueType) {
+    switch (queueType) {
+      case "NORMAL_TFT":
+        return QueueType.normal;
+      case "RANKED_TFT":
+        return QueueType.ranked;
+      case "TUTORIAL_TFT":
+        return QueueType.none;
+      case "RANKED_TFT_TURBO":
+        return QueueType.hyperRoll;
+      case "RANKED_TFT_DOUBLE_UP":
+        return QueueType.doubleUp;
+      default:
+        return QueueType.none;
+    }
+  }
 }

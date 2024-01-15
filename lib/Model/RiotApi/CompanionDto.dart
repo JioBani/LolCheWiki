@@ -29,6 +29,15 @@ class CompanionDto {
     );
   }
 
+  factory CompanionDto.none() {
+    return CompanionDto(
+      contentId: "none",
+      itemId: 0,
+      skinId: 0,
+      species:"none",
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'content_ID': contentId,

@@ -35,6 +35,23 @@ class MetadataDto {
   }
 
 
+  factory MetadataDto.none(){
+    return MetadataDto(
+      dataVersion: "none",
+      matchId: "none",
+      participants: [
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+      ],
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'data_version': dataVersion,

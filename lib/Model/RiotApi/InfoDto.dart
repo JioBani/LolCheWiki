@@ -54,6 +54,20 @@ class InfoDto {
     );
   }
 
+  factory InfoDto.none() {
+    return InfoDto(
+      gameDatetime: 0,
+      gameLength: 0,
+      gameVariation: "none",
+      gameVersion: "none",
+      participants: [
+
+      ],
+      queueId: 0,
+      tftSetNumber: 0,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'game_datetime': gameDatetime,

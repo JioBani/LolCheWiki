@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/MatchDataService.dart';
-import 'package:app/Service/RiotApiService.dart';
+import 'package:app/Service/Riot/RiotApiResponse.dart';
+import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:developer';
 
 import 'package:logger/logger.dart';
@@ -67,23 +69,6 @@ class TestPage extends StatelessWidget {
                   },
                   child: Text(
                     "매치 id 불러오기",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    List<String> matchIdList = await RiotApiService.getMatchIds(RiotApiService.puuid, 20);
-                    List<MatchDto> matchDtoList = await Future.wait(
-                        matchIdList.map((e) => RiotApiService.getMatch(e))
-                    );
-
-                    saveMatchDtoList(matchDtoList);
-                  },
-                  child: Text(
-                    "매치 리스트 저장하기",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15.sp
@@ -171,7 +156,13 @@ class TestPage extends StatelessWidget {
   }
 
   Future<void> saveMatchIdList()async {
-    List<String> matchIdList = await RiotApiService.getMatchIds(RiotApiService.puuid, 20);
+    RiotApiResponse<List<String>> matchIdListRes = await RiotApiService.getMatchIds(RiotApiService.puuid, 20);
+    if(!matchIdListRes.isSuccess){
+      Fluttertoast.showToast(msg: matchIdListRes.exception!.msg);
+      return;
+    }
+
+    List<String> matchIdList = matchIdListRes.response!;
     bool result = await DataStoreService.saveMatchIdList(RiotApiService.puuid,matchIdList);
   }
 
@@ -197,17 +188,6 @@ class TestPage extends StatelessWidget {
     List<MatchDto?> result = await Future.wait(
         matchIdList.map((e) => DataStoreService.readMatchDto(RiotApiService.puuid,e))
     );
-
-    /*
-    MatchDto? matchDto = await DataStoreService.readMatchDto(matchIdList[0]);
-
-    if(matchDto != null){
-      Logger().i(matchDto.matchId);
-    }
-    else{
-      Logger().e("데이터 읽기 실패");
-    }
-    */
 
     for (var value in result) {
       if(value != null){
