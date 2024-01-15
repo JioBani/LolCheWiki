@@ -117,7 +117,7 @@ class RankImageWidget extends StatelessWidget {
         ),
         SizedBox(height: 2.h,),
         Image.asset(
-          Images.tierTest,
+          Images.getRankImage(leagueEntryDTO?.tier),
           fit: BoxFit.fitWidth,
           width: 42.sp,
           height: 42.sp,

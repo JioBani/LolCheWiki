@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:app/Service/StaticLogger.dart';
+
 class Images{
   static const String caitlyn = "assets/images/Caitlyn_19.jpg";
   static const String disk = "assets/images/disk.png";
@@ -38,4 +40,24 @@ class Images{
   }
 
   static String errorItemImage = "assets/images/item/error.png";
+
+  static String getRankImage(String? rank){
+    switch(rank){
+      case "BRONZE":
+      case "CHALLENGER":
+      case "DIAMOND":
+      case "EMERALD":
+      case "GOLD":
+      case "GRANDMASTER":
+      case "IRON":
+      case "GOLD":
+      case "MASTER":
+      case "PLATINUM":
+      case "SILVER" : return "assets/images/rank/$rank.png";
+      default : {
+        StaticLogger.logger.e("[Images.getRankImage()] 입력이 잘못됨 : $rank");
+        return errorItemImage;
+      }
+    }
+  }
 }
