@@ -13,40 +13,74 @@ class RankTabViewWidget extends StatefulWidget {
   State<RankTabViewWidget> createState() => _RankTabViewWidgetState();
 }
 
-class _RankTabViewWidgetState extends State<RankTabViewWidget>{
+class _RankTabViewWidgetState extends State<RankTabViewWidget> with TickerProviderStateMixin {
 
+
+  late final TabController tabController = TabController(length: 3, vsync: this);
+
+  int tabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 80.w,
-      height: 120.h,
-      child: DefaultTabController(
-        animationDuration: const Duration(milliseconds: 300),
-        length: 3,
-        child: TabBarView(
+    return Column(
+      children: [
+        SizedBox(
+          width: 80.w,
+          height: 120.h,
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              Center(
+                child: RankImageWidget(
+                  queueType: QueueType.ranked,
+                  leagueEntryDTO: widget.leagueEntryDTOMap[QueueType.ranked],
+                ),
+              ),
+              Center(
+                child: RankImageWidget(
+                  queueType: QueueType.hyperRoll,
+                  leagueEntryDTO: widget.leagueEntryDTOMap[QueueType.hyperRoll],
+                ),
+              ),
+              Center(
+                child: RankImageWidget(
+                  queueType: QueueType.doubleUp,
+                  leagueEntryDTO:  widget.leagueEntryDTOMap[QueueType.doubleUp],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Row(
           children: [
-            Center(
-              child: RankImageWidget(
-                queueType: QueueType.ranked,
-                leagueEntryDTO: widget.leagueEntryDTOMap[QueueType.ranked],
+            InkWell(
+              onTap: (){
+                if(tabIndex > 0){
+                  tabIndex--;
+                  tabController.animateTo(tabIndex);
+                }
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                size: 11.sp,
               ),
             ),
-            Center(
-              child: RankImageWidget(
-                queueType: QueueType.hyperRoll,
-                leagueEntryDTO: widget.leagueEntryDTOMap[QueueType.hyperRoll],
-              ),
-            ),
-            Center(
-              child: RankImageWidget(
-                queueType: QueueType.doubleUp,
-                leagueEntryDTO:  widget.leagueEntryDTOMap[QueueType.doubleUp],
+            SizedBox(width: 30.w,),
+            InkWell(
+              onTap: (){
+                if(tabIndex < 2){
+                  tabIndex++;
+                  tabController.animateTo(tabIndex);
+                }
+              },
+              child: Icon(
+                Icons.arrow_forward_ios,
+                size: 11.sp,
               ),
             ),
           ],
-        ),
-      ),
+        )
+      ],
     );
   }
 }
