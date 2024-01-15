@@ -18,8 +18,8 @@ extension QueueTypeExtension on QueueType {
   String getGameName(){
     switch (this){
       case QueueType.none : return "기타";
-      case QueueType.normal : return "랭크";
-      case QueueType.ranked : return "튜토리얼";
+      case QueueType.normal : return "일반";
+      case QueueType.ranked : return "랭크";
       case QueueType.hyperRoll : return "초고속모드";
       case QueueType.doubleUp : return "더블 업";
       default : return "기타";
