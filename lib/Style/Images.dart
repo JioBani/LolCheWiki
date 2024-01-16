@@ -56,7 +56,7 @@ class Images{
       case "SILVER" : return "assets/images/rank/$rank.png";
       default : {
         StaticLogger.logger.e("[Images.getRankImage()] 입력이 잘못됨 : $rank");
-        return errorItemImage;
+        return "assets/images/rank/UNRANK.png";
       }
     }
   }
