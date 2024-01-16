@@ -26,7 +26,7 @@ class _RankTabViewWidgetState extends State<RankTabViewWidget> with TickerProvid
       children: [
         SizedBox(
           width: 80.w,
-          height: 120.h,
+          height: 140.h,
           child: TabBarView(
             controller: tabController,
             children: [
@@ -105,7 +105,6 @@ class RankImageWidget extends StatelessWidget {
     }
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
@@ -115,14 +114,12 @@ class RankImageWidget extends StatelessWidget {
             fontSize: 13.sp,
           ),
         ),
-        SizedBox(height: 2.h,),
         Image.asset(
           Images.getRankImage(leagueEntryDTO?.tier),
           fit: BoxFit.fitWidth,
-          width: 42.sp,
-          height: 42.sp,
+          width: 70.sp,
+          height: 70.sp,
         ),
-        SizedBox(height: 2.h,),
         FittedBox(
           fit: BoxFit.fitWidth,
           child: Text(
