@@ -16,20 +16,20 @@ class ChampionTileWidget extends StatelessWidget {
     Color costColor = Palette.rarityColor[unitDto.rarity];
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(2.w, 0, 2.w, 0),
+      padding: EdgeInsets.fromLTRB(0.4.w, 0, 0.4.w, 0),
       child: Column(
         children: [
           StarWidget(
               nums: unitDto.tier,
               color: costColor
           ),
-          SizedBox(height: 2.h,),
+          SizedBox(height: 1.h,),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
+              borderRadius: BorderRadius.circular(7.5.r),
               border: Border.all(
                   color: costColor,
-                  width: 3.sp,
+                  width: 2.sp,
                   style: BorderStyle.solid
               ),
             ),
@@ -37,8 +37,8 @@ class ChampionTileWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(5.sp),
               child: Image.asset(
                 Images.getChampionTileImagePath(unitDto.characterId),
-                width: 28.sp,
-                height: 28.sp,
+                width: 25.sp,
+                height: 25.sp,
               ),
             ),
           ),
@@ -61,8 +61,8 @@ class StarWidget extends StatelessWidget {
 
     final Widget star = Image.asset(
       Images.star,
-      width: 11.sp,
-      height: 11.sp,
+      width: 9.sp,
+      height: 9.sp,
       color: color,
     );
 
@@ -124,7 +124,7 @@ class ItemImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 1.w , right:1.w),
+      padding: EdgeInsets.only(left: 0.5.w , right:0.5.w),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(2.sp)),
         child: Image.asset(
@@ -132,25 +132,11 @@ class ItemImageWidget extends StatelessWidget {
           width: 10.sp,
           height: 10.sp,
           errorBuilder:(context, exception, stackTrace) {
-            //Logger().e("[ItemImageWidget.Image.asset.errorBuilder()] $item");
             return Image.asset(
               Images.errorItemImage,
-              width: 10.sp,
-              height: 10.sp,
+              width: 8.sp,
+              height: 8.sp,
             );
-            /*return CachedNetworkImage(
-              imageUrl : "https://ddragon.leagueoflegends.com/cdn/13.24.1/img/tft-item/$item.png",
-              placeholder: (context, url) => CircularProgressIndicator(),
-              width: 10.sp,
-              height: 10.sp,
-              errorWidget: (context , url , error){
-                return Image.asset(
-                  Images.errorItemImage,
-                  width: 10.sp,
-                  height: 10.sp,
-                );
-              },
-            );*/
           },
         ),
       ),
