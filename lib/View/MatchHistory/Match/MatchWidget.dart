@@ -1,7 +1,9 @@
 import 'package:app/Model/RiotApi/MatchDto.dart';
+import 'package:app/Model/RiotApi/ParticipantDto.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/Match/ChampionTileWidget.dart';
 import 'package:app/View/MatchHistory/Match/OpenIconWidget.dart';
+import 'package:app/View/MatchHistory/Match/ParticipantWidget.dart';
 import 'package:app/View/MatchHistory/Match/TraitDtoListWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -109,7 +111,28 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
               Builder(
                 builder: (context){
                   double h = isOpen ? 200.h : 0;
+
+                  if(isOpen){
+                    return SizedBox();
+                  }
+                  else{
+                    return Column(
+                      children: widget.matchDto.info.participants.map(
+                              (participant) => ParticipantWidget(participantDto: participant,)
+                      ).toList(),
+                    );
+                  }
+
+                 /* Wrap(
+                    alignment: WrapAlignment.start,
+                    children: widget.matchDto.info.participants[0].units.map(
+                            (unitDto) => ChampionTileWidget(unitDto: unitDto,)
+                    ).toList(),
+                  ),*/
+
                   return SizedBox(height: h,);
+
+
                 }
               )
             ],
