@@ -4,7 +4,6 @@ import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/MatchHistoryPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,7 @@ class CustomSearchBar extends StatelessWidget {
           filled: true,
           fillColor: Palette.brightUi,
           suffixIcon: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               color: Colors.grey,
             ),
@@ -47,7 +46,7 @@ class CustomSearchBar extends StatelessWidget {
               RiotApiResponse<SummonerProfile> apiResponse = await RiotApiService.getSummonerProfileByName(name, tag);
 
               if(apiResponse.isSuccess){
-                Get.to(MatchHistoryPage(summonerProfile: apiResponse.response!,));
+                Get.to(MatchHistoryPage(summonerProfile: apiResponse.response!));
               }
               else{
                 Fluttertoast.showToast(msg: apiResponse.exception!.msg);

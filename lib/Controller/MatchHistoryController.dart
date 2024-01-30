@@ -12,7 +12,8 @@ class MatchHistoryController extends GetxController{
   RxList<MatchDto> allMatches = RxList([]);
   RxList<String> matchIds = RxList([]);
   Map<QueueType , List<MatchDto>> matches = {};
-  Map<String , MatchDataService> matchDataServiceMap = {};
+  late MatchDataService matchDataService;
+  String puuid;
 
   bool isLoading = false;
 
@@ -22,7 +23,7 @@ class MatchHistoryController extends GetxController{
 
   int start = 0;
 
-  MatchHistoryController(){
+  MatchHistoryController(this.puuid){
     tabTexts = [
       "전체(0)",
       "랭크(0)",
@@ -38,27 +39,21 @@ class MatchHistoryController extends GetxController{
       Tab(text: tabTexts[3]),
       Tab(text: tabTexts[4]),
     ]);
+
+    matchDataService = MatchDataService(puuid: puuid);
   }
 
   Future<void> fetchData(String puuid , int initMatchNumber) async{
-    MatchDataService matchDataService;
-
-    if(matchDataServiceMap[puuid] == null){
-      matchDataServiceMap[puuid] = MatchDataService(puuid: puuid);
-    }
-
-    matchDataService = matchDataServiceMap[puuid]!;
-
 
     if(matchDataService.matchDtoList.isEmpty){
       isLoading = true;
       await matchDataService.getNextMatchDtoList(initMatchNumber);
       isLoading = false;
     }
-    _loadDataFromService(matchDataService);
+    _loadDataFromService();
   }
 
-  void _loadDataFromService(MatchDataService matchDataService){
+  void _loadDataFromService(){
     matches.clear();
     for (var element in QueueType.values) {
       matches[element] = [];
@@ -75,18 +70,10 @@ class MatchHistoryController extends GetxController{
   }
 
   Future<void> loadMoreData(String puuid , int count)async{
-
-    MatchDataService? matchDataService = matchDataServiceMap[puuid];
-
-    if(matchDataServiceMap[puuid] == null){
-      Logger().i("[MatchHistoryController.loadMoreData()] 매치 데이터 서비스가 없음");
-      return;
-    }
-
     isLoading = true;
-    await matchDataService!.getNextMatchDtoList(count);
+    await matchDataService.getNextMatchDtoList(count);
     isLoading = false;
-    _loadDataFromService(matchDataService);
+    _loadDataFromService();
   }
 
   void refreshTabText(){

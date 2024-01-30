@@ -21,17 +21,19 @@ class MatchHistoryPageView extends StatefulWidget {
 }
 
 class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
-  final MatchHistoryController matchHistoryController = Get.find<MatchHistoryController>();
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onLoading() async{
+    final MatchHistoryController matchHistoryController = Get.find<MatchHistoryController>(tag: widget.puuid);
     await matchHistoryController.loadMoreData(RiotApiService.puuid , 5);
     _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final MatchHistoryController matchHistoryController = Get.find<MatchHistoryController>(tag: widget.puuid);
 
     List<Widget> elements = List.generate(widget.matchList.length, (index){
       MatchDto matchDto = widget.matchList[index];
@@ -52,48 +54,25 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
       }
     });
 
-    if(Get.find<MatchHistoryController>().isLoading){
+    if(matchHistoryController.isLoading){
       elements.add(SizedBox(
         child: CircularProgressIndicator(),
         width: 30.sp,
         height: 30.sp,
       ));
     }
+    
+    elements.add(
+        ElevatedButton(
+            onPressed: (){}, 
+            child: Text(
+              "더 불러오기"
+            )
+        )
+    );
 
-    return SmartRefresher(
-      enablePullDown: true,
-      enablePullUp: true,
-      header: WaterDropHeader(),
-      footer: CustomFooter(
-        builder: (context,mode){
-          Widget body ;
-          if(mode==LoadStatus.idle){
-            body =  Text("pull up load");
-          }
-          else if(mode==LoadStatus.loading){
-            body =  CupertinoActivityIndicator();
-          }
-          else if(mode == LoadStatus.failed){
-            body = Text("Load Failed!Click retry!");
-          }
-          else if(mode == LoadStatus.canLoading){
-            body = Text("release to load more");
-          }
-          else{
-            body = Text("No more Data");
-          }
-          return Container(
-            height: 55.0,
-            child: Center(child:body),
-          );
-        },
-      ),
-      controller: _refreshController,
-      //onRefresh: _onRefresh,
-      onLoading: _onLoading,
-      child: ListView(
-          children: elements
-      ),
+    return ListView(
+        children: elements
     );
   }
 }

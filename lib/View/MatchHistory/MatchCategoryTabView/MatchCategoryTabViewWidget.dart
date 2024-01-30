@@ -29,7 +29,13 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.find<MatchHistoryController>().fetchData(widget.puuid, 20);
+
+    Get.put<MatchHistoryController>(
+      MatchHistoryController(widget.puuid),
+      tag : widget.puuid,
+    );
+
+    Get.find<MatchHistoryController>(tag: widget.puuid).fetchData(widget.puuid, 20);
   }
 
 
@@ -42,6 +48,7 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
         child: Column(
           children: [
             GetX<MatchHistoryController>(
+              tag: widget.puuid,
               builder: (controller) {
                 return TabBar(
                   tabs:controller.tabList.value,
@@ -64,26 +71,37 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
             Expanded(
               child: TabBarView(
                 children: List.generate(5, (index){
-                  return GetX<MatchHistoryController>(
-                      builder: (controller) {
-                        if(controller.allMatches.isEmpty){
-                          return const Text("데이터 없음");
-                        }
-                        else{
-                          if(index == 0){
-                            return MatchHistoryPageView(
-                              matchList: controller.allMatches,
-                              puuid: widget.puuid,
-                            );
-                          }
-                          else{
-                            return MatchHistoryPageView(
-                              matchList: controller.matches[QueueTypeExtension.getTypeByIndex(index)]!,
-                              puuid:  widget.puuid,
-                            );
-                          }
-                        }
+                  return Builder(
+                    builder: (context) {
+                      if(!Get.isRegistered<MatchHistoryController>(tag: widget.puuid)){
+                        return SizedBox();
                       }
+                      else{
+                        return GetX<MatchHistoryController>(
+                            tag: widget.puuid,
+                            builder: (controller) {
+                              if(controller.allMatches.isEmpty){
+                                return const Text("데이터 없음");
+                              }
+                              else{
+                                if(index == 0){
+                                  return MatchHistoryPageView(
+                                    matchList: controller.allMatches,
+                                    puuid: widget.puuid,
+                                  );
+                                }
+                                else{
+                                  return MatchHistoryPageView(
+                                    matchList: controller.matches[QueueTypeExtension.getTypeByIndex(index)]!,
+                                    puuid:  widget.puuid,
+                                  );
+                                }
+                              }
+                            }
+                        );
+                      }
+
+                    }
                   );
                 })
               ),

@@ -8,10 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class MatchHistoryPage extends StatelessWidget {
-  MatchHistoryPage({super.key, required this.summonerProfile});
+  const MatchHistoryPage({super.key, required this.summonerProfile});
   final SummonerProfile summonerProfile;
-
-  final MatchHistoryController controller = Get.put(MatchHistoryController());
 
   @override
   Widget build(BuildContext context) {
