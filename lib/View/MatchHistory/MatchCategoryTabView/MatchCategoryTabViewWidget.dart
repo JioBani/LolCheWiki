@@ -1,16 +1,18 @@
 import 'package:app/Controller/MatchHistoryController.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
+import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'CategoryTabWidget.dart';
 import 'MatchHistoryPageView.dart';
 
 class MatchCategoryTabViewWidget extends StatefulWidget {
-  const MatchCategoryTabViewWidget({super.key});
+  const MatchCategoryTabViewWidget({super.key, required this.puuid});
+
+  final String puuid;
 
   @override
   State<MatchCategoryTabViewWidget> createState() => _MatchCategoryTabViewWidgetState();
@@ -27,7 +29,7 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.find<MatchHistoryController>().fetchData(RiotApiService.puuid , 20);
+    Get.find<MatchHistoryController>().fetchData(widget.puuid, 20);
   }
 
 

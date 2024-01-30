@@ -46,7 +46,7 @@ class MatchHistoryPage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 24.h,),
-              MatchCategoryTabViewWidget()
+              MatchCategoryTabViewWidget(puuid:  summonerProfile.summonerDTO.puuid,)
             ],
           ),
         ),
