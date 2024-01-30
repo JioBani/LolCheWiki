@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "773723790875",
+    "project_id": "lolche-wiki",
+    "storage_bucket": "lolche-wiki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773723790875:android:3d69dead9645feafd622be",
+        "android_client_info": {
+          "package_name": "com.lnk.lolche.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6xjKtlpj3aRnuzrgAU6IdULT0v5xLlgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,7 @@ import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/View/MatchHistory/Match/MatchWidget.dart';
+import 'package:app/View/MatchHistory/Match/NoTargetSetMatchWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +32,14 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
   @override
   Widget build(BuildContext context) {
 
-    List<Widget> elements = List.generate(widget.matchList.length, (index) => MatchWidget(matchDto: widget.matchList[index]));
+    List<Widget> elements = List.generate(widget.matchList.length, (index){
+      if(widget.matchList[index].info.tftSetNumber != 10){
+        return NoTargetSetMatchWidget(matchDto: widget.matchList[index]);
+      }
+      else{
+        return MatchWidget(matchDto: widget.matchList[index]);
+      }
+    });
 
     if(Get.find<MatchHistoryController>().isLoading){
       elements.add(SizedBox(

@@ -2,7 +2,7 @@ import 'ParticipantDto.dart';
 
 class InfoDto {
   int gameDatetime;
-  double gameLength;
+  num gameLength;
   String gameVariation;
   String gameVersion;
   List<ParticipantDto> participants;

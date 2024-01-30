@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:app/Model/RiotApi/MatchDto.dart';
+import 'package:app/Service/StaticLogger.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
@@ -55,6 +56,15 @@ class DataStoreService{
     }
   }
 
+  static Future<void> _makeDirectory(String path) async{
+    try{
+      await Directory(await _getFilePath(path)).create(recursive: true);
+    }catch(e){
+      StaticLogger.logger.e("[DataStoreService._makeDirectory()] 디렉토리 생성 실패 : $e");
+      rethrow;
+    }
+  }
+
   static String getMatchIdListPath(String puuid){
     return "$puuid/matchIdList.json";
   }
@@ -86,17 +96,28 @@ class DataStoreService{
     }
   }
 
-  static Future<bool> saveMatchDto(String puuid, MatchDto matchDto) async{
-    String matchDtoPath = getMatchDtoPath(puuid);
-    bool isExist = await _isPathExist(matchDtoPath);
 
-    if(!isExist){
-      String path = await _getFilePath(matchDtoPath);
-      logger.i("[DataStoreService.readMatchDto()] $path");
-      var directory = await Directory(path).create(recursive: true);
-      logger.i("[DataStoreService.readMatchDto()] 디렉토리생성");
+  static Future<bool> ensureMatchDtoDirectory(String puuid) async{
+    try{
+      String matchDtoPath =  getMatchDtoPath(puuid);
+      bool isExist = await _isPathExist(matchDtoPath);
+
+      if(!isExist){
+        logger.i("[DataStoreService.ensureMatchDtoDirectory()] 존재하지않음 : $matchDtoPath");
+        await _makeDirectory(matchDtoPath);
+        logger.i("[DataStoreService.readMatchDto()] 디렉토리생성 : $matchDtoPath");
+      }
+
+      return true;
+    }catch(e){
+      StaticLogger.logger.e("[DataStoreService.ensureMatchDtoDirectory()] $e");
+      return false;
     }
 
+  }
+
+  static Future<bool> saveMatchDto(String puuid, MatchDto matchDto) async{
+    String matchDtoPath = getMatchDtoPath(puuid);
     final jsonString = jsonEncode(matchDto);
     return await _save("$matchDtoPath/${matchDto.matchId}.json", jsonString);
   }
@@ -152,6 +173,25 @@ class DataStoreService{
       return false;
     }
   }
+
+  /*static Future<void> saveTest(String path , String content) async{
+    bool success = await _save(path, content);
+    if(success){
+      logger.i("[DataStoreService.saveTest()] 데이터 저장 완료");
+    }
+    else{
+      logger.e("[DataStoreService.saveTest()] 데이터 저장 실패");
+    }
+  }
+
+  static Future<String?> readTest(String path) async{
+    try{
+      return await _read(path);
+    }catch(e){
+      logger.e("[DataStoreService.readTest()] $e");
+      return null;
+    }
+  }*/
 
 
 }

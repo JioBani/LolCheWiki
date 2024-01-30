@@ -3,6 +3,7 @@ import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
+import 'package:app/Service/StaticLogger.dart';
 import 'package:logger/logger.dart';
 
 class MatchDataService{
@@ -47,6 +48,12 @@ class MatchDataService{
       increase++;
     }
 
+    try{
+      await DataStoreService.ensureMatchDtoDirectory(_puuid);
+    }catch(e){
+      StaticLogger.logger.e("MatchDataService.getNextMatchDtoList() : $e");
+    }
+
     _matchDtoList = await Future.wait(
         targetIdList.map((e) => _getMatchDto(e))
     );
@@ -67,14 +74,22 @@ class MatchDataService{
     }
     else{
         RiotApiResponse<MatchDto> matchRes = await RiotApiService.getMatch(matchId);
+
         if(matchRes.isSuccess){
           matchDto = matchRes.response!;
           logger.i("[MatchDataService._getMatchDto()] 네트워크에서 로드함 ($matchId)");
 
-          await DataStoreService.saveMatchDto(RiotApiService.puuid ,matchDto);
-          logger.i("[MatchDataService._getMatchDto()] 매치 데이터 저장 ($matchId)");
+          try{
+            await DataStoreService.saveMatchDto(RiotApiService.puuid ,matchDto);
+
+            logger.i("[MatchDataService._getMatchDto()] 매치 데이터 저장 ($matchId)");
+
+          }catch(e){
+            StaticLogger.logger.e("[MatchDataService._getMatchDto()] 매치데이터 저장 실패 : $e");
+          }
         }
         else{
+          StaticLogger.logger.e("[MatchDataService._getMatchDto()] 매치데이터 불러오기 실패 : ${matchRes.exception!.msg} , id = $matchId");
           matchDto = MatchDto.none();
         }
     }

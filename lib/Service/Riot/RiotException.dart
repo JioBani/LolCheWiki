@@ -1,3 +1,4 @@
+import 'package:app/Service/StaticLogger.dart';
 import 'package:logger/logger.dart';
 
 enum RiotApiExceptionCode{
@@ -64,9 +65,14 @@ class RiotApiException implements Exception{
       return _fromStatusCode(e).print();
     }
     if (e is FormatException) {
-      return RiotApiException._parsing().print();
-    } else {
-      return RiotApiException._network().print();
+      return RiotApiException._parsing(e.toString()).print();
+    }
+    else if(e is TypeError){
+      return RiotApiException._parsing(e.toString()).print();
+    }
+    else {
+      StaticLogger.logger.e("[RiotApiException.makeException()] ${e.runtimeType}");
+      return RiotApiException._network(e.toString()).print();
     }
   }
 
@@ -92,16 +98,16 @@ class RiotApiException implements Exception{
 
   RiotApiException({required this.msg , required this.exceptionCode});
 
-  factory RiotApiException._network(){
+  factory RiotApiException._network(String msg){
     return RiotApiException(
-      msg: "인터넷에 연결 할 수 없습니다.",
+      msg: "인터넷에 연결 할 수 없습니다. : $msg",
       exceptionCode: RiotApiExceptionCode.network
     );
   }
 
-  factory RiotApiException._parsing(){
+  factory RiotApiException._parsing(String msg){
     return RiotApiException(
-        msg: "데이터 처리중 오류가 발생하였습니다.",
+        msg: "데이터 처리중 오류가 발생하였습니다. : $msg",
         exceptionCode: RiotApiExceptionCode.parsing
     );
   }

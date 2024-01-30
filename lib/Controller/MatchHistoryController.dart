@@ -40,7 +40,7 @@ class MatchHistoryController extends GetxController{
     ]);
   }
 
-  Future<void> fetchData(String puuid) async{
+  Future<void> fetchData(String puuid , int initMatchNumber) async{
     MatchDataService matchDataService;
 
     if(matchDataServiceMap[puuid] == null){
@@ -52,11 +52,10 @@ class MatchHistoryController extends GetxController{
 
     if(matchDataService.matchDtoList.isEmpty){
       isLoading = true;
-      await matchDataService.getNextMatchDtoList(20);
+      await matchDataService.getNextMatchDtoList(initMatchNumber);
       isLoading = false;
     }
     _loadDataFromService(matchDataService);
-
   }
 
   void _loadDataFromService(MatchDataService matchDataService){

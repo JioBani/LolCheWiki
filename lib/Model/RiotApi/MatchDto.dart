@@ -1,3 +1,5 @@
+import 'package:app/Service/StaticLogger.dart';
+
 import 'InfoDto.dart';
 import 'MetadataDto.dart';
 
@@ -29,6 +31,7 @@ class MatchDto {
   }
 
   factory MatchDto.none(){
+    StaticLogger.logger.e("[MatchDto.none]");
     return MatchDto(
       matchId: "none",
       metadata: MetadataDto.none(),

@@ -1,38 +1,47 @@
+import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Model/RiotApi/ParticipantDto.dart';
-import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/Match/TraitDtoListWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'ChampionTileWidget.dart';
 
-class ParticipantWidget extends StatelessWidget {
-  const ParticipantWidget({super.key, required this.participantDto});
+class ParticipantWidget extends StatefulWidget {
+  const ParticipantWidget({super.key, required this.participantDto, required this.matchDto });
   final ParticipantDto participantDto;
+  final MatchDto matchDto;
+
+  @override
+  State<ParticipantWidget> createState() => _ParticipantWidgetState();
+}
+
+class _ParticipantWidgetState extends State<ParticipantWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        /*Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(width: 5.w,),
             Text(
-              "#${participantDto.placement}등",
+              "#${widget.participantDto.placement}등",
               style: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
-                  color: Palette.rankColors[participantDto.placement]
+                  color: Palette.rankColors[widget.participantDto.placement]
               ),
             ),
             SizedBox(width: 5.w,),
             Text("티어"),
-            Text("JioBani"),
+            SizedBox(width: 5.w,),
+            Text(widget.participantDto.summonerDTO?.name ?? "null"),
             Expanded(child: SizedBox()),
             SizedBox(width: 15.w,),
             Text(
-              "#${participantDto.level}레벨",
+              "#${widget.participantDto.level}레벨",
               style: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
@@ -40,17 +49,20 @@ class ParticipantWidget extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        TraitDtoListWidget(traitDtos: participantDto.traits,),
+        ),*/
+        TraitDtoListWidget(traitDtos: widget.participantDto.traits,),
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-                children: participantDto.units.map(
+                children: widget.participantDto.units.map(
                         (unitDto) => ChampionTileWidget(unitDto: unitDto,)
                 ).toList(),
             )
         ),
+        const Divider(
+          color: Colors.black,
+        )
       ],
     );
   }

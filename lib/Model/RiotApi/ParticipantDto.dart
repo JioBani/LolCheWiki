@@ -1,5 +1,6 @@
 import 'package:app/Model/RiotApi/TraitDto.dart';
 import 'CompanionDto.dart';
+import 'SummonerDTO.dart';
 import 'UnitDto.dart';
 
 class ParticipantDto {
@@ -10,10 +11,11 @@ class ParticipantDto {
   int placement;
   int playersEliminated;
   String puuid;
-  double timeEliminated;
+  num timeEliminated;
   int totalDamageToPlayers;
   List<TraitDto> traits;
   List<UnitDto> units;
+  SummonerDTO? summonerDTO;
 
   ParticipantDto({
     required this.companion,
@@ -116,5 +118,9 @@ class ParticipantDto {
       'traits': traits.map((e) => e.toJson()).toList(),
       'units': units.map((e) => e.toJson()).toList(),
     };
+  }
+
+  setSummoner(SummonerDTO summonerDTO){
+    this.summonerDTO = summonerDTO;
   }
 }

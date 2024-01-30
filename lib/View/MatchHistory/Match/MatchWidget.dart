@@ -1,5 +1,4 @@
 import 'package:app/Model/RiotApi/MatchDto.dart';
-import 'package:app/Model/RiotApi/ParticipantDto.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/Match/ChampionTileWidget.dart';
 import 'package:app/View/MatchHistory/Match/OpenIconWidget.dart';
@@ -7,6 +6,8 @@ import 'package:app/View/MatchHistory/Match/ParticipantWidget.dart';
 import 'package:app/View/MatchHistory/Match/TraitDtoListWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
 
 class MatchWidget extends StatefulWidget {
   const MatchWidget({super.key, required this.matchDto});
@@ -110,29 +111,17 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
               Divider(color: Color(0xffD4D4D4),thickness: 2,),
               Builder(
                 builder: (context){
-                  double h = isOpen ? 200.h : 0;
 
-                  if(isOpen){
+                  if(!isOpen){
                     return SizedBox();
                   }
                   else{
                     return Column(
                       children: widget.matchDto.info.participants.map(
-                              (participant) => ParticipantWidget(participantDto: participant,)
+                              (participant) => ParticipantWidget(participantDto: participant, matchDto: widget.matchDto,)
                       ).toList(),
                     );
                   }
-
-                 /* Wrap(
-                    alignment: WrapAlignment.start,
-                    children: widget.matchDto.info.participants[0].units.map(
-                            (unitDto) => ChampionTileWidget(unitDto: unitDto,)
-                    ).toList(),
-                  ),*/
-
-                  return SizedBox(height: h,);
-
-
                 }
               )
             ],

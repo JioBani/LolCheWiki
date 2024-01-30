@@ -46,6 +46,7 @@ dependencies:
   cached_network_image:
   pull_to_refresh:
   path_provider:
+  firebase_core: 
 
 dev_dependencies:
   flutter_test:

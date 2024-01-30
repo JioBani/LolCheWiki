@@ -5,6 +5,7 @@ import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/MatchDataService.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
+import 'package:app/Service/StaticLogger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -148,6 +149,60 @@ class TestPage extends StatelessWidget {
                     ),
                   )
               ),
+              ElevatedButton(
+                  onPressed: ()async{
+                    StaticLogger.logger.i(RiotApiService.riotApiCounter.print());
+                  },
+                  child: Text(
+                    "API 카운트",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              )
+              /*ElevatedButton(
+                  onPressed: ()async{
+                    DataStoreService.saveTest("test.dat", "test");
+                  },
+                  child: Text(
+                    "데이터 저장 테스트",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+              ElevatedButton(
+                  onPressed: ()async{
+                    String? result = await DataStoreService.readTest("test.dat");
+                    if(result == null){
+                      StaticLogger.logger.e("[Test] 데이터 읽기 실패");
+                    }
+                    else{
+                      StaticLogger.logger.i("[Test] 데이터 읽기 성공 $result");
+                    }
+                  },
+                  child: Text(
+                    "데이터 읽기 테스트",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+              ElevatedButton(
+                  onPressed: ()async{
+
+                  },
+                  child: Text(
+                    "데이터 삭제 테스트",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),*/
             ],
           ),
         ),

@@ -27,7 +27,7 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.find<MatchHistoryController>().fetchData(RiotApiService.puuid);
+    Get.find<MatchHistoryController>().fetchData(RiotApiService.puuid , 20);
   }
 
 
