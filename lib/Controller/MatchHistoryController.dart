@@ -1,21 +1,19 @@
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
 import 'package:app/Service/MatchDataService.dart';
-import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class MatchHistoryController extends GetxController{
   Rx<MatchDto?> matchDto = Rx(null);
 
-  RxList<MatchDto> allMatches = RxList([]);
-  RxList<String> matchIds = RxList([]);
+  List<MatchDto> allMatches = [];
+  List<String> matchIds = [];
   Map<QueueType , List<MatchDto>> matches = {};
   late MatchDataService matchDataService;
   String puuid;
 
-  bool isLoading = false;
+  RxBool isLoading = RxBool(false);
 
   List<String> tabTexts = [];
 
@@ -46,9 +44,9 @@ class MatchHistoryController extends GetxController{
   Future<void> fetchData(String puuid , int initMatchNumber) async{
 
     if(matchDataService.matchDtoList.isEmpty){
-      isLoading = true;
+      isLoading.value = true;
       await matchDataService.getNextMatchDtoList(initMatchNumber);
-      isLoading = false;
+      isLoading.value = false;
     }
     _loadDataFromService();
   }
@@ -69,10 +67,10 @@ class MatchHistoryController extends GetxController{
     update();
   }
 
-  Future<void> loadMoreData(String puuid , int count)async{
-    isLoading = true;
+  Future<void> loadMoreData(int count)async{
+    isLoading.value = true;
     await matchDataService.getNextMatchDtoList(count);
-    isLoading = false;
+    isLoading.value = false;
     _loadDataFromService();
   }
 
