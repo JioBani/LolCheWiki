@@ -68,53 +68,49 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
               }
             ),
             Expanded(
-              child: RefreshConfiguration(
-                maxOverScrollExtent: 500,
-                maxUnderScrollExtent: 500,
-                child: TabBarView(
-                  children: List.generate(5, (index){
-                    return Builder(
-                      builder: (context) {
-                        if(!Get.isRegistered<MatchHistoryController>(tag: widget.puuid)){
-                          return const SizedBox();
-                        }
-                        else{
-                          return GetX<MatchHistoryController>(
-                              tag: widget.puuid,
-                              builder: (controller) {
-                                if(controller.isLoading.value){
-                                  return const Center(
-                                    child: Text(
-                                      "로딩중"
-                                    ),
-                                  );
+              child: TabBarView(
+                children: List.generate(5, (index){
+                  return Builder(
+                    builder: (context) {
+                      if(!Get.isRegistered<MatchHistoryController>(tag: widget.puuid)){
+                        return const SizedBox();
+                      }
+                      else{
+                        return GetX<MatchHistoryController>(
+                            tag: widget.puuid,
+                            builder: (controller) {
+                              if(controller.isLoading.value){
+                                return const Center(
+                                  child: Text(
+                                    "로딩중"
+                                  ),
+                                );
+                              }
+                              else{
+                                if(controller.allMatches.isEmpty){
+                                  return const Text("데이터 없음");
                                 }
                                 else{
-                                  if(controller.allMatches.isEmpty){
-                                    return const Text("데이터 없음");
+                                  if(index == 0){
+                                    return MatchHistoryPageView(
+                                      matchList: controller.allMatches,
+                                      puuid: widget.puuid,
+                                    );
                                   }
                                   else{
-                                    if(index == 0){
-                                      return MatchHistoryPageView(
-                                        matchList: controller.allMatches,
-                                        puuid: widget.puuid,
-                                      );
-                                    }
-                                    else{
-                                      return MatchHistoryPageView(
-                                        matchList: controller.matches[QueueTypeExtension.getTypeByIndex(index)]!,
-                                        puuid:  widget.puuid,
-                                      );
-                                    }
+                                    return MatchHistoryPageView(
+                                      matchList: controller.matches[QueueTypeExtension.getTypeByIndex(index)]!,
+                                      puuid:  widget.puuid,
+                                    );
                                   }
                                 }
                               }
-                          );
-                        }
+                            }
+                        );
                       }
-                    );
-                  })
-                ),
+                    }
+                  );
+                })
               ),
             ),
             /*Expanded(

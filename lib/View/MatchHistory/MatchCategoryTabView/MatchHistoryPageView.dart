@@ -1,7 +1,7 @@
 import 'package:app/Controller/MatchHistoryController.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
-import 'package:app/Service/StaticLogger.dart';
-import 'package:app/View/MatchHistory/Match/MatchLoadButton.dart';
+import 'package:app/Model/RiotApi/QueueType.dart';
+import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/View/MatchHistory/Match/MatchWidget.dart';
 import 'package:app/View/MatchHistory/Match/NoTargetSetMatchWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,10 +22,7 @@ class MatchHistoryPageView extends StatefulWidget {
 
 class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
 
-  final RefreshController _refreshController = RefreshController(
-      initialRefresh: false
-  );
-
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onLoading() async{
     final MatchHistoryController matchHistoryController = Get.find<MatchHistoryController>(tag: widget.puuid);
@@ -35,9 +32,6 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
 
   @override
   Widget build(BuildContext context) {
-
-    final MatchHistoryController matchHistoryController = Get.find<MatchHistoryController>(tag: widget.puuid);
-
 
     List<Widget> elements = List.generate(widget.matchList.length, (index){
       MatchDto matchDto = widget.matchList[index];
@@ -54,29 +48,21 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
       }
 
       else{
-        return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex);
+        return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
       }
     });
 
-    if(matchHistoryController.isLoading.value){
-      elements.add(
-        SizedBox(
-          child: const CircularProgressIndicator(),
-          width: 30.sp,
-          height: 30.sp,
-        )
-      );
+    if(Get.find<MatchHistoryController>(tag: widget.puuid).isLoading.value){
+      elements.add(SizedBox(
+        child: CircularProgressIndicator(),
+        width: 30.sp,
+        height: 30.sp,
+      ));
     }
 
-    elements.add(
-      MatchLoadButton(
-        puuid: widget.puuid,
-        refreshController: _refreshController,
-      )
-    );
-
     return SmartRefresher(
-      enablePullUp: false,
+      enablePullDown: true,
+      enablePullUp: true,
       header: WaterDropHeader(),
       footer: CustomFooter(
         builder: (context,mode){
@@ -85,7 +71,7 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
             body =  Text("pull up load");
           }
           else if(mode==LoadStatus.loading){
-            body = CupertinoActivityIndicator();
+            body =  CupertinoActivityIndicator();
           }
           else if(mode == LoadStatus.failed){
             body = Text("Load Failed!Click retry!");
@@ -103,6 +89,7 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
         },
       ),
       controller: _refreshController,
+      //onRefresh: _onRefresh,
       onLoading: _onLoading,
       child: ListView(
           children: elements
