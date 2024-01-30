@@ -1,3 +1,4 @@
+import 'package:app/Common/DateCalculator.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/Match/ChampionTileWidget.dart';
@@ -67,7 +68,7 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
                   ),
                   SizedBox(width: 22.w,),
                   Text(
-                    "30분 전",
+                    DateCalculator.getElapsedTimeString(widget.matchDto.info.gameDatetime),
                     style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,

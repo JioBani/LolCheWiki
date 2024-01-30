@@ -1,3 +1,4 @@
+import 'package:app/Common/DateCalculator.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/StaticLogger.dart';
 import 'package:app/Style/Palette.dart';
@@ -47,7 +48,7 @@ class NoTargetSetMatchWidget extends StatelessWidget {
                   ),
                   SizedBox(width: 22.w,),
                   Text(
-                    "30분 전",
+                    DateCalculator.getElapsedTimeString(matchDto.info.gameDatetime),
                     style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
