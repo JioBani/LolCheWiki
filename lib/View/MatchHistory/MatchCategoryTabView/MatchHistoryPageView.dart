@@ -11,9 +11,10 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MatchHistoryPageView extends StatefulWidget {
-  MatchHistoryPageView({super.key , required this.matchList});
+  MatchHistoryPageView({super.key , required this.matchList, required this.puuid});
 
   final List<MatchDto> matchList;
+  final String puuid;
 
   @override
   State<MatchHistoryPageView> createState() => _MatchHistoryPageViewState();
@@ -33,11 +34,21 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> {
   Widget build(BuildContext context) {
 
     List<Widget> elements = List.generate(widget.matchList.length, (index){
-      if(widget.matchList[index].info.tftSetNumber != 10){
-        return NoTargetSetMatchWidget(matchDto: widget.matchList[index]);
+      MatchDto matchDto = widget.matchList[index];
+      int ownerIndex = 0;
+
+      for(int i = 0; i< matchDto.info.participants.length; i++){
+        if(widget.puuid == matchDto.info.participants[i].puuid){
+          ownerIndex = i;
+        }
       }
+
+      if(widget.matchList[index].info.tftSetNumber != 10){
+        return NoTargetSetMatchWidget(matchDto: matchDto);
+      }
+
       else{
-        return MatchWidget(matchDto: widget.matchList[index]);
+        return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
       }
     });
 

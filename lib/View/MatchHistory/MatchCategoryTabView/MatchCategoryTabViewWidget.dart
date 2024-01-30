@@ -71,10 +71,16 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
                         }
                         else{
                           if(index == 0){
-                            return MatchHistoryPageView(matchList: controller.allMatches,);
+                            return MatchHistoryPageView(
+                              matchList: controller.allMatches,
+                              puuid: widget.puuid,
+                            );
                           }
                           else{
-                            return MatchHistoryPageView(matchList: controller.matches[QueueTypeExtension.getTypeByIndex(index)]!,);
+                            return MatchHistoryPageView(
+                              matchList: controller.matches[QueueTypeExtension.getTypeByIndex(index)]!,
+                              puuid:  widget.puuid,
+                            );
                           }
                         }
                       }

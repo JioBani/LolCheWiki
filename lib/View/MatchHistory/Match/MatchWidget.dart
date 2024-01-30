@@ -1,5 +1,6 @@
 import 'package:app/Common/DateCalculator.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
+import 'package:app/Model/RiotApi/ParticipantDto.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/Match/ChampionTileWidget.dart';
 import 'package:app/View/MatchHistory/Match/OpenIconWidget.dart';
@@ -11,9 +12,10 @@ import 'package:get/get.dart';
 
 
 class MatchWidget extends StatefulWidget {
-  const MatchWidget({super.key, required this.matchDto});
+  const MatchWidget({super.key, required this.matchDto, required this.ownerIndex});
 
   final MatchDto matchDto;
+  final int ownerIndex;
 
   @override
   State<MatchWidget> createState() => _MatchWidgetState();
@@ -24,8 +26,10 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
   bool isOpen = false;
 
 
+
   @override
   Widget build(BuildContext context) {
+    ParticipantDto owner = widget.matchDto.info.participants[widget.ownerIndex];
 
     return Container(
       margin: EdgeInsets.only(right: 10.w , bottom: 24.h),
@@ -48,10 +52,10 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TraitDtoListWidget(traitDtos: widget.matchDto.info.participants[0].traits,),
+              TraitDtoListWidget(traitDtos: owner.traits,),
               Wrap(
                 alignment: WrapAlignment.start,
-                children: widget.matchDto.info.participants[0].units.map(
+                children: owner.units.map(
                         (unitDto) => ChampionTileWidget(unitDto: unitDto,)
                 ).toList(),
               ),
@@ -77,16 +81,16 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
                   ),
                   const Expanded(child: SizedBox()),
                   Text(
-                    "#${widget.matchDto.info.participants[0].placement}등",
+                    "#${owner.placement}등",
                     style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
-                        color: Palette.rankColors[widget.matchDto.info.participants[0].placement]
+                        color: Palette.rankColors[owner.placement]
                     ),
                   ),
                   SizedBox(width: 15.w,),
                   Text(
-                    "#${widget.matchDto.info.participants[0].level}레벨",
+                    "#${owner.level}레벨",
                     style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
