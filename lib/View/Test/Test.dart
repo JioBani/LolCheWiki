@@ -6,6 +6,7 @@ import 'package:app/Service/MatchDataService.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Service/StaticLogger.dart';
+import 'package:app/View/Test/FirebaseTest.dart';
 import 'package:app/View/Test/ScrollTest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -170,6 +171,18 @@ class TestPage extends StatelessWidget {
                   },
                   child: Text(
                     "스크롤 테스트",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+              ElevatedButton(
+                  onPressed: ()async{
+                    Get.to(FirebaseTestPage());
+                  },
+                  child: Text(
+                    "파이어스토어 테스트",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15.sp
