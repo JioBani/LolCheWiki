@@ -31,12 +31,12 @@ class MatchDataService{
     }
   }
 
-  Future<List<MatchDto>> getNextMatchDtoList(int count) async{
+  Future<List<MatchDto>?> getNextMatchDtoList(int count) async{
     //TODO
     int index = _nextMatchIndex;
     int increase = 0;
 
-    final List<MatchDto> _matchDtoList;
+    final List<MatchDto>? _matchDtoList;
     final List<String> targetIdList = [];
 
     if(matchIdList.isEmpty){
@@ -48,26 +48,34 @@ class MatchDataService{
       increase++;
     }
 
+    if(targetIdList.isEmpty){
+      return null;
+    }
+
     try{
       await DataStoreService.ensureMatchDtoDirectory(_puuid);
     }catch(e){
       StaticLogger.logger.e("MatchDataService.getNextMatchDtoList() : $e");
     }
 
-    _matchDtoList = await Future.wait(
-        targetIdList.map((e) => _getMatchDto(e))
-    );
+    _matchDtoList = await _getMatchDtoList(targetIdList);
 
-    _matchDtoList.sort(MatchDto.compare); // 정렬하는거 부터
+    if(_matchDtoList == null){
+      return null;
+    }
+    else{
+      _matchDtoList.sort(MatchDto.compare); // 정렬하는거 부터
 
-    _nextMatchIndex += increase;
+      _nextMatchIndex += increase;
 
-    matchDtoList.addAll(_matchDtoList);
+      matchDtoList.addAll(_matchDtoList);
 
-    return _matchDtoList;
+      return _matchDtoList;
+    }
+
   }
 
-  Future<MatchDto> _getMatchDto(String matchId) async{
+  Future<MatchDto?> _getMatchDto(String matchId) async{
     MatchDto? matchDto = await DataStoreService.readMatchDto(RiotApiService.puuid  , matchId);
     if(matchDto != null){
         logger.i("[MatchDataService._getMatchDto()] 로컬에서 로드함 ($matchId)");
@@ -90,10 +98,28 @@ class MatchDataService{
         }
         else{
           StaticLogger.logger.e("[MatchDataService._getMatchDto()] 매치데이터 불러오기 실패 : ${matchRes.exception!.msg} , id = $matchId");
-          matchDto = MatchDto.none();
         }
     }
     return matchDto;
+  }
+
+  Future<List<MatchDto>?> _getMatchDtoList(List<String> matchIdList)async{
+    List<MatchDto?> temp = await Future.wait(
+        matchIdList.map((e) => _getMatchDto(e))
+    );
+
+    List<MatchDto> matchDtoList = [];
+
+    for (var value in temp) {
+      if(value == null){
+        return null;
+      }
+      else{
+        matchDtoList.add(value);
+      }
+    }
+
+    return matchDtoList;
   }
 
   void refresh() async{

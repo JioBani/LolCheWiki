@@ -57,6 +57,7 @@ class MatchDto {
     }
   }
 
+
   bool isNone(){
     return matchId == "none";
   }

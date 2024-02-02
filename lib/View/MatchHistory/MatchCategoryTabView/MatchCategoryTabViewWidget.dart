@@ -4,7 +4,6 @@ import 'package:app/Style/Palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'MatchHistoryPageView.dart';
 
@@ -34,12 +33,12 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
       tag : widget.puuid,
     );
 
-    Get.find<MatchHistoryController>(tag: widget.puuid).fetchData(widget.puuid, 20);
+    Get.find<MatchHistoryController>(tag: widget.puuid).initData(20);
   }
-
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     return DefaultTabController(
       length: 5,
@@ -79,30 +78,23 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
                         return GetX<MatchHistoryController>(
                             tag: widget.puuid,
                             builder: (controller) {
-                              if(controller.isLoading.value){
-                                return const Center(
-                                  child: Text(
-                                    "로딩중"
-                                  ),
-                                );
+                              if(!controller.isInitiated.value){
+                                return const Text("로딩중");
+                              }
+                              else if(controller.allMatches.isEmpty){
+                                return const Text("데이터 없음");
                               }
                               else{
-                                if(controller.allMatches.isEmpty){
-                                  return const Text("데이터 없음");
+                                if(index == 0){
+                                  return MatchHistoryPageView(
+                                    puuid: widget.puuid,
+                                  );
                                 }
                                 else{
-                                  if(index == 0){
-                                    return MatchHistoryPageView(
-                                      matchList: controller.allMatches,
-                                      puuid: widget.puuid,
-                                    );
-                                  }
-                                  else{
-                                    return MatchHistoryPageView(
-                                      matchList: controller.matches[QueueTypeExtension.getTypeByIndex(index)]!,
-                                      puuid:  widget.puuid,
-                                    );
-                                  }
+                                  return MatchHistoryPageView(
+                                    queueType: QueueTypeExtension.getTypeByIndex(index),
+                                    puuid:  widget.puuid,
+                                  );
                                 }
                               }
                             }
@@ -113,9 +105,6 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
                 })
               ),
             ),
-            /*Expanded(
-              child: _tabBarView()
-            ),*/
           ],
         ),
       ),

@@ -21,6 +21,7 @@ class TestPage extends StatelessWidget {
   final MatchDataService matchDataService = MatchDataService(puuid: RiotApiService.puuid);
   final Logger logger = Logger();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,12 +94,12 @@ class TestPage extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: ()async{
-                    await matchDataService.setMatchIdList(100);
-                    List<MatchDto> matchDtoList = await matchDataService.getNextMatchDtoList(5);
+                    /*await matchDataService.setMatchIdList(100);
+                    List<MatchDto>? matchDtoList = await matchDataService.getNextMatchDtoList(5);
                     logger.i(matchDtoList.length);
                     for (var value in matchDtoList) {
                       logger.i(value.matchId);
-                    }
+                    }*/
                   },
                   child: Text(
                     "매치 리스트 불러오기2",
