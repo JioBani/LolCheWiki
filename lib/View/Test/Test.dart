@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/Model/Champion.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/MatchDataService.dart';
@@ -183,6 +184,18 @@ class TestPage extends StatelessWidget {
                   },
                   child: Text(
                     "파이어스토어 테스트",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+              ElevatedButton(
+                  onPressed: ()async{
+
+                  },
+                  child: Text(
+                    "챔피언 파싱 테스트",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15.sp
