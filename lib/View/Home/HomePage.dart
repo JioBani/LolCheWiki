@@ -21,65 +21,60 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 113.h),
-            CustomSearchBar(),
-            SizedBox(height: 10.h),
-            SearchHistoryWidget(),
-            SizedBox(height: 50.h),
-            ProfileWidget(),
-            SizedBox(height: 56.h,),
-            Padding(
-              padding: EdgeInsets.only(left: 10.w , right: 10.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    child: Container(
+        child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(height: 113.h),
+              const CustomSearchBar(),
+              SizedBox(height: 10.h),
+              const SearchHistoryWidget(),
+              SizedBox(height: 50.h),
+              const ProfileWidget(),
+              SizedBox(height: 56.h,),
+              Padding(
+                padding: EdgeInsets.only(left: 10.w , right: 10.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      child: Container(
+                        width: 90.w,
+                        height: 100.h,
+                        decoration: BoxDecoration(
+                          color: Palette.brightUi,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                      ),
+                      onTap: (){
+                        Get.to(const ChampionListPage());
+                      },
+                    ),
+                    Container(
                       width: 90.w,
                       height: 100.h,
                       decoration: BoxDecoration(
                         color: Palette.brightUi,
                         borderRadius: BorderRadius.circular(10.r),
-                        boxShadow: [
-                          //ShadowPalette.defaultShadow
-                        ]
+
                       ),
                     ),
-                    onTap: (){
-                      Get.to(ChampionListPage());
-                    },
-                  ),
-                  Container(
-                    width: 90.w,
-                    height: 100.h,
-                    decoration: BoxDecoration(
-                      color: Palette.brightUi,
-                      borderRadius: BorderRadius.circular(10.r),
-                      boxShadow: [
-                        //ShadowPalette.defaultShadow
-                      ]
-                    ),
-                  ),
-                  Container(
-                    width: 90.w,
-                    height: 100.h,
-                    decoration: BoxDecoration(
-                      color: Palette.brightUi,
-                      borderRadius: BorderRadius.circular(10.r),
-                      boxShadow: [
-                        //ShadowPalette.defaultShadow
-                      ]
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+                    Container(
+                      width: 90.w,
+                      height: 100.h,
+                      decoration: BoxDecoration(
+                        color: Palette.brightUi,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

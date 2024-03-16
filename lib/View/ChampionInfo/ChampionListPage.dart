@@ -1,11 +1,15 @@
+import 'package:app/Controller/ChamptionListPageController.dart';
+import 'package:app/Controller/LoadingState.dart';
 import 'package:app/Model/Champion.dart';
 import 'package:app/Service/FirestoreService.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
+import 'package:app/View/ChampionInfo/ChampionSearchPage.dart';
 import 'package:app/View/ChampionInfo/TraitTextWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'ChampionInfoPage.dart';
@@ -18,12 +22,22 @@ class ChampionListPage extends StatefulWidget {
 }
 
 class _ChampionListPageState extends State<ChampionListPage> {
-  int sortMode = 0;
+  SortMode sortMode = SortMode.cost;
 
-  void onClickSortButton(int mode){
+  void onClickSortButton(SortMode mode){
     setState(() {
       sortMode = mode;
     });
+  }
+
+  late ChampionListPageController championListPageController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    championListPageController = Get.put(ChampionListPageController());
+    championListPageController.getChampionData();
+    super.initState();
   }
 
   @override
@@ -33,27 +47,44 @@ class _ChampionListPageState extends State<ChampionListPage> {
         child: Column(
           children: [
             SizedBox(height: 20.h,),
-            Stack(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(10.w, 0, 0, 0),
-                    child: IconButton(
-                        onPressed: (){
-                          Get.back();
-                        },
-                        icon: Icon(Icons.arrow_back_ios)
-                    ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10.w, 0, 0, 0),
+                  child: IconButton(
+                      onPressed: (){
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        size: 25.sp,
+                      )
                   ),
                 ),
-                Center(
-                  child: Text(
-                    '#챔피언 목록',
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
+                Text(
+                  '#챔피언 목록',
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 5.w, 0),
+                  child: IconButton(
+                      onPressed: (){
+                        if(championListPageController.championList != null){
+                          Get.to(ChampionSearchPage(championList: championListPageController.championList!,));
+                        }
+                        else{
+                          Fluttertoast.showToast(msg: '챔피언 데이터를 불러오는 중 입니다.');
+                        }
+                      },
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                        Icons.search,
+                        size: 30.sp,
+                      )
                   ),
                 ),
               ],
@@ -65,25 +96,53 @@ class _ChampionListPageState extends State<ChampionListPage> {
                 SortButtonWidget(
                     onClick: onClickSortButton,
                     name: '이름순',
-                    sortMode: 1,
+                    sortMode: SortMode.name,
                     nowSortMode: sortMode
                 ),
                 SortButtonWidget(
                     onClick: onClickSortButton,
                     name: '가격순',
-                    sortMode: 0,
+                    sortMode: SortMode.cost,
                     nowSortMode: sortMode
                 ),
                 SortButtonWidget(
                     onClick: onClickSortButton,
                     name: '계열순',
-                    sortMode: 2,
+                    sortMode: SortMode.trait,
                     nowSortMode: sortMode
                 ),
               ],
             ),
             SizedBox(height: 10.h,),
             Expanded(
+                child: GetX<ChampionListPageController>(
+                  builder: (ChampionListPageController controller) {
+                    if(
+                    controller.loadingState.value == LoadingState.beforeLoading ||
+                        controller.loadingState.value == LoadingState.loading
+                    ){
+                      return Text('로딩중');
+                    }
+                    else if(controller.loadingState.value == LoadingState.fail){
+                      return Text('데이터를 가져 올 수 없습니다.');
+                    }
+                    else{
+                      return SingleChildScrollView(
+                        child: Wrap(
+                          spacing: 5.w,
+                          children: controller.getChampionList(sortMode)!.map((champion) =>
+                              ChampionTileWidget(champion: champion,)
+                          ).toList(),
+                        ),
+                      );
+                    }
+                  },
+                )
+            )
+            /*Expanded(
+
+
+
                 child: FutureBuilder(
                   future: FirestoreService.getChampionList(),
                   builder: (context , snapshot) {
@@ -129,7 +188,7 @@ class _ChampionListPageState extends State<ChampionListPage> {
                     }
                   }
                 )
-            )
+            )*/
           ],
         )
       ),
@@ -138,8 +197,9 @@ class _ChampionListPageState extends State<ChampionListPage> {
 }
 
 class ChampionTileWidget extends StatelessWidget {
-  const ChampionTileWidget({super.key, required this.champion});
+  const ChampionTileWidget({super.key, required this.champion, this.isExpand = false});
   final Champion champion;
+  final bool isExpand;
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +210,7 @@ class ChampionTileWidget extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.fromLTRB(5.w, 10.w, 5.w, 10.w),
         height: 100.w,
-        width: 160.w,
+        width: isExpand ? double.infinity : 160.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
           color: Palette.brightUi,
@@ -231,10 +291,10 @@ class SortButtonWidget extends StatelessWidget {
     required this.nowSortMode,
   });
 
-  final Function(int) onClick;
+  final Function(SortMode) onClick;
   final String name;
-  final int sortMode;
-  final int nowSortMode;
+  final SortMode sortMode;
+  final SortMode nowSortMode;
 
   @override
   Widget build(BuildContext context) {
