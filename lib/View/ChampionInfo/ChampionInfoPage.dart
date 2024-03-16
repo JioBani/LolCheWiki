@@ -96,12 +96,15 @@ class _ChampionInfoPageState extends State<ChampionInfoPage> with TickerProvider
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(height: 20.h,),
-                                        Text(
-                                          widget.champion.name,
-                                          style: TextStyle(
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.w900,
-                                              color: Colors.black
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 10.w),
+                                          child: Text(
+                                            widget.champion.name,
+                                            style: TextStyle(
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.w900,
+                                                color: Colors.black
+                                            ),
                                           ),
                                         ),
                                         SizedBox(height: 20.h,),
