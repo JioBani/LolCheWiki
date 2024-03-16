@@ -1,4 +1,5 @@
 import 'package:app/Style/Images.dart';
+import 'package:app/Style/Palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -53,7 +54,7 @@ class _OpenIconWidgetState extends State<OpenIconWidget>
           Images.down,
           width: 25.sp,
           height: 25.sp,
-          color: Colors.deepOrangeAccent,
+          color: Palette.green,
         ),
       ),
       onPressed: (){
