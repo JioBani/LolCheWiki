@@ -1,3 +1,4 @@
+import 'package:app/Style/Palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          fontFamily: 'Roboto'
+          fontFamily: 'Roboto',
+          primaryColor: Palette.green
         ),
         debugShowCheckedModeBanner: false,
         home: HomePage(),
