@@ -34,6 +34,10 @@ class Palette{
     Color(0xff6f6f6f),
     Color(0xff6f6f6f),
   ];
+  
+  static Color green = const Color.fromRGBO(51, 206, 140, 1);
+  static Color greenDark = const Color.fromRGBO(12, 47, 28, 1.0);
+  static Color unSelectedGrey = const Color.fromRGBO(239, 239, 239, 1.0);
 }
 
 class ShadowPalette{

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 
@@ -28,13 +29,12 @@ class Ability {
 
   factory Ability.fromJson(Map<String, dynamic> json) {
     return Ability(
-      desc: json['ability']['desc'] ?? "",
-      icon: json['ability']['icon'] ?? "",
-      name: json['ability']['name'] ?? "",
-      variables: List<Map<String, dynamic>>.from(json['ability']['variables']),
+      desc: json['desc'] ?? "",
+      icon: json['icon'] ?? "",
+      name: json['name'] ?? "",
+      variables: List<Map<String, dynamic>>.from(json['variables']),
     );
   }
-
 
   String completeDescription() {
     String completeDesc = desc.replaceAll(RegExp('<[^>]*>'), ''); // Remove HTML style text
@@ -82,16 +82,16 @@ class Stats {
 
   factory Stats.fromJson(Map<String, dynamic> json) {
     return Stats(
-      armor: json['stats']['armor'] ?? 0,
-      attackSpeed: json['stats']['attackSpeed'] ?? 0,
-      critChance: json['stats']['critChance'] ?? 0,
-      critMultiplier: json['stats']['critMultiplier'] ?? 0,
-      damage: json['stats']['damage'] ?? 0,
-      hp: json['stats']['hp'] ?? 0,
-      initialMana: json['stats']['initialMana'] ?? 0,
-      magicResist: json['stats']['magicResist'] ?? 0,
-      mana: json['stats']['mana'] ?? 0,
-      range: json['stats']['range'] ?? 0,
+      armor: json['armor'] ?? 0,
+      attackSpeed: json['attackSpeed'] ?? 0,
+      critChance: json['critChance'] ?? 0,
+      critMultiplier: json['critMultiplier'] ?? 0,
+      damage: json['damage'] ?? 0,
+      hp: json['hp'] ?? 0,
+      initialMana: json['initialMana'] ?? 0,
+      magicResist: json['magicResist'] ?? 0,
+      mana: json['mana'] ?? 0,
+      range: json['range'] ?? 0,
     );
   }
 
@@ -139,16 +139,32 @@ class Champion {
 
   factory Champion.fromJson(Map<String, dynamic> json) {
     return Champion(
-      ability: Ability.fromJson(json),
+      ability: Ability.fromJson(json['ability']),
       apiName: json['apiName'],
       characterName: json['characterName'],
       cost: json['cost'],
       icon: json['icon'],
       name: json['name'],
       squareIcon: json['squareIcon'],
-      stats: Stats.fromJson(json),
+      stats: Stats.fromJson(json['stats']),
       tileIcon: json['tileIcon'],
       traits: List<String>.from(json['traits']),
+    );
+  }
+
+  factory Champion.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+    return Champion(
+      ability: Ability.fromJson(data['ability']),
+      apiName: data['apiName'],
+      characterName: data['characterName'],
+      cost: data['cost'],
+      icon: data['icon'],
+      name: data['name'],
+      squareIcon: data['squareIcon'],
+      stats: Stats.fromJson(data['stats']),
+      tileIcon: data['tileIcon'],
+      traits: List<String>.from(data['traits']),
     );
   }
 
@@ -167,6 +183,17 @@ class Champion {
     };
   }
 
+  static int sortByCost(Champion a, Champion b){
+    return a.cost.compareTo(b.cost);
+  }
+
+  static int sortByName(Champion a , Champion b){
+    return a.name.compareTo(b.name);
+  }
+
+  static int sortByTrait(Champion a , Champion b){
+    return a.traits[0].compareTo(b.traits[0]);
+  }
 
 }
 

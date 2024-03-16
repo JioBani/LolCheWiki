@@ -79,6 +79,8 @@ flutter:
     - assets/images/synergy_tier/
     - assets/images/champion_tile/
     - assets/images/match_history/
+    - assets/images/champion_full/
+    - assets/images/champion_skill/
     - assets/images/rank/
     - assets/images/trait/
     - assets/images/item/

@@ -14,6 +14,8 @@ class Images{
   static const String star = "assets/images/match_history/star.png";
   static const String down = "assets/images/match_history/down.png";
 
+  static const String tempChampionFullImage = "assets/images/champion_full/Blitzcrank_29.jpg";
+
   static List<String> traitTiers = [
     "assets/images/synergy_tier/bronze.png",
     "assets/images/synergy_tier/bronze.png",
@@ -59,5 +61,13 @@ class Images{
         return "assets/images/rank/UNRANK.png";
       }
     }
+  }
+
+  static String getChampionFullImage(String apiName){
+    return tempChampionFullImage;
+  }
+
+  static String getChampionSkill(String apiName){
+    return "assets/images/champion_skill/Blitzcrank.png";
   }
 }
