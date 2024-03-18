@@ -48,6 +48,7 @@ dependencies:
   path_provider:
   firebase_core: ^2.25.3
   cloud_firestore: ^4.15.3
+  flutter_widget_from_html: ^0.14.11
 
 
 dev_dependencies:

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app/Model/Champion.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
+import 'package:app/Service/Admin.dart';
 import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/MatchDataService.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
@@ -196,6 +197,18 @@ class TestPage extends StatelessWidget {
                   },
                   child: Text(
                     "챔피언 파싱 테스트",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+              ElevatedButton(
+                  onPressed: ()async{
+                   Admin.uploadTraitList();
+                  },
+                  child: Text(
+                    "특성 데이터 업로드",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15.sp

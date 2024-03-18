@@ -1,7 +1,7 @@
 import 'package:app/Controller/ChamptionListPageController.dart';
 import 'package:app/Controller/LoadingState.dart';
 import 'package:app/Model/Champion.dart';
-import 'package:app/Service/FirestoreService.dart';
+import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/ChampionInfo/ChampionSearchPage.dart';
@@ -115,22 +115,22 @@ class _ChampionListPageState extends State<ChampionListPage> {
             ),
             SizedBox(height: 10.h,),
             Expanded(
-                child: GetX<ChampionListPageController>(
-                  builder: (ChampionListPageController controller) {
+                child: GetX<GameDataService>(
+                  builder: (service) {
                     if(
-                    controller.loadingState.value == LoadingState.beforeLoading ||
-                        controller.loadingState.value == LoadingState.loading
+                    service.loadingState.value == LoadingState.beforeLoading ||
+                        service.loadingState.value == LoadingState.loading
                     ){
                       return Text('로딩중');
                     }
-                    else if(controller.loadingState.value == LoadingState.fail){
+                    else if(service.loadingState.value == LoadingState.fail){
                       return Text('데이터를 가져 올 수 없습니다.');
                     }
                     else{
                       return SingleChildScrollView(
                         child: Wrap(
                           spacing: 5.w,
-                          children: controller.getChampionList(sortMode)!.map((champion) =>
+                          children: service.getChampionList(sortMode)!.map((champion) =>
                               ChampionTileWidget(champion: champion,)
                           ).toList(),
                         ),
@@ -139,56 +139,6 @@ class _ChampionListPageState extends State<ChampionListPage> {
                   },
                 )
             )
-            /*Expanded(
-
-
-
-                child: FutureBuilder(
-                  future: FirestoreService.getChampionList(),
-                  builder: (context , snapshot) {
-                    List<Champion> champions = [];
-                    if(snapshot.hasData){
-                      for (var element in snapshot.data!) {
-                        if(1 <= element.cost && element.cost <= 5){
-                          champions.add(element);
-                        }
-                      }
-
-                      if(sortMode == 0){
-                        champions.sort(Champion.sortByCost);
-                      }
-                      else if(sortMode == 1){
-                        champions.sort(Champion.sortByName);
-                      }
-                      else{
-                        champions.sort(Champion.sortByTrait);
-                      }
-
-
-                      return SingleChildScrollView(
-                        child: Wrap(
-                          spacing: 5.w,
-                          children: champions.map((champion) =>
-                            ChampionTileWidget(champion: champion,)
-                          ).toList(),
-                        ),
-                      );
-                    }
-                    else if(snapshot.hasError){
-                      return Center(
-                        child: Text(
-                            snapshot.error.toString()
-                        ),
-                      );
-                    }
-                    else{
-                      return const Center(
-                        child: CupertinoActivityIndicator(),
-                      );
-                    }
-                  }
-                )
-            )*/
           ],
         )
       ),
@@ -212,11 +162,8 @@ class ChampionTileWidget extends StatelessWidget {
         height: 100.w,
         width: isExpand ? double.infinity : 160.w,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(5.r),
           color: Palette.brightUi,
-          boxShadow: [
-            ShadowPalette.defaultShadow
-          ]
         ),
         padding: EdgeInsets.fromLTRB(5.w, 10.h, 0, 10.h),
         child: Row(

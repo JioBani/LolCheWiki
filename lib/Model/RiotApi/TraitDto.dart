@@ -26,7 +26,7 @@ class TraitDto {
       style: json['style'],
       tierCurrent: json['tier_current'],
       tierTotal: json['tier_total'],
-      trait: Trait.fromJson(json)
+      trait: Trait.fromMap(json)
     );
   }
 

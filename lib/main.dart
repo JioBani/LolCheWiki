@@ -1,3 +1,4 @@
+import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  var service = Get.put(GameDataService());
+  service.fetchData();
 
   runApp(const MyApp());
 

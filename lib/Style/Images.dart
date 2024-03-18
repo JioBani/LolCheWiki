@@ -31,7 +31,7 @@ class Images{
     return "assets/images/champion_tile/$championId.jpg";
   }
 
-  static String traitDefaultImage = "assets/images/trait/Set10_8Bit.jpg";
+  static String traitDefaultImage = "assets/images/trait/Set10_8Bit.png";
 
   static String getTraitIconImagePath(String traitId){
     return "assets/images/trait/$traitId.png";
