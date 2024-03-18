@@ -1,3 +1,4 @@
+import 'package:app/Model/Champion.dart';
 import 'package:app/Service/StaticLogger.dart';
 
 class Trait {
@@ -7,6 +8,7 @@ class Trait {
   final String icon;
   final String name;
   late final String iconImagePath;
+  final List<Champion> members = [];
 
   Trait({
     required this.apiName,
@@ -75,6 +77,10 @@ class Trait {
     });
 
     return formattedDesc;
+  }
+
+  void addMember(Champion member){
+    members.add(member);
   }
 
 }

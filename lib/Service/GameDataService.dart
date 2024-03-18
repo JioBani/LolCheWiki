@@ -38,6 +38,14 @@ class GameDataService extends GetxService{
 
       traitList = await FirestoreService.getTraitList();
 
+      for(var champion in championListSortByTrait!){
+        for(var trait in champion.traits){
+          traitList!.firstWhere((element) =>
+            element.name == trait
+          ).addMember(champion);
+        }
+      }
+
       traitChampions = {};
 
       for (var trait in traitList!) {

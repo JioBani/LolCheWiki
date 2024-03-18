@@ -96,7 +96,8 @@ class TraitInfoTabView extends StatelessWidget {
                   child: HtmlWidget(trait?.formatDescription() ?? ''),
                 ),
                 Row(
-                  children: gameDataService.traitChampions?[trait?.name]?.map((e) => Text(e.name)).toList() ?? [],
+                  //children: gameDataService.traitChampions?[trait?.name]?.map((e) => Text(e.name)).toList() ?? [],
+                  children: trait?.members.map((e) => Text(e.name)).toList() ?? [],
                 )
               ],
             ),
