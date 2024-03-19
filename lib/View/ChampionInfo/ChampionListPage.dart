@@ -101,13 +101,13 @@ class _ChampionListPageState extends State<ChampionListPage> {
                 ),
                 SortButtonWidget(
                     onClick: onClickSortButton,
-                    name: '가격순',
+                    name: '계열순',
                     sortMode: SortMode.cost,
                     nowSortMode: sortMode
                 ),
                 SortButtonWidget(
                     onClick: onClickSortButton,
-                    name: '계열순',
+                    name: '가격순',
                     sortMode: SortMode.trait,
                     nowSortMode: sortMode
                 ),

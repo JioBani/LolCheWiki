@@ -1,5 +1,6 @@
 import 'package:app/Controller/LoadingState.dart';
 import 'package:app/Controller/TraitInfoPageController.dart';
+import 'package:app/Model/Trait.dart';
 import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/TraitInfo/TraitListTabView.dart';
@@ -9,7 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TraitListPage extends StatefulWidget {
-  const TraitListPage({super.key});
+  const TraitListPage({super.key, this.targetTrait});
+  final Trait? targetTrait;
 
   @override
   State<TraitListPage> createState() => _TraitListPageState();
@@ -93,7 +95,7 @@ class _TraitListPageState extends State<TraitListPage> with TickerProviderStateM
                       child: TabBarView(
                           controller: traitTypeTabController,
                           children: [
-                            TraitListTabView(traitList: service.traitList!,),
+                            TraitListTabView(traitList: service.traitList!, targetTrait: widget.targetTrait,),
                             TraitListTabView(traitList: service.traitList!,),
                           ]
                       ),

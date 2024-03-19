@@ -1,15 +1,13 @@
-import 'dart:math';
-
 import 'package:app/Model/Trait.dart';
-import 'package:app/Style/Palette.dart';
 import 'package:app/View/TraitInfo/TraitInfoTabView.dart';
 import 'package:app/View/TraitInfo/TraitListTileWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TraitListTabView extends StatefulWidget {
-  const TraitListTabView({super.key, required this.traitList});
+  const TraitListTabView({super.key, required this.traitList, this.targetTrait});
   final List<Trait> traitList;
+  final Trait? targetTrait;
 
   @override
   State<TraitListTabView> createState() => _TraitListTabViewState();
@@ -34,6 +32,14 @@ class _TraitListTabViewState extends State<TraitListTabView> with TickerProvider
     tabController = TabController(length: 2, vsync: this);
     pageController = PageController(viewportFraction: 1.0);
     scrollController = ScrollController();
+
+
+    if(widget.targetTrait != null){
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) =>
+          Future.delayed(const Duration(milliseconds: 300)).then((value) => onTapTraitListTile(widget.targetTrait!))
+      );
+    }
     super.initState();
   }
 
@@ -88,8 +94,6 @@ class _TraitListTabViewState extends State<TraitListTabView> with TickerProvider
             width: infoPageWidth,
             child: TraitInfoTabView(
               trait: tabTrait,
-              test: test,
-              scrollController: scrollController,
               move: movePage,
             ),
           ),

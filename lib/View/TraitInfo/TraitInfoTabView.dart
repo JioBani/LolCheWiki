@@ -1,31 +1,23 @@
 import 'package:app/Model/Trait.dart';
-import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/TraitInfo/ChampionTileWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class TraitInfoTabView extends StatelessWidget {
   const TraitInfoTabView({
     super.key,
     required this.trait,
-    required this.test,
-    required this.scrollController,
     required this.move,
   });
 
   final Trait? trait;
-  final int test;
-  final ScrollController scrollController;
-
   final Function(int) move;
 
   @override
   Widget build(BuildContext context) {
-    GameDataService gameDataService = Get.find<GameDataService>();
     return Builder(
       builder: (context) {
         if(trait == null){

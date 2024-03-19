@@ -2,8 +2,11 @@ import 'package:app/Model/Champion.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/Match/OpenIconWidget.dart';
+import 'package:app/View/TraitInfo/TraitListPage.dart';
+import 'package:app/View/TraitInfo/TraitListTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ChampionInfoPage extends StatefulWidget {
   const ChampionInfoPage({super.key, required this.champion});
@@ -109,19 +112,24 @@ class _ChampionInfoPageState extends State<ChampionInfoPage> with TickerProvider
                                         ),
                                         SizedBox(height: 20.h,),
                                         Row(
-                                          children: widget.champion.traitNames.map((trait) =>
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color: Palette.brightGray,
-                                                    borderRadius: BorderRadius.circular(7.r)
-                                                ),
-                                                padding: EdgeInsets.fromLTRB(10.w, 5.w, 10.w, 5.w),
-                                                margin: EdgeInsets.fromLTRB(5.w, 0, 10.w, 0),
-                                                child: Text(
-                                                  trait,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 14.sp
+                                          children: widget.champion.traits.map((trait) =>
+                                              InkWell(
+                                                onTap: (){
+                                                  Get.to(TraitListPage(targetTrait: trait,));
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Palette.brightGray,
+                                                      borderRadius: BorderRadius.circular(7.r)
+                                                  ),
+                                                  padding: EdgeInsets.fromLTRB(10.w, 5.w, 10.w, 5.w),
+                                                  margin: EdgeInsets.fromLTRB(5.w, 0, 10.w, 0),
+                                                  child: Text(
+                                                    trait.name,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 14.sp
+                                                    ),
                                                   ),
                                                 ),
                                               )
@@ -131,10 +139,10 @@ class _ChampionInfoPageState extends State<ChampionInfoPage> with TickerProvider
                                         Row(
                                           children: [
                                             ClipRRect(
+                                              borderRadius: BorderRadius.circular(5.r),
                                               child: Image.asset(
                                                 Images.getChampionSkill(widget.champion.apiName)
                                               ),
-                                              borderRadius: BorderRadius.circular(5.r),
                                             ),
                                             SizedBox(width: 10.w,),
                                             Text(
