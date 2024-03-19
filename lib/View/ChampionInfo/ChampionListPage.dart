@@ -165,49 +165,58 @@ class ChampionTileWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(5.r),
           color: Palette.brightUi,
         ),
-        padding: EdgeInsets.fromLTRB(5.w, 10.h, 0, 10.h),
+        padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 73.sp,
-                    height: 73.sp,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: champion.cost < 6 ? Palette.rarityColor[champion.cost] : Colors.black,
-                          width: 5,
+            SizedBox(
+              width: 50.w,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 50.sp,
+                      height: 50.sp,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: champion.cost < 6 ? Palette.rarityColor[champion.cost] : Colors.black,
+                            width: 5,
+                          ),
+                          borderRadius: BorderRadius.circular(100.r)
                       ),
-                      borderRadius: BorderRadius.circular(100.r)
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.r),
-                      child: Image.asset(
-                        Images.errorItemImage,
-                        fit: BoxFit.fill,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100.r),
+                        child: Image.asset(
+                          Images.getChampionTileImagePath(champion.apiName),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      champion.name,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+
+                ],
+              ),
             ),
             SizedBox(width: 10.w,),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    champion.name,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+
                   Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
