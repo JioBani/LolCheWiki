@@ -89,13 +89,16 @@ class _ChampionSearchPageState extends State<ChampionSearchPage> {
                 else{
                   return Expanded(
                     child: SingleChildScrollView(
-                      child: Wrap(
-                        spacing: 5.w,
-                        children: widget.championList.where(
-                                (element) => element.name.contains(textEditingController.text)
-                        ).map((champion) =>
-                            ChampionTileWidget(champion: champion,isExpand: true,)
-                        ).toList(),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(5.w, 0, 5.w, 0),
+                        child: Wrap(
+                          spacing: 5.w,
+                          children: widget.championList.where(
+                                  (element) => element.name.contains(textEditingController.text)
+                          ).map((champion) =>
+                              ChampionTileWidget(champion: champion,isExpand: true,)
+                          ).toList(),
+                        ),
                       ),
                     ),
                   );
