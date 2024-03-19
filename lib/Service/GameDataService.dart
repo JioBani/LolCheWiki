@@ -31,10 +31,10 @@ class GameDataService extends GetxService{
       championListSortByName!.sort(Champion.sortByName);
 
       championListSortByTrait = championList!.toList();
-      championListSortByTrait!.sort(Champion.sortByCost);
+      championListSortByTrait!.sort(Champion.sortByTrait);
 
       championListSortByCost = championList!.toList();
-      championListSortByCost!.sort(Champion.sortByTrait);
+      championListSortByCost!.sort(Champion.sortByCost);
 
       traitList = await FirestoreService.getTraitList();
 

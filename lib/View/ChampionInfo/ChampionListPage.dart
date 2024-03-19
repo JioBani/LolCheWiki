@@ -1,4 +1,3 @@
-import 'package:app/Controller/ChamptionListPageController.dart';
 import 'package:app/Controller/LoadingState.dart';
 import 'package:app/Model/Champion.dart';
 import 'package:app/Service/GameDataService.dart';
@@ -6,12 +5,10 @@ import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/ChampionInfo/ChampionSearchPage.dart';
 import 'package:app/View/ChampionInfo/TraitTextWidget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
 import 'ChampionInfoPage.dart';
 
 class ChampionListPage extends StatefulWidget {
@@ -21,27 +18,21 @@ class ChampionListPage extends StatefulWidget {
   State<ChampionListPage> createState() => _ChampionListPageState();
 }
 
-class _ChampionListPageState extends State<ChampionListPage> {
-  SortMode sortMode = SortMode.cost;
-
-  void onClickSortButton(SortMode mode){
-    setState(() {
-      sortMode = mode;
-    });
-  }
-
-  late ChampionListPageController championListPageController;
+class _ChampionListPageState extends State<ChampionListPage> with TickerProviderStateMixin{
+  late TabController tabController = TabController(length: 3, vsync: this);
 
   @override
-  void initState() {
-    // TODO: implement initState
-    championListPageController = Get.put(ChampionListPageController());
-    championListPageController.getChampionData();
-    super.initState();
+  void dispose() {
+    // TODO: implement dispose
+    tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    var gameDataService = Get.find<GameDataService>();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -73,8 +64,8 @@ class _ChampionListPageState extends State<ChampionListPage> {
                   padding: EdgeInsets.fromLTRB(0, 0, 5.w, 0),
                   child: IconButton(
                       onPressed: (){
-                        if(championListPageController.championList != null){
-                          Get.to(ChampionSearchPage(championList: championListPageController.championList!,));
+                        if(gameDataService.championList != null){
+                          Get.to(ChampionSearchPage(championList: gameDataService.championList!,));
                         }
                         else{
                           Fluttertoast.showToast(msg: '챔피언 데이터를 불러오는 중 입니다.');
@@ -90,29 +81,7 @@ class _ChampionListPageState extends State<ChampionListPage> {
               ],
             ),
             SizedBox(height: 20.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SortButtonWidget(
-                    onClick: onClickSortButton,
-                    name: '이름순',
-                    sortMode: SortMode.name,
-                    nowSortMode: sortMode
-                ),
-                SortButtonWidget(
-                    onClick: onClickSortButton,
-                    name: '계열순',
-                    sortMode: SortMode.cost,
-                    nowSortMode: sortMode
-                ),
-                SortButtonWidget(
-                    onClick: onClickSortButton,
-                    name: '가격순',
-                    sortMode: SortMode.trait,
-                    nowSortMode: sortMode
-                ),
-              ],
-            ),
+            SortTabBar(controller : tabController,),
             SizedBox(height: 10.h,),
             Expanded(
                 child: GetX<GameDataService>(
@@ -121,19 +90,19 @@ class _ChampionListPageState extends State<ChampionListPage> {
                     service.loadingState.value == LoadingState.beforeLoading ||
                         service.loadingState.value == LoadingState.loading
                     ){
-                      return Text('로딩중');
+                      return const Center(child: Text('로딩중'));
                     }
                     else if(service.loadingState.value == LoadingState.fail){
-                      return Text('데이터를 가져 올 수 없습니다.');
+                      return const Center(child: Text('데이터를 가져 올 수 없습니다.'));
                     }
                     else{
-                      return SingleChildScrollView(
-                        child: Wrap(
-                          spacing: 5.w,
-                          children: service.getChampionList(sortMode)!.map((champion) =>
-                              ChampionTileWidget(champion: champion,)
-                          ).toList(),
-                        ),
+                      return TabBarView(
+                         controller: tabController,
+                          children: const [
+                            ChampionListTabViewPage(sortMode: SortMode.name,),
+                            ChampionListTabViewPage(sortMode: SortMode.cost,),
+                            ChampionListTabViewPage(sortMode: SortMode.trait,),
+                          ]
                       );
                     }
                   },
@@ -175,24 +144,21 @@ class ChampionTileWidget extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      width: 50.sp,
-                      height: 50.sp,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: champion.cost < 6 ? Palette.rarityColor[champion.cost] : Colors.black,
-                            width: 5,
-                          ),
-                          borderRadius: BorderRadius.circular(100.r)
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100.r),
-                        child: Image.asset(
-                          Images.getChampionTileImagePath(champion.apiName),
-                          fit: BoxFit.fill,
+                  Container(
+                    width: 50.sp,
+                    height: 50.sp,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: champion.cost < 6 ? Palette.rarityColor[champion.cost] : Colors.black,
+                          width: 3.sp,
                         ),
+                        borderRadius: BorderRadius.circular(100.r)
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100.r),
+                      child: Image.asset(
+                        Images.getChampionTileImagePath(champion.apiName),
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -221,10 +187,6 @@ class ChampionTileWidget extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        /*children: [
-                                                      TraitTextWidget(trait: "돌연변이"),
-                                                      TraitTextWidget(trait: "도전자"),
-                                                    ],*/
                         children: champion.traitNames.map((trait) => TraitTextWidget(trait: trait)).toList(),
                       )
                   ),
@@ -238,40 +200,98 @@ class ChampionTileWidget extends StatelessWidget {
   }
 }
 
-class SortButtonWidget extends StatelessWidget {
-  const SortButtonWidget({
-    super.key,
-    required this.onClick,
-    required this.name,
-    required this.sortMode,
-    required this.nowSortMode,
-  });
+class SortTabBar extends StatefulWidget {
+  const SortTabBar({super.key, required this.controller});
+  final TabController controller;
 
-  final Function(SortMode) onClick;
-  final String name;
-  final SortMode sortMode;
-  final SortMode nowSortMode;
+  @override
+  State<SortTabBar> createState() => _SortTabBarState();
+}
+
+class _SortTabBarState extends State<SortTabBar> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.controller.addListener(onTabChanged);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    widget.controller.removeListener(onTabChanged);
+  }
+
+  void onTabChanged(){
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        onClick(sortMode);
-      },
-      child: Container(
-        width: 95.w,
-        height: 35.h,
-        decoration: BoxDecoration(
-            color: sortMode == nowSortMode ? Palette.green : Palette.unSelectedGrey ,
-            borderRadius: BorderRadius.circular(5.r)
+
+    return TabBar(
+        controller: widget.controller,
+        indicatorColor: Colors.transparent,
+        labelColor : Colors.white,
+        unselectedLabelColor: Colors.black,
+        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed)) return Colors.transparent; // 누른 상태
+            if (states.contains(MaterialState.hovered)) return Colors.transparent; // 호버 상태
+            return null; // 기본값
+          },
         ),
-        child: Center(
-          child: Text(
-            name,
-            style: TextStyle(
-                fontSize: 14.sp,
-                color:  sortMode == nowSortMode ? Colors.white : Colors.black
+        tabs: [
+          Tab(
+            child: SortTabContainer(
+              recentIndex: widget.controller.index,
+              index: 0,
+              text: '이름순',
             ),
+          ),
+          Tab(
+            child: SortTabContainer(
+              recentIndex: widget.controller.index,
+              index: 1,
+              text: '가격순',
+            ),
+          ),
+          Tab(
+            child: SortTabContainer(
+              recentIndex: widget.controller.index,
+              index: 2,
+              text: '특성순',
+            ),
+          ),
+        ]
+    );
+  }
+}
+
+class SortTabContainer extends StatelessWidget {
+  const SortTabContainer({super.key, required this.recentIndex, required this.index, required this.text});
+  final int recentIndex;
+  final int index;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 95.w,
+      height: 35.h,
+      decoration: BoxDecoration(
+          color: recentIndex == index ? Palette.green : Palette.unSelectedGrey ,
+          borderRadius: BorderRadius.circular(5.r)
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 14.sp,
+              color:recentIndex == index  ? Colors.white : Colors.black
           ),
         ),
       ),
@@ -279,4 +299,25 @@ class SortButtonWidget extends StatelessWidget {
   }
 }
 
+class ChampionListTabViewPage extends StatelessWidget {
+  const ChampionListTabViewPage({super.key, required this.sortMode});
+  final SortMode sortMode;
+
+  @override
+  Widget build(BuildContext context) {
+    GameDataService service = Get.find<GameDataService>();
+
+    return GridView.count(
+      childAspectRatio: (100.w / 70.w),
+      shrinkWrap: true,
+      padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+      mainAxisSpacing: 5.w,
+      crossAxisSpacing: 5.w,
+      crossAxisCount: 2,
+      children: service.getChampionList(sortMode)!.map((champion) =>
+          ChampionTileWidget(champion: champion,)
+      ).toList(),
+    );
+  }
+}
 
