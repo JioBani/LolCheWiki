@@ -39,10 +39,12 @@ class GameDataService extends GetxService{
       traitList = await FirestoreService.getTraitList();
 
       for(var champion in championListSortByTrait!){
-        for(var trait in champion.traits){
-          traitList!.firstWhere((element) =>
+        for(var trait in champion.traitNames){
+          Trait targetTrait = traitList!.firstWhere((element) =>
             element.name == trait
-          ).addMember(champion);
+          );
+          targetTrait.addMember(champion);
+          champion.addTrait(targetTrait);
         }
       }
 
@@ -53,7 +55,7 @@ class GameDataService extends GetxService{
       }
 
       for (var champion in championListSortByTrait!) {
-        for (var trait in champion.traits) {
+        for (var trait in champion.traitNames) {
           if(traitChampions![trait] == null){
             traitChampions![trait] = [];
 

@@ -2,6 +2,7 @@ import 'package:app/Model/Trait.dart';
 import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
+import 'package:app/View/TraitInfo/ChampionTileWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -95,9 +96,14 @@ class TraitInfoTabView extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
                   child: HtmlWidget(trait?.formatDescription() ?? ''),
                 ),
-                Row(
-                  //children: gameDataService.traitChampions?[trait?.name]?.map((e) => Text(e.name)).toList() ?? [],
-                  children: trait?.members.map((e) => Text(e.name)).toList() ?? [],
+                SizedBox(height: 10.w,),
+                Padding(
+                  padding: EdgeInsets.only(left: 15.w),
+                  child: Wrap(
+                    children: trait?.members.map((champion) =>
+                      ChampionTileWidget(champion: champion)
+                    ).toList() ?? [],
+                  ),
                 )
               ],
             ),

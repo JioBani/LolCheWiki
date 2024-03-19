@@ -109,7 +109,7 @@ class _ChampionInfoPageState extends State<ChampionInfoPage> with TickerProvider
                                         ),
                                         SizedBox(height: 20.h,),
                                         Row(
-                                          children: widget.champion.traits.map((trait) =>
+                                          children: widget.champion.traitNames.map((trait) =>
                                               Container(
                                                 decoration: BoxDecoration(
                                                     color: Palette.brightGray,

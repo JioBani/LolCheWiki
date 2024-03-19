@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:app/Model/Trait.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -122,7 +123,8 @@ class Champion {
   String squareIcon;
   Stats stats;
   String tileIcon;
-  List<String> traits;
+  List<String> traitNames;
+  final List<Trait> traits = [];
 
   Champion({
     required this.ability,
@@ -134,7 +136,7 @@ class Champion {
     required this.squareIcon,
     required this.stats,
     required this.tileIcon,
-    required this.traits,
+    required this.traitNames,
   });
 
   factory Champion.fromJson(Map<String, dynamic> json) {
@@ -148,7 +150,7 @@ class Champion {
       squareIcon: json['squareIcon'],
       stats: Stats.fromJson(json['stats']),
       tileIcon: json['tileIcon'],
-      traits: List<String>.from(json['traits']),
+      traitNames: List<String>.from(json['traits']),
     );
   }
 
@@ -164,7 +166,7 @@ class Champion {
       squareIcon: data['squareIcon'],
       stats: Stats.fromJson(data['stats']),
       tileIcon: data['tileIcon'],
-      traits: List<String>.from(data['traits']),
+      traitNames: List<String>.from(data['traits']),
     );
   }
 
@@ -179,7 +181,7 @@ class Champion {
       'squareIcon': squareIcon,
       'stats': stats.toMap(),
       'tileIcon': tileIcon,
-      'traits': traits,
+      'traits': traitNames,
     };
   }
 
@@ -192,7 +194,11 @@ class Champion {
   }
 
   static int sortByTrait(Champion a , Champion b){
-    return a.traits[0].compareTo(b.traits[0]);
+    return a.traitNames[0].compareTo(b.traitNames[0]);
+  }
+
+  void addTrait(Trait trait){
+    traits.add(trait);
   }
 
 }

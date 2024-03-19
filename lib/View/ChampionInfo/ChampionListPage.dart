@@ -216,7 +216,7 @@ class ChampionTileWidget extends StatelessWidget {
                                                       TraitTextWidget(trait: "돌연변이"),
                                                       TraitTextWidget(trait: "도전자"),
                                                     ],*/
-                        children: champion.traits.map((trait) => TraitTextWidget(trait: trait)).toList(),
+                        children: champion.traitNames.map((trait) => TraitTextWidget(trait: trait)).toList(),
                       )
                   ),
                 ],
