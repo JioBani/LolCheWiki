@@ -7,9 +7,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ChampionTileWidget extends StatelessWidget {
-  const ChampionTileWidget({super.key, required this.champion});
+  const ChampionTileWidget({super.key,
+    required this.champion,
+    required this.width,
+    required this.height
+  });
 
   final Champion champion;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +43,8 @@ class ChampionTileWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.sp),
                 child: Image.asset(
                   Images.getChampionTileImagePath(champion.apiName),
-                  width: 35.sp,
-                  height: 35.sp,
+                  width: width,
+                  height: height,
                 ),
               ),
             ),

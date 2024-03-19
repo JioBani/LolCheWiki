@@ -29,7 +29,7 @@ class TraitInfoTabView extends StatelessWidget {
     return Builder(
       builder: (context) {
         if(trait == null){
-          return SizedBox();
+          return const SizedBox();
         }
         else{
           return Container(
@@ -101,7 +101,7 @@ class TraitInfoTabView extends StatelessWidget {
                   padding: EdgeInsets.only(left: 15.w),
                   child: Wrap(
                     children: trait?.members.map((champion) =>
-                      ChampionTileWidget(champion: champion)
+                      ChampionTileWidget(champion: champion, width: 35.sp,height: 35.sp,)
                     ).toList() ?? [],
                   ),
                 )

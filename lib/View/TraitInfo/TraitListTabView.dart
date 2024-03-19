@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:app/Model/Trait.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/TraitInfo/TraitInfoTabView.dart';
+import 'package:app/View/TraitInfo/TraitListTileWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,6 +56,16 @@ class _TraitListTabViewState extends State<TraitListTabView> with TickerProvider
     page = moveTo;
   }
 
+  void onTapTraitListTile(Trait trait){
+    if(page == 0){
+      tabTrait = trait;
+      setState(() {
+
+      });
+      movePage(1);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -69,37 +80,7 @@ class _TraitListTabViewState extends State<TraitListTabView> with TickerProvider
             width: 360.w,
             child: ListView(
               children: widget.traitList.map((trait) =>
-                  InkWell(
-                    onTap: (){
-                      if(page == 0){
-                        test = Random().nextInt(10);
-                        tabTrait = trait;
-                        setState(() {
-
-                        });
-                        movePage(1);
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 75.h,
-                      margin: EdgeInsets.fromLTRB(0, 5.h, 10.w, 5.h),
-                      decoration: BoxDecoration(
-                          color: Palette.brightUi,
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(10.r) , bottomRight: Radius.circular(10.r))
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            trait.apiName
-                          ),
-                          Text(
-                            trait.name
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
+                  TraitListTileWidget(trait: trait, onTap: onTapTraitListTile)
               ).toList()
             ),
           ),
