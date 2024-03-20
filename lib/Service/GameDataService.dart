@@ -19,6 +19,7 @@ class GameDataService extends GetxService{
   Map<String , List<Champion>>? traitChampions;
 
   List<Trait>? traitList;
+  Map<TraitType ,List<Trait>> traitListByType = Map();
   Rx<LoadingState> loadingState = Rx(LoadingState.beforeLoading);
 
 
@@ -37,6 +38,19 @@ class GameDataService extends GetxService{
       championListSortByCost!.sort(Champion.sortByCost);
 
       traitList = await FirestoreService.getTraitList();
+
+      // 임의로 trait type 적용하기
+
+      bool isClasses = true;
+
+      for(var trait in traitList!){
+        trait.setType(isClasses ? TraitType.classes : TraitType.origins);
+        isClasses = !isClasses;
+      }
+
+      traitListByType[TraitType.origins] = traitList!.where((trait) => trait.type == TraitType.origins).toList();
+      traitListByType[TraitType.classes] = traitList!.where((trait) => trait.type == TraitType.classes).toList();
+
 
       for(var champion in championListSortByTrait!){
         for(var trait in champion.traitNames){

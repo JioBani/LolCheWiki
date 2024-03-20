@@ -31,7 +31,6 @@ class _TraitListPageState extends State<TraitListPage> with TickerProviderStateM
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,12 +90,29 @@ class _TraitListPageState extends State<TraitListPage> with TickerProviderStateM
                     );
                   }
                   else{
+                    TraitType? targetType;
+
+                    if(widget.targetTrait != null){
+                      if(service.traitListByType[TraitType.classes]!.contains(widget.targetTrait)){
+                        targetType = TraitType.classes;
+                      }
+                      else{
+                        targetType = TraitType.origins;
+                      }
+                    }
+
                     return Expanded(
                       child: TabBarView(
                           controller: traitTypeTabController,
                           children: [
-                            TraitListTabView(traitList: service.traitList!, targetTrait: widget.targetTrait,),
-                            TraitListTabView(traitList: service.traitList!,),
+                            TraitListTabView(
+                              traitList: service.traitListByType[TraitType.classes]!,
+                              targetTrait: targetType == TraitType.classes ? widget.targetTrait : null,
+                            ),
+                            TraitListTabView(
+                              traitList: service.traitListByType[TraitType.origins]!,
+                              targetTrait: targetType == TraitType.origins ? widget.targetTrait : null,
+                            ),
                           ]
                       ),
                     );
