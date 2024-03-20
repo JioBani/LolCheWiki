@@ -1,6 +1,11 @@
 import 'package:app/Model/Champion.dart';
 import 'package:app/Service/StaticLogger.dart';
 
+enum TraitType{
+  origins,
+  classes
+}
+
 class Trait {
   final String apiName;
   final String desc;
@@ -9,6 +14,7 @@ class Trait {
   final String name;
   late final String iconImagePath;
   final List<Champion> members = [];
+  late final TraitType type;
 
   Trait({
     required this.apiName,
@@ -81,6 +87,10 @@ class Trait {
 
   void addMember(Champion member){
     members.add(member);
+  }
+
+  void setType(TraitType type){
+    this.type = type;
   }
 
 }
