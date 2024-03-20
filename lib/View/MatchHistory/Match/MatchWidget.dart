@@ -8,7 +8,6 @@ import 'package:app/View/MatchHistory/Match/ParticipantWidget.dart';
 import 'package:app/View/MatchHistory/Match/TraitDtoListWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 
 class MatchWidget extends StatefulWidget {
@@ -37,9 +36,6 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(topRight: Radius.circular(5.sp) , bottomRight: Radius.circular(5.sp)),
         color: Palette.brightUi,
-        boxShadow: [
-          ShadowPalette.defaultShadow
-        ]
       ),
       child: AnimatedSize(
         clipBehavior: Clip.hardEdge,
@@ -116,7 +112,6 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
               Divider(color: Color(0xffD4D4D4),thickness: 2,),
               Builder(
                 builder: (context){
-
                   if(!isOpen){
                     return SizedBox();
                   }

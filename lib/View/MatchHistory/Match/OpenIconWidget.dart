@@ -52,9 +52,9 @@ class _OpenIconWidgetState extends State<OpenIconWidget>
         angle: _animation.value * 3.14159265359 / 180,
         child: Image.asset(
           Images.down,
-          width: 25.sp,
-          height: 25.sp,
-          color: Palette.green,
+          width: 20.sp,
+          height: 20.sp,
+          color: Palette.iconColor,
         ),
       ),
       onPressed: (){

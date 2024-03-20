@@ -40,7 +40,7 @@ class TraitDtoImage extends StatelessWidget {
             height: 22.sp,
           ),
           Image.asset(
-            traitDto.trait.iconImagePath,
+            Images.traitDefaultImage,
             width: 14.sp,
             height: 14.sp,
             color: Colors.black,
