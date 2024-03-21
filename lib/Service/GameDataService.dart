@@ -1,5 +1,6 @@
 import 'package:app/Controller/LoadingState.dart';
 import 'package:app/Model/Champion.dart';
+import 'package:app/Model/Item.dart';
 import 'package:app/Model/Trait.dart';
 import 'package:app/Service/FirestoreService.dart';
 import 'package:app/Service/StaticLogger.dart';
@@ -16,7 +17,14 @@ class GameDataService extends GetxService{
   List<Champion>? championListSortByName;
   List<Champion>? championListSortByTrait;
   List<Champion>? championListSortByCost;
+
   Map<String , List<Champion>>? traitChampions;
+
+  final Map<ItemType , List<Item>> itemListByType = {
+    ItemType.component : [],
+    ItemType.completed : [],
+    ItemType.emblem : [],
+  };
 
   List<Trait>? traitList;
   Map<TraitType ,List<Trait>> traitListByType = Map();
@@ -78,10 +86,27 @@ class GameDataService extends GetxService{
         }
       }
 
+      await fetchItemData();
+
       loadingState.value = LoadingState.success;
     }catch(e , s){
       StaticLogger.logger.e('$e\n$s');
       loadingState.value = LoadingState.fail;
+    }
+  }
+
+  Future<void> fetchItemData()async{
+    try{
+      await Future.wait(
+          ItemType.values.map((e) async{
+            itemListByType[e] = await FirestoreService.getItemList(e);
+          })
+      );
+
+      return;
+    }catch(e , s){
+      StaticLogger.logger.e('GameDataService [fetchItemData()] $e\n$s');
+      rethrow;
     }
   }
 

@@ -217,7 +217,7 @@ class TestPage extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: ()async{
-                    Admin.uploadItemList();
+                    Admin.uploadAllItemList();
                   },
                   child: Text(
                     "아이템 데이터 업로드",

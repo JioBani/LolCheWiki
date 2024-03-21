@@ -1034,12 +1034,30 @@ class Admin{
     }
   }
   
-  static Future<void> uploadItemList()async{
+  static Future<void> uploadAllItemList()async{
     try{
-      await FirebaseFirestore.instance.collection('items').doc('component').set(ItemJson.component);
-      await FirebaseFirestore.instance.collection('items').doc('completed').set(ItemJson.completed);
-      await FirebaseFirestore.instance.collection('items').doc('emblem').set(ItemJson.emblem);
+
+      await _uploadItemList(ItemJson.component , 'component');
+      await _uploadItemList(ItemJson.completed , 'completed');
+      await _uploadItemList(ItemJson.emblem , 'emblem');
       StaticLogger.logger.i("아이템 데이터 업로드 완료");
+    }catch(e){
+      StaticLogger.logger.e(e);
+    }
+  }
+
+  static Future<void> _uploadItemList(Map<String , dynamic> map , String name)async{
+    try{
+
+      List<Map<String , dynamic>> itemList = map['data'] as List<Map<String , dynamic>>;
+
+      await Future.wait(
+          itemList.map((e) async =>
+          await FirebaseFirestore.instance.collection('items').doc(name).collection('data').doc(e['apiName']).set(e)
+          )
+      );
+
+      StaticLogger.logger.i("$name 데이터 업로드 완료");
     }catch(e){
       StaticLogger.logger.e(e);
     }

@@ -4,6 +4,7 @@ import 'package:app/View/ChampionInfo/ChampionListPage.dart';
 import 'package:app/View/Home/CustomSearchBarWidget.dart';
 import 'package:app/View/Home/ProfileWidget.dart';
 import 'package:app/View/Home/SearchHistoryWidget.dart';
+import 'package:app/View/ItemInfo/ItemInfoPage.dart';
 import 'package:app/View/TraitInfo/TraitListPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,14 +65,19 @@ class _HomePageState extends State<HomePage> {
                         Get.to(const TraitListPage());
                       },
                     ),
-                    Container(
-                      width: 90.w,
-                      height: 100.h,
-                      decoration: BoxDecoration(
-                        color: Palette.brightUi,
-                        borderRadius: BorderRadius.circular(10.r),
+                    InkWell(
+                      child: Container(
+                        width: 90.w,
+                        height: 100.h,
+                        decoration: BoxDecoration(
+                          color: Palette.brightUi,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
                       ),
-                    )
+                      onTap: (){
+                        Get.to(const ItemInfoPage());
+                      },
+                    ),
                   ],
                 ),
               )
