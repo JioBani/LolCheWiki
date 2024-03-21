@@ -1,3 +1,4 @@
+import 'package:app/Admin/itemJson.dart';
 import 'package:app/Service/StaticLogger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -1028,6 +1029,17 @@ class Admin{
       (map['data'] as List<Map<String , dynamic>>).forEach((element) {
         uploadTrait(element);
       });
+    }catch(e){
+      StaticLogger.logger.e(e);
+    }
+  }
+  
+  static Future<void> uploadItemList()async{
+    try{
+      await FirebaseFirestore.instance.collection('items').doc('component').set(ItemJson.component);
+      await FirebaseFirestore.instance.collection('items').doc('completed').set(ItemJson.completed);
+      await FirebaseFirestore.instance.collection('items').doc('emblem').set(ItemJson.emblem);
+      StaticLogger.logger.i("아이템 데이터 업로드 완료");
     }catch(e){
       StaticLogger.logger.e(e);
     }

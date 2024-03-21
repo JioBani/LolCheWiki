@@ -215,6 +215,18 @@ class TestPage extends StatelessWidget {
                     ),
                   )
               ),
+              ElevatedButton(
+                  onPressed: ()async{
+                    Admin.uploadItemList();
+                  },
+                  child: Text(
+                    "아이템 데이터 업로드",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
               /*ElevatedButton(
                   onPressed: ()async{
                     DataStoreService.saveTest("test.dat", "test");
