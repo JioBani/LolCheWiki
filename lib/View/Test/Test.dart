@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:app/Model/Champion.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
@@ -24,6 +25,13 @@ class TestPage extends StatelessWidget {
   final MatchDataService matchDataService = MatchDataService(puuid: RiotApiService.puuid);
   final Logger logger = Logger();
 
+  Future<int> fetchData()async {
+    await Future.delayed(Duration(seconds: 3));
+    return Random().nextInt(100);
+  }
+
+  late Future<int> fetchResult;
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,187 +42,6 @@ class TestPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                  onPressed: (){
-                    //RiotApiService.fetchMatch(RiotApiService.matchUrl).then((value) => Logger().i(value.toJson().toString()));
-                  },
-                  child: Text(
-                    "매치 데이터 가져오기",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: (){
-                    RiotApiService.getMatchIds(RiotApiService.puuid, 20).then((value) => Logger().i(value));
-                  },
-                  child: Text(
-                    "매치 id 가져오기",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: (){
-                    saveMatchIdList();
-                  },
-                  child: Text(
-                    "매치 id 저장하기",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: (){
-                    readMatchIdList();
-                  },
-                  child: Text(
-                    "매치 id 불러오기",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                onPressed: ()async{
-                  List<String> matchIdList = await readMatchIdList();
-                  readMatchDtoList(matchIdList);
-                },
-                child: Text(
-                  "매치 리스트 불러오기",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15.sp
-                  ),
-                )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    /*await matchDataService.setMatchIdList(100);
-                    List<MatchDto>? matchDtoList = await matchDataService.getNextMatchDtoList(5);
-                    logger.i(matchDtoList.length);
-                    for (var value in matchDtoList) {
-                      logger.i(value.matchId);
-                    }*/
-                  },
-                  child: Text(
-                    "매치 리스트 불러오기2",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    await DataStoreService.resetData(RiotApiService.puuid);
-                    logger.i("리셋 완료");
-                  },
-                  child: Text(
-                    "데이터 삭제",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    await DataStoreService.removeAllData();
-                  },
-                  child: Text(
-                    "데이터 모두 초기화",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    /*Map<String , dynamic> result = await RiotApiService.getPuuid('보타쿠리', "KR1");
-                    if(result["status"]! == 200){
-                      Logger().i(result["value"]!);
-                    }
-                    else{
-                      Logger().e(result["value"]!);
-                    }*/
-                  },
-                  child: Text(
-                    "이름 검색",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    StaticLogger.logger.i(RiotApiService.riotApiCounter.print());
-                  },
-                  child: Text(
-                    "API 카운트",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    Get.to(ScrollTest());
-                  },
-                  child: Text(
-                    "스크롤 테스트",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    Get.to(FirebaseTestPage());
-                  },
-                  child: Text(
-                    "파이어스토어 테스트",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-
-                  },
-                  child: Text(
-                    "챔피언 파싱 테스트",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                   Admin.uploadTraitList();
-                  },
-                  child: Text(
-                    "특성 데이터 업로드",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
               ElevatedButton(
                   onPressed: ()async{
                     Admin.uploadAllItemList();
@@ -227,48 +54,34 @@ class TestPage extends StatelessWidget {
                     ),
                   )
               ),
-              /*ElevatedButton(
-                  onPressed: ()async{
-                    DataStoreService.saveTest("test.dat", "test");
-                  },
-                  child: Text(
-                    "데이터 저장 테스트",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
-                    String? result = await DataStoreService.readTest("test.dat");
-                    if(result == null){
-                      StaticLogger.logger.e("[Test] 데이터 읽기 실패");
-                    }
-                    else{
-                      StaticLogger.logger.i("[Test] 데이터 읽기 성공 $result");
-                    }
-                  },
-                  child: Text(
-                    "데이터 읽기 테스트",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp
-                    ),
-                  )
-              ),
-              ElevatedButton(
-                  onPressed: ()async{
 
+              ElevatedButton(
+                  onPressed: ()async{
+                    fetchResult = fetchData();
                   },
                   child: Text(
-                    "데이터 삭제 테스트",
+                    "FetchData",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15.sp
                     ),
                   )
-              ),*/
+              ),
+
+              ElevatedButton(
+                  onPressed: ()async{
+                    fetchResult.then((value) => StaticLogger.logger.i("then : ${value.toString()}"));
+                    int result = await fetchResult;
+                    StaticLogger.logger.i(result.toString());
+                  },
+                  child: Text(
+                    "완료 확인",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
             ],
           ),
         ),

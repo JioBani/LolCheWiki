@@ -10,7 +10,9 @@ class FirestoreService{
     static final CollectionReference traitsCollection = FirebaseFirestore.instance.collection('traits');
     static final CollectionReference itemCollection = FirebaseFirestore.instance.collection('items');
 
-    static Future<List<Champion>> getChampionList()async{
+    static const Duration timeout = Duration(seconds: 10);
+
+    static Future<List<Champion>> _getChampionList()async{
       try{
         QuerySnapshot snapshot = await championCollection.get();
 
@@ -19,6 +21,10 @@ class FirestoreService{
         StaticLogger.logger.e("[FirestoreService.getChampionList()] $e\n$s");
         rethrow;
       }
+    }
+
+    static Future<List<Champion>> getChampionList()async{
+      return _getChampionList().timeout(timeout);
     }
 
     static Future<List<Trait>> getTraitList()async{

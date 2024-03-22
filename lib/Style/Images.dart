@@ -71,3 +71,7 @@ class Images{
     return "assets/images/champion_skill/Blitzcrank.png";
   }
 }
+
+class IconImages{
+  static const String equals = "assets/images/icons/equals.png";
+}

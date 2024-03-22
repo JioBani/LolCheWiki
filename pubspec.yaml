@@ -85,6 +85,7 @@ flutter:
     - assets/images/rank/
     - assets/images/trait/
     - assets/images/item/
+    - assets/images/icons/
     - assets/audios/
     - assets/fonts/
     - assets/json/

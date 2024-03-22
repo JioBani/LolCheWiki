@@ -12,6 +12,11 @@ enum SortMode{
   trait
 }
 
+class GameDataNotFetchedException implements Exception{
+  @override
+  String toString() => 'GameDataNotFetchedException: Game data not fetched';
+}
+
 class GameDataService extends GetxService{
   List<Champion>? championList;
   List<Champion>? championListSortByName;
@@ -30,8 +35,25 @@ class GameDataService extends GetxService{
   Map<TraitType ,List<Trait>> traitListByType = Map();
   Rx<LoadingState> loadingState = Rx(LoadingState.beforeLoading);
 
+  Future<bool>? fetchTask;
 
-  Future<void> fetchData() async {
+  Future<bool> fetchData() async{
+    try{
+      if(loadingState.value == LoadingState.beforeLoading || loadingState.value == LoadingState.fail){
+        fetchTask = _fetchData();
+      }
+
+      bool result = await fetchTask!;
+      StaticLogger.logger.i(result);
+      return result;
+
+    }catch(e){
+      StaticLogger.logger.e('[GameDataService.fetchData()] $e');
+      return false;
+    }
+  }
+
+  Future<bool> _fetchData() async {
     try{
       loadingState.value = LoadingState.loading;
 
@@ -89,9 +111,13 @@ class GameDataService extends GetxService{
       await fetchItemData();
 
       loadingState.value = LoadingState.success;
+      StaticLogger.logger.i('[GameDataService._fetchData()] fatch success');
+      return true;
     }catch(e , s){
       StaticLogger.logger.e('$e\n$s');
       loadingState.value = LoadingState.fail;
+      StaticLogger.logger.e('[GameDataService._fetchData()] fatch fail');
+      return false;
     }
   }
 

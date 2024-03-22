@@ -9,7 +9,7 @@ enum ItemType{
 class Item {
   final String apiName;
   final List<dynamic>? associatedTraits;
-  final List<dynamic>? composition;
+  final List<dynamic> composition;
   final String? desc;
   final Map<String, num?>? effects;
   final List<dynamic>? from;
@@ -24,7 +24,7 @@ class Item {
   Item({
     required this.apiName,
     this.associatedTraits,
-    this.composition,
+    required this.composition,
     this.desc,
     this.effects,
     this.from,
@@ -82,6 +82,23 @@ class Item {
   }
 
   factory Item.error() {
-    return Item(apiName: 'error',isError: true);
+    return Item(apiName: 'error',composition: [],isError: true);
+  }
+
+  String getImageString(){
+    return '$apiName.png';
+  }
+
+  String resolvedDesc() {
+    String resolved = desc ?? "";
+    effects?.forEach((key, value) {
+      resolved = resolved.replaceAll("@$key@", value.toString());
+    });
+    return resolved;
+  }
+
+  bool isCombination(Item a, Item b){
+    return (composition![0] == a.apiName &&  composition![1] == b.apiName) ||
+        (composition![1] == a.apiName &&  composition![0] == b.apiName);
   }
 }
