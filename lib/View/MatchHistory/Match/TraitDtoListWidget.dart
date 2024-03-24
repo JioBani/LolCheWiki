@@ -38,12 +38,26 @@ class TraitDtoImage extends StatelessWidget {
             Images.traitTiers[traitDto.style],
             width: 22.sp,
             height: 22.sp,
+            errorBuilder: (context , error , stackTrace){
+              return  Image.asset(
+                Images.errorItemImage,
+                width: 22.sp,
+                height: 22.sp,
+              );
+            },
           ),
           Image.asset(
             Images.traitDefaultImage,
             width: 14.sp,
             height: 14.sp,
             color: Colors.black,
+            errorBuilder: (context , error , stackTrace){
+              return  Image.asset(
+                Images.errorItemImage,
+                width: 22.sp,
+                height: 22.sp,
+              );
+            },
           ),
         ],
       ),
