@@ -36,8 +36,8 @@ class ItemPageController extends GetxController{
     else{
       items[2] = item;
       if(item.composition.length == 2){
-        items[0] = _findItemByApiName(item.composition[0]);
-        items[1] = _findItemByApiName(item.composition[1]);
+        items[0] = findItemByApiName(item.composition[0]);
+        items[1] = findItemByApiName(item.composition[1]);
       }
       else{
         items[0] = null;
@@ -135,7 +135,7 @@ class ItemPageController extends GetxController{
     return _findCombinationItemInList(completeItemList , a , b);
   }
 
-  Item? _findItemByApiName(String apiName){
+  Item? findItemByApiName(String apiName){
     Item? result = componentItemList.firstWhereOrNull((item) => item.apiName == apiName);
     if(result != null) return result;
 

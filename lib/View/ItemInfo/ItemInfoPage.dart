@@ -1,6 +1,7 @@
 import 'package:app/Controller/ItemPageController.dart';
 import 'package:app/Model/Item.dart';
 import 'package:app/View/ItemInfo/ItemCombinationTableWidget.dart';
+import 'package:app/View/ItemInfo/itemSearchPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,22 +21,19 @@ class ItemInfoPage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 10.w,),
-            Stack(
-              alignment: Alignment.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(10.w, 0, 0, 0),
-                    child: IconButton(
-                        onPressed: (){
-                          Get.back();
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          size: 25.sp,
-                        )
-                    ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10.w, 0, 0, 0),
+                  child: IconButton(
+                      onPressed: (){
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        size: 25.sp,
+                      )
                   ),
                 ),
                 Text(
@@ -43,6 +41,19 @@ class ItemInfoPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 5.w, 0),
+                  child: IconButton(
+                      onPressed: (){
+                        Get.to(ItemSearchPage());
+                      },
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                        Icons.search,
+                        size: 30.sp,
+                      )
                   ),
                 ),
               ],
