@@ -49,6 +49,7 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
               tag: widget.puuid,
               builder: (controller) {
                 return TabBar(
+                  tabAlignment: TabAlignment.start,
                   tabs:controller.tabList.value,
                   labelColor: Palette.iconColor,
                   labelStyle: TextStyle(

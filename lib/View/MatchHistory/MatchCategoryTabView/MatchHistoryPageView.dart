@@ -67,6 +67,8 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> with Automa
           }
         }
 
+        return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
+
         if(matchDto.info.tftSetNumber != 10){
           return NoTargetSetMatchWidget(matchDto: matchDto);
         }
@@ -85,6 +87,8 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> with Automa
             ownerIndex = i;
           }
         }
+
+        return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
 
         if(matchDto.info.tftSetNumber != 10){
           return NoTargetSetMatchWidget(matchDto: matchDto);

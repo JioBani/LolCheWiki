@@ -12,14 +12,18 @@ class Palette{
 
   static List<Color> rarityColor = [
     Color(0xff7F7F7F),
+    Color(0xff7F7F7F),
     Color(0xff13B188),
     Color(0xff237AC3),
     Color(0xffBD44D1),
-    Color(0xffBD44D1),
     Color(0xffFABA48),
     Color(0xffFABA48),
-    Color(0xffFABA48),
-    Color(0xffFABA48),
+    Color(0xfffa4848),
+    Color(0xfffa4848),
+    Color(0xfffa4848),
+    Color(0xfffa4848),
+    Color(0xfffa4848),
+    Color(0xfffa4848),
   ];
 
   static List<Color> rankColors = [

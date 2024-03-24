@@ -1,4 +1,5 @@
 import 'package:app/Model/RiotApi/UnitDto.dart';
+import 'package:app/Service/StaticLogger.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,6 +15,10 @@ class ChampionTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color costColor = Palette.rarityColor[unitDto.rarity];
+
+    if(unitDto.rarity > 8){
+      StaticLogger.logger.wtf(unitDto.characterId);
+    }
 
     return Padding(
       padding: EdgeInsets.fromLTRB(0.4.w, 0, 0.4.w, 0),
@@ -39,6 +44,13 @@ class ChampionTileWidget extends StatelessWidget {
                 Images.getChampionTileImagePath(unitDto.characterId),
                 width: 25.sp,
                 height: 25.sp,
+                errorBuilder: (context , error , stackTrace){
+                  return  Image.asset(
+                    Images.errorItemImage,
+                    width: 22.sp,
+                    height: 22.sp,
+                  );
+                },
               ),
             ),
           ),
