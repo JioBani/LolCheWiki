@@ -32,7 +32,7 @@ class _ItemCombinationTableWidgetState extends State<ItemCombinationTableWidget>
               ),
               const TableItemWidget(index:1),
               Image.asset(
-                IconImages.equals,
+                Images.icons.equals,
                 color: Colors.grey,
                 width: 25.sp,
                 height: 25.sp,

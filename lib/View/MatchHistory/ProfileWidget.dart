@@ -1,7 +1,11 @@
 import 'package:app/Model/RiotApi/SummonerProfile.dart';
+import 'package:app/Service/DataStoreService.dart';
+import 'package:app/Service/ProfileService.dart';
 import 'package:app/Style/Images.dart';
+import 'package:app/Style/Palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
@@ -29,13 +33,36 @@ class ProfileWidget extends StatelessWidget {
           SizedBox(
             width: 96.w,
             height: 96.w,
-            child: SimpleShadow(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.r),
-                child: Image.network(
-                  Images.testProfile
+            child: Stack(
+              children: [
+                SimpleShadow(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.r),
+                    child: Image.network(
+                      Images.testProfile
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.only(right: 5.w),
+                  child: InkWell(
+                    onTap: () async {
+                      bool result = await DataStoreService.saveBookmarkPuuid(summonerProfile.summonerDTO.puuid);
+                      if(result){
+                        Get.find<ProfileService>().fetchData();
+                      }
+                    },
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Image.asset(
+                        Images.icons.bookmark,
+                        width: 25.sp,
+                        color: Palette.green,
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
           Expanded(

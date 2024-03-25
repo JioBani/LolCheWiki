@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'Service/ProfileService.dart';
 import 'firebase_options.dart';
 
 import 'View/Home/HomePage.dart';
@@ -16,8 +17,11 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  var service = Get.put(GameDataService());
-  service.fetchData();
+  var gameDataService = Get.put(GameDataService());
+  var profileService = Get.put(ProfileService());
+
+  gameDataService.fetchData();
+  profileService.fetchData();
 
   runApp(const MyApp());
 

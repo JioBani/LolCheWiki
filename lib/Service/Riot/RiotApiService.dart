@@ -137,7 +137,7 @@ class RiotApiService {
         throw summonerRes.statusCode;
       }
 
-      SummonerDTO summonerDTO = SummonerDTO.fromJson(jsonDecode(summonerRes.body));
+      SummonerDTO summonerDTO = SummonerDTO.fromMap(jsonDecode(summonerRes.body));
 
       //#2. AccountDto 가져오기
 
@@ -205,7 +205,7 @@ class RiotApiService {
         throw summonerRes.statusCode;
       }
 
-      SummonerDTO summonerDTO = SummonerDTO.fromJson(jsonDecode(summonerRes.body));
+      SummonerDTO summonerDTO = SummonerDTO.fromMap(jsonDecode(summonerRes.body));
 
       return RiotApiResponse<SummonerDTO>(
           isSuccess: true,
