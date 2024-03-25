@@ -4,6 +4,7 @@ import 'package:app/Model/RiotApi/LeagueEntryDTO.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
+import 'package:app/Style/Toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,79 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget> {
 
+
+  void buildDialog(){
+    showDialog(
+      context: context,
+      barrierDismissible: true, //바깥 영역 터치시 닫을지 여부 결정
+      builder: ((context) {
+        return AlertDialog(
+          actionsPadding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.r)
+          ),
+          title: Column(
+            children: [
+              Text(
+                '즐겨찾기를 삭제할까요?',
+                style: TextStyle(
+                    fontSize: 17.sp,
+                    color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          actionsAlignment: MainAxisAlignment.spaceAround,
+          actions: [
+            TextButton(
+                onPressed: (){
+                  Get.find<ProfileService>().removeProfile().then((value) {
+                      if (value) {
+                        Toasts.buildToast(
+                          text: '삭제가 완료되었습니다.',
+                          context: context
+                        );
+                      }
+                      else{
+                        Toasts.buildToast(
+                            text: '삭제에 실패했습니다.',
+                            context: context
+                        );
+                      }
+                    }
+                  );
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  '예',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.black,
+                  ),
+                )
+            ),
+            TextButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  '아니오',
+                  style: TextStyle(
+                      fontSize: 13.sp,
+                      color: Colors.black,
+                  ),
+                )
+            ),
+          ],
+        );
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
       width: 276.w,
       height: 150.h,
@@ -35,16 +107,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               height: 150.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
-                  boxShadow: [
-                    ShadowPalette.defaultShadow
-                    /*BoxShadow(
-                      color: Colors.black,
-                      offset: Offset(2,2),
-                      blurRadius: 4
-                    )*/
-                  ]
               ),
-              child: Text("로딩중"),
+              child: const Center(
+                  child: Text("로딩중")
+              ),
             );
           }
           else if(state == LoadingState.fail){
@@ -53,16 +119,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               height: 150.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
-                  boxShadow: [
-                    ShadowPalette.defaultShadow
-                    /*BoxShadow(
-                      color: Colors.black,
-                      offset: Offset(2,2),
-                      blurRadius: 4
-                    )*/
-                  ]
               ),
-              child: Text("데이터를 가져 올 수 없습니다."),
+              child: const Center(
+                  child: Text("소환사 데이터를 가져 올 수 없습니다.")
+              ),
             );
           }
           else{
@@ -75,30 +135,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     height: 150.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
-                        boxShadow: [
-                          ShadowPalette.defaultShadow
-                          /*BoxShadow(
-                      color: Colors.black,
-                      offset: Offset(2,2),
-                      blurRadius: 4
-                    )*/
-                        ]
                     ),
-                    child: Text("프로필이 없습니다."),
+                    child: const Center(child:
+                        Text("소환사 즐겨찾기가 없습니다.")
+                    ),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () async {
 
-                        },
-                        icon: Icon(
-                          Icons.menu,
-                          size: 24.sp,
-                          color: Palette.iconColor,
-                        )
-                    ),
-                  ),
                 ],
               );
             }
@@ -112,14 +154,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     height: 150.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
-                        boxShadow: [
-                          ShadowPalette.defaultShadow
-                          /*BoxShadow(
-                      color: Colors.black,
-                      offset: Offset(2,2),
-                      blurRadius: 4
-                    )*/
-                        ]
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.r),
@@ -131,15 +165,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ),
                   Align(
                     alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () async {
-
-                        },
-                        icon: Icon(
-                          Icons.menu,
-                          size: 24.sp,
-                          color: Palette.iconColor,
-                        )
+                    child: InkWell(
+                      onTap: (){
+                        buildDialog();
+                      },
+                      child: Icon(
+                        Icons.close,
+                        size: 30.sp,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   Center(

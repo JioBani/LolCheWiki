@@ -2,27 +2,30 @@ import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/ProfileService.dart';
 import 'package:app/Style/Images.dart';
-import 'package:app/Style/Palette.dart';
+import 'package:app/Style/Toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
-import 'RankTabViewWidget.dart';
-
-class ProfileWidget extends StatelessWidget {
+class ProfileWidget extends StatefulWidget {
   const ProfileWidget({super.key, required this.summonerProfile});
   final SummonerProfile summonerProfile;
 
   @override
+  State<ProfileWidget> createState() => _ProfileWidgetState();
+}
+
+class _ProfileWidgetState extends State<ProfileWidget> {
+  @override
   Widget build(BuildContext context) {
     final String name;
-    if(summonerProfile.tag != null){
-      name = "${summonerProfile.name}#${summonerProfile.tag}";
+    if(widget.summonerProfile.tag != null){
+      name = "${widget.summonerProfile.name}#${widget.summonerProfile.tag}";
     }
     else{
-      name = summonerProfile.name;
+      name = widget.summonerProfile.name;
     }
 
     return Padding(
@@ -45,20 +48,54 @@ class ProfileWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 5.w),
-                  child: InkWell(
-                    onTap: () async {
-                      bool result = await DataStoreService.saveBookmarkPuuid(summonerProfile.summonerDTO.puuid);
-                      if(result){
-                        Get.find<ProfileService>().fetchData();
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: GetX<ProfileService>(
+                      builder: (service) {
+                        bool isBookmarked =
+                            service.profile.value != null &&
+                            service.profile.value!.summonerDTO.puuid == widget.summonerProfile.summonerDTO.puuid;
+
+                        if(isBookmarked){
+                          return InkWell(
+                            onTap: () {
+                              service.removeProfile();
+                            },
+                            child: Image.asset(
+                                Images.icons.bookmark,
+                                width: 25.sp,
+                                color: Colors.green
+                            ),
+                          );
+                        }
+                        else{
+                          return InkWell(
+                            onTap: () async {
+
+                              bool result = await DataStoreService.saveBookmarkPuuid(widget.summonerProfile.summonerDTO.puuid);
+
+                              if(!mounted) {
+                                return;
+                              }
+
+                              if(result){
+                                service.fetchData();
+                                Toasts.buildToast(text: '즐겨찾기 등록에 성공했습니다.', context: context);
+                              }
+                              else{
+                                Toasts.buildToast(text: '즐겨찾기 등록에 실패했습니다.', context: context);
+                                Fluttertoast.showToast(msg: '즐겨찾기에 실패했습니다.');
+                              }
+
+                            },
+                            child: Image.asset(
+                                Images.icons.bookmark,
+                                width: 25.sp,
+                                color: Colors.grey
+                            ),
+                          );
+                        }
                       }
-                    },
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Image.asset(
-                        Images.icons.bookmark,
-                        width: 25.sp,
-                        color: Palette.green,
-                      ),
                     ),
                   ),
                 )
@@ -72,7 +109,7 @@ class ProfileWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "LV. ${summonerProfile.summonerDTO.summonerLevel}",
+                    "LV. ${widget.summonerProfile.summonerDTO.summonerLevel}",
                     style: TextStyle(
                       color: Color(0xff949494),
                       fontSize: 13.sp,

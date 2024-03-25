@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:app/Model/Champion.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/Admin.dart';
 import 'package:app/Service/DataStoreService.dart';
@@ -9,13 +8,10 @@ import 'package:app/Service/MatchDataService.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Service/StaticLogger.dart';
-import 'package:app/View/Test/FirebaseTest.dart';
-import 'package:app/View/Test/ScrollTest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
-import 'dart:developer';
 
 import 'package:logger/logger.dart';
 
@@ -76,6 +72,26 @@ class TestPage extends StatelessWidget {
                   },
                   child: Text(
                     "완료 확인",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+
+              ElevatedButton(
+                  onPressed: ()async{
+                    //Interactive toast, set [isIgnoring] false.
+                    showToast(
+                        "hello styled toast",
+                      context:context,
+                      animation: StyledToastAnimation.slideToBottom,
+                      animDuration: Duration(milliseconds: 300),
+                      curve: Curves.linearToEaseOut,
+                    );
+                  },
+                  child: Text(
+                    "토스트 메세지",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15.sp

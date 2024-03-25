@@ -42,7 +42,12 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           fontFamily: 'Roboto',
-          primaryColor: Palette.green
+          primaryColor: Palette.green,
+          dialogTheme: const DialogTheme(
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.transparent,
+          ),
+          //useMaterial3: false,
         ),
         debugShowCheckedModeBanner: false,
         home: HomePage(),

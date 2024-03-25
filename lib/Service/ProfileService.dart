@@ -50,4 +50,12 @@ class ProfileService extends GetxService{
       loadingState.value = LoadingState.success;
     }
   }
+
+  Future<bool> removeProfile() async {
+    bool result = await DataStoreService.removeBookmark();
+    if(result){
+      profile.value = null;
+    }
+    return result;
+  }
 }

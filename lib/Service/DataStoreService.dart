@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Service/StaticLogger.dart';
@@ -60,6 +61,18 @@ class DataStoreService{
     } catch (e) {
       logger.e("[DataStoreService.read()] $e");
       return null;
+    }
+  }
+
+  static Future<bool> _delete(String path, {bool recursive = false}) async {
+    try {
+      final file = await _getFile(path);
+      await file.delete(recursive : recursive);
+      logger.i("[DataStoreService._delete()] 삭제 완료");
+      return true;
+    } catch (e) {
+      logger.e("[DataStoreService._delete()] $e");
+      return false;
     }
   }
 
@@ -147,7 +160,7 @@ class DataStoreService{
     }
   }
 
-  static Future<bool> resetData(String puuid)async{
+  static Future<bool> resetMatchData(String puuid)async{
     String matchDtoPath = getMatchDtoPath(puuid);
     
     try{
@@ -190,6 +203,10 @@ class DataStoreService{
 
   static Future<bool> isBookmarkPuuidExist() async {
     return await _isFileExist('puuid.dat');
+  }
+
+  static Future<bool> removeBookmark(){
+    return _delete('puuid.dat');
   }
 
   static Future<bool> removeAllData() async{

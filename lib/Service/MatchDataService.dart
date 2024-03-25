@@ -136,7 +136,7 @@ class MatchDataService{
 
     matchIdList = apiResponse.response!;
 
-    await DataStoreService.resetData(RiotApiService.puuid );
+    await DataStoreService.resetMatchData(RiotApiService.puuid );
     await DataStoreService.saveMatchIdList(RiotApiService.puuid ,matchIdList);
 
     logger.i("[MatchDataService.refresh()] 데이터 초기화 완료 : first = ${matchIdList.first} , last = ${matchIdList.last}");

@@ -50,6 +50,7 @@ dependencies:
   cloud_firestore: ^4.15.3
   flutter_widget_from_html: ^0.14.11
   auto_size_text:
+  flutter_styled_toast: ^2.2.1
 
 dev_dependencies:
   flutter_test:
