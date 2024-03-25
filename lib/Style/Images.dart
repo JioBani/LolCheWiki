@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:app/Service/StaticLogger.dart';
 
 class Images{
+
+  static const IconImages icons = IconImages();
+
   static const String caitlyn = "assets/images/Caitlyn_19.jpg";
   static const String disk = "assets/images/disk.png";
 
@@ -73,5 +76,7 @@ class Images{
 }
 
 class IconImages{
-  static const String equals = "assets/images/icons/equals.png";
+  const IconImages();
+  final String equals = "assets/images/icons/equals.png";
+  final String bookmark = "assets/images/icons/bookmark.png";
 }
