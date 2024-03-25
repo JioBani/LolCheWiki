@@ -11,7 +11,7 @@ class MiniSeriesDTO {
     required this.wins,
   });
 
-  factory MiniSeriesDTO.fromJson(Map<String, dynamic> json) {
+  factory MiniSeriesDTO.fromMap(Map<String, dynamic> json) {
     return MiniSeriesDTO(
       losses: json['losses'] ?? 0,
       progress: json['progress'] ?? "",
@@ -20,7 +20,7 @@ class MiniSeriesDTO {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'losses': losses,
       'progress': progress,

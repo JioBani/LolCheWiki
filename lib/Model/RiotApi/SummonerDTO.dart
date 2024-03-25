@@ -17,19 +17,31 @@ class SummonerDTO {
     required this.summonerLevel,
   });
 
-  factory SummonerDTO.fromJson(Map<String, dynamic> json) {
+  factory SummonerDTO.fromMap(Map<String, dynamic> map) {
     return SummonerDTO(
-      accountId: json['accountId'],
-      profileIconId: json['profileIconId'],
-      revisionDate: json['revisionDate'],
-      name: json['name'],
-      id: json['id'],
-      puuid: json['puuid'],
-      summonerLevel: json['summonerLevel'],
+      accountId: map['accountId'],
+      profileIconId: map['profileIconId'],
+      revisionDate: map['revisionDate'],
+      name: map['name'],
+      id: map['id'],
+      puuid: map['puuid'],
+      summonerLevel: map['summonerLevel'],
     );
   }
 
   Map<String, dynamic> toJson() {
+    return {
+      'accountId': accountId,
+      'profileIconId': profileIconId,
+      'revisionDate': revisionDate,
+      'name': name,
+      'id': id,
+      'puuid': puuid,
+      'summonerLevel': summonerLevel,
+    };
+  }
+
+  Map<String, dynamic> toMap() {
     return {
       'accountId': accountId,
       'profileIconId': profileIconId,

@@ -40,28 +40,28 @@ class LeagueEntryDTO {
   });
 
   static List<LeagueEntryDTO> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((json) => LeagueEntryDTO.fromJson(json)).toList();
+    return jsonList.map((json) => LeagueEntryDTO.fromMap(json)).toList();
   }
 
-  factory LeagueEntryDTO.fromJson(Map<String, dynamic> json) {
+  factory LeagueEntryDTO.fromMap(Map<String, dynamic> map) {
     return LeagueEntryDTO(
-        puuid: json['puuid'],
-        leagueId: json['leagueId'],
-        summonerId: json['summonerId'],
-        summonerName: json['summonerName'],
-        queueType: json['queueType'],
-        ratedTier: json['ratedTier'],
-        ratedRating: json['ratedRating'],
-        tier: json['tier'],
-        rank: json['rank'],
-        leaguePoints: json['leaguePoints'],
-        wins: json['wins'],
-        losses: json['losses'],
-        hotStreak: json['hotStreak'],
-        veteran: json['veteran'],
-        freshBlood: json['freshBlood'],
-        inactive: json['inactive'],
-        miniSeries: (json['miniSeries'] == null) ? null : MiniSeriesDTO.fromJson(json['miniSeries'])
+        puuid: map['puuid'],
+        leagueId: map['leagueId'],
+        summonerId: map['summonerId'],
+        summonerName: map['summonerName'],
+        queueType: map['queueType'],
+        ratedTier: map['ratedTier'],
+        ratedRating: map['ratedRating'],
+        tier: map['tier'],
+        rank: map['rank'],
+        leaguePoints: map['leaguePoints'],
+        wins: map['wins'],
+        losses: map['losses'],
+        hotStreak: map['hotStreak'],
+        veteran: map['veteran'],
+        freshBlood: map['freshBlood'],
+        inactive: map['inactive'],
+        miniSeries: (map['miniSeries'] == null) ? null : MiniSeriesDTO.fromMap(map['miniSeries'])
     );
   }
 
@@ -83,7 +83,29 @@ class LeagueEntryDTO {
       'veteran': veteran,
       'freshBlood': freshBlood,
       'inactive': inactive,
-      'miniSeries': miniSeries?.toJson(), // MiniSeriesDTO.toJson 추가
+      'miniSeries': miniSeries?.toMap(), // MiniSeriesDTO.toJson 추가
+    };
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'puuid': puuid,
+      'leagueId': leagueId,
+      'summonerId': summonerId,
+      'summonerName': summonerName,
+      'queueType': queueType,
+      'ratedTier': ratedTier,
+      'ratedRating': ratedRating,
+      'tier': tier,
+      'rank': rank,
+      'leaguePoints': leaguePoints,
+      'wins': wins,
+      'losses': losses,
+      'hotStreak': hotStreak,
+      'veteran': veteran,
+      'freshBlood': freshBlood,
+      'inactive': inactive,
+      'miniSeries': miniSeries?.toMap(), // Assuming MiniSeriesDTO also has a toMap method
     };
   }
 }
