@@ -4,12 +4,13 @@ import 'package:logger/logger.dart';
 
 class RiotApiResponse<T> {
   RiotApiException? exception;
+  StackTrace? stackTrace;
   bool isSuccess;
   Logger logger = Logger();
 
   T? response;
 
-  RiotApiResponse({required this.isSuccess, this.exception, this.response});
+  RiotApiResponse({required this.isSuccess, this.exception, this.response , this.stackTrace});
 
 
   static Future<RiotApiResponse<T2>> handleExceptions<T2>(Future<RiotApiResponse<T2>> Function() asyncFunction) async {
@@ -19,7 +20,8 @@ class RiotApiResponse<T> {
       StaticLogger.logger.e('[RiotApiResponse.handleExceptions()] $stacktrace : $e : ${e.runtimeType}');
       return RiotApiResponse(
           isSuccess: false,
-          exception : RiotApiException.makeException(e)
+          exception : RiotApiException.makeException(e),
+          stackTrace: stacktrace
       );
     }
   }
