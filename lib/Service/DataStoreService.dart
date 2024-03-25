@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:app/Model/RiotApi/MatchDto.dart';
+import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Service/StaticLogger.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,6 +29,12 @@ class DataStoreService{
     final path = await _getFilePath(filePath);
     // 파일 경로와 파일 이름을 합쳐서 전체 파일 경로를 만듬
     return await Directory(path).exists();
+  }
+
+  static Future<bool> _isFileExist(String filePath)async{
+    final path = await _getFilePath(filePath);
+    // 파일 경로와 파일 이름을 합쳐서 전체 파일 경로를 만듬
+    return await File(path).exists();
   }
 
   static Future<bool> _save(String path , String content) async{
@@ -96,7 +103,6 @@ class DataStoreService{
     }
   }
 
-
   static Future<bool> ensureMatchDtoDirectory(String puuid) async{
     try{
       String matchDtoPath =  getMatchDtoPath(puuid);
@@ -158,6 +164,32 @@ class DataStoreService{
       logger.e("[DataStoreService.resetData()] $e");
       return false;
     }
+  }
+
+  static Future<bool> saveBookmarkPuuid(String puuid) async {
+    bool result = await _save('puuid.dat', puuid);
+    if(result){
+      StaticLogger.logger.i('[DataStoreService.saveBookmarkPuuid()] 즐겨찾기 puuid 저장 성공');
+    }
+    else{
+      StaticLogger.logger.e('[DataStoreService.saveBookmarkPuuid()] 즐겨찾기 puuid 저장 실패');
+    }
+    return result;
+  }
+
+  static Future<String?> getBookmarkPuuid() async {
+    String? result = await _read('puuid.dat');
+    if(result == null){
+      StaticLogger.logger.e('[DataStoreService.getProfileData()] 프로필 데이터 불러오기 실패');
+      return null;
+    }
+    else{
+      return result;
+    }
+  }
+
+  static Future<bool> isBookmarkPuuidExist() async {
+    return await _isFileExist('puuid.dat');
   }
 
   static Future<bool> removeAllData() async{
