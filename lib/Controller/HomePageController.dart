@@ -1,3 +1,4 @@
+import 'package:app/Controller/SearchHistoryController.dart';
 import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
@@ -22,6 +23,11 @@ class HomePageController{
       name = text;
       tag = "KR1";
     }
+    
+    if(Get.isRegistered<SearchHistoryController>()){
+      Get.find<SearchHistoryController>().addHistory(text);
+    }
+    
 
     final (apiResponse, isClosed) = await Dialogs.showLoadingDialogWithFuture<RiotApiResponse<SummonerProfile>>(
         context ,

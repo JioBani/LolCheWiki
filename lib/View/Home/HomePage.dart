@@ -1,3 +1,4 @@
+import 'package:app/Controller/SearchHistoryController.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/BottomNavBar/BottomNavBar.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  var searchController = Get.put(SearchHistoryController());
 
   @override
   Widget build(BuildContext context) {

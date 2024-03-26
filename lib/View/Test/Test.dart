@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:app/Controller/SearchHistoryController.dart';
 import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/Admin.dart';
 import 'package:app/Service/DataStoreService.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 import 'package:logger/logger.dart';
 
@@ -129,6 +131,18 @@ class TestPage extends StatelessWidget {
                   },
                   child: Text(
                     "토스트 메세지",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+              ElevatedButton(
+                  onPressed: ()async{
+                    Get.find<SearchHistoryController>().addHistory('보타쿠리');
+                  },
+                  child: Text(
+                    "검색 기록 추가",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15.sp

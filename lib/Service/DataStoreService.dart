@@ -207,6 +207,48 @@ class DataStoreService{
     return _delete('puuid.dat');
   }
 
+  static Future<List<String>?> getSearchHistory() async {
+    String? result = await _read('search.dat');
+    if(result == null){
+      StaticLogger.logger.e('[DataStoreService.getSearchHistory()] 검색 기록 불러오기 실패');
+      return null;
+    }
+    else{
+      try{
+        return List<String>.from(jsonDecode(result));
+      }catch(e , s){
+        StaticLogger.logger.e('[DataStoreService.getSearchHistory()] 검색 기록 변환 실패');
+        StaticLogger.logger.e('$e\n$s');
+        return null;
+      }
+    }
+  }
+
+  static Future<bool> saveSearchHistory(List<String> searchHistory) async {
+    bool result = await _save('search.dat', jsonEncode(searchHistory));
+    if(result){
+      StaticLogger.logger.i('[DataStoreService.saveSearchHistory()] 검색 기록 불러오기저장 성공');
+    }
+    else{
+      StaticLogger.logger.e('[DataStoreService.saveSearchHistory()] 검색 기록 불러오기 저장 실패');
+    }
+    return result;
+  }
+
+  static Future<bool> removeSearchHistory(int index) async {
+    List<String>? history = await getSearchHistory();
+
+    if(history == null){
+      return false;
+    }
+    else{
+      if(history.length < index){
+        history.removeAt(index);
+      }
+      return saveSearchHistory(history);
+    }
+  }
+
   static Future<bool> removeAllData() async{
     try{
       String matchPath = await _getFilePath("");
