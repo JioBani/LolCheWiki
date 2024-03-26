@@ -1,3 +1,4 @@
+import 'package:app/Controller/HomePageController.dart';
 import 'package:app/Controller/LoadingState.dart';
 import 'package:app/Service/ProfileService.dart';
 import 'package:app/Model/RiotApi/LeagueEntryDTO.dart';
@@ -18,11 +19,12 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget> {
 
+  HomePageController homePageController = HomePageController();
 
   void buildDialog(){
     showDialog(
       context: context,
-      barrierDismissible: true, //바깥 영역 터치시 닫을지 여부 결정
+      barrierDismissible: true,
       builder: ((context) {
         return AlertDialog(
           actionsPadding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
@@ -149,17 +151,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
               return Stack(
                 children: [
-                  Container(
-                    width: 276.w,
-                    height: 150.h,
-                    decoration: BoxDecoration(
+                  InkWell(
+                    onTap: (){
+                      homePageController.searchByPuuid(service.profile.value!.summonerDTO.puuid, context);
+                    },
+                    child: Container(
+                      width: 276.w,
+                      height: 150.h,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Image.asset(
-                        Images.caitlyn,
-                        fit: BoxFit.fitWidth,
+                        child: Image.asset(
+                          Images.caitlyn,
+                          fit: BoxFit.fitWidth,
+                        ),
                       ),
                     ),
                   ),
@@ -190,7 +197,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                         SizedBox(height: 10.h,),
                         Text(
-                          "${rankEntry?.rank} ${rankEntry?.tier}",
+                          "${rankEntry?.rank ?? ''} ${rankEntry?.tier ?? ''}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10.sp,

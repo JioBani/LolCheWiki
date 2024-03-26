@@ -3,9 +3,9 @@ import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/ProfileService.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Toasts.dart';
+import 'package:app/View/Test/Dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
@@ -79,12 +79,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               }
 
                               if(result){
-                                service.fetchData();
-                                Toasts.buildToast(text: '즐겨찾기 등록에 성공했습니다.', context: context);
+                                await Dialogs.showLoadingDialogWithFuture(context, service.fetchData());
+                                if(mounted){
+                                  Toasts.buildToast(text: '즐겨찾기 등록에 성공했습니다.', context: context);
+                                }
                               }
                               else{
-                                Toasts.buildToast(text: '즐겨찾기 등록에 실패했습니다.', context: context);
-                                Fluttertoast.showToast(msg: '즐겨찾기에 실패했습니다.');
+                                if(mounted){
+                                  Toasts.buildToast(text: '즐겨찾기 등록에 실패했습니다.', context: context);
+                                }
                               }
 
                             },
@@ -131,13 +134,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               ),
             ),
           ),
-         /* SizedBox(
-            width: 80.w,
-            child: RankTabViewWidget(
-              leagueEntryDTOMap: summonerProfile.leagueEntryDTOMap,
-            ),
-          ),
-          SizedBox(width: 15.w,)*/
         ],
       ),
     );

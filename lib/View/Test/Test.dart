@@ -8,6 +8,8 @@ import 'package:app/Service/MatchDataService.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Service/StaticLogger.dart';
+import 'package:app/Style/Palette.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -88,6 +90,41 @@ class TestPage extends StatelessWidget {
                       animation: StyledToastAnimation.slideToBottom,
                       animDuration: Duration(milliseconds: 300),
                       curve: Curves.linearToEaseOut,
+                    );
+                  },
+                  child: Text(
+                    "토스트 메세지",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp
+                    ),
+                  )
+              ),
+
+              ElevatedButton(
+                  onPressed: ()async{
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return UnconstrainedBox(
+                          constrainedAxis: Axis.vertical,
+                          child: SizedBox(
+                            width: 50.w,
+                            height: 50.w,
+                            child: Dialog(
+                              insetPadding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.r),
+                              ),
+                              child: SizedBox(
+                                  width: 50.w,
+                                  height: 50.w,
+                                  child: CupertinoActivityIndicator()
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
                   child: Text(

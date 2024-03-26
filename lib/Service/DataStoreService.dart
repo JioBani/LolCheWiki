@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:app/Model/RiotApi/MatchDto.dart';
-import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Service/StaticLogger.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
@@ -222,25 +220,4 @@ class DataStoreService{
       return false;
     }
   }
-
-  /*static Future<void> saveTest(String path , String content) async{
-    bool success = await _save(path, content);
-    if(success){
-      logger.i("[DataStoreService.saveTest()] 데이터 저장 완료");
-    }
-    else{
-      logger.e("[DataStoreService.saveTest()] 데이터 저장 실패");
-    }
-  }
-
-  static Future<String?> readTest(String path) async{
-    try{
-      return await _read(path);
-    }catch(e){
-      logger.e("[DataStoreService.readTest()] $e");
-      return null;
-    }
-  }*/
-
-
 }
