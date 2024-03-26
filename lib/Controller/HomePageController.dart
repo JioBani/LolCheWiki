@@ -2,6 +2,7 @@ import 'package:app/Controller/SearchHistoryController.dart';
 import 'package:app/Model/RiotApi/SummonerProfile.dart';
 import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
+import 'package:app/Style/Toasts.dart';
 import 'package:app/View/MatchHistory/MatchHistoryPage.dart';
 import 'package:app/View/Test/Dialogs.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,7 +40,7 @@ class HomePageController{
         Get.to(MatchHistoryPage(summonerProfile: apiResponse.response!));
       }
       else{
-        Fluttertoast.showToast(msg: apiResponse.exception!.msg);
+        Toasts.buildToast(text: apiResponse.exception!.msg, context: context);
       }
     }
   }
