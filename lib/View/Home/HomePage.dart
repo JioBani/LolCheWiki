@@ -1,3 +1,4 @@
+import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/BottomNavBar/BottomNavBar.dart';
 import 'package:app/View/ChampionInfo/ChampionListPage.dart';
@@ -41,44 +42,21 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    InkWell(
-                      child: Container(
-                        width: 90.w,
-                        height: 100.h,
-                        decoration: BoxDecoration(
-                          color: Palette.brightUi,
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                      ),
-                      onTap: (){
-                        Get.to(const ChampionListPage());
-                      },
+                    PageMoveButtonWidget(
+                      page: const ChampionListPage(),
+                      imagePath: Images.icons.championIcon,
+                      text: '챔피언',
                     ),
-                    InkWell(
-                      child: Container(
-                        width: 90.w,
-                        height: 100.h,
-                        decoration: BoxDecoration(
-                          color: Palette.brightUi,
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                      ),
-                      onTap: (){
-                        Get.to(const TraitListPage());
-                      },
+                    PageMoveButtonWidget(
+                      page: const TraitListPage(),
+                      imagePath: Images.icons.traitIcon,
+                      text: '특성',
+                      imageColor: Colors.black,
                     ),
-                    InkWell(
-                      child: Container(
-                        width: 90.w,
-                        height: 100.h,
-                        decoration: BoxDecoration(
-                          color: Palette.brightUi,
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                      ),
-                      onTap: (){
-                        Get.to(const ItemInfoPage());
-                      },
+                    PageMoveButtonWidget(
+                      page: const ItemInfoPage(),
+                      imagePath: Images.icons.itemIcon,
+                      text: '아이템',
                     ),
                   ],
                 ),
@@ -91,3 +69,58 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+class PageMoveButtonWidget extends StatelessWidget {
+  const PageMoveButtonWidget({super.key,
+    required this.page,
+    required this.imagePath,
+    required this.text,
+    this.imageColor
+  });
+
+  final Widget page;
+  final String imagePath;
+  final String text;
+  final Color? imageColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Container(
+          width: 90.w,
+          height: 100.h,
+          decoration: BoxDecoration(
+            color: Palette.brightUi,
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(9.w),
+                  child: ClipRRect(
+                    borderRadius : BorderRadius.circular(100.r),
+                    child: Image.asset(
+                      imagePath,
+                      color: imageColor,
+                    ),
+                  ),
+                ),
+              ),
+              Text(
+                text,
+                style: TextStyle(
+                    color: Palette.darkGray
+                ),
+              ),
+              SizedBox(height: 10.w,)
+            ],
+          )
+      ),
+      onTap: (){
+        Get.to(page);
+      },
+    );
+  }
+}
+

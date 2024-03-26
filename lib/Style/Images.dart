@@ -79,4 +79,7 @@ class IconImages{
   const IconImages();
   final String equals = "assets/images/icons/equals.png";
   final String bookmark = "assets/images/icons/bookmark.png";
+  final String championIcon = "assets/images/icons/champion_icon.png";
+  final String traitIcon = "assets/images/icons/trait_icon.png";
+  final String itemIcon = "assets/images/icons/item_icon.png";
 }
