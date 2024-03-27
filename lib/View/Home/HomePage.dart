@@ -1,7 +1,6 @@
 import 'package:app/Controller/SearchHistoryController.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
-import 'package:app/View/BottomNavBar/BottomNavBar.dart';
 import 'package:app/View/ChampionInfo/ChampionListPage.dart';
 import 'package:app/View/Home/CustomSearchBarWidget.dart';
 import 'package:app/View/Home/ProfileWidget.dart';
@@ -32,7 +31,16 @@ class _HomePageState extends State<HomePage> {
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(height: 113.h),
+              SizedBox(height: 20.h),
+              Text(
+                '#롤체위키',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Palette.green,
+                  fontSize: 25.sp
+                ),
+              ),
+              SizedBox(height: 60.h),
               const CustomSearchBar(),
               SizedBox(height: 10.h),
               const SearchHistoryWidget(),
@@ -67,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      //bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

@@ -26,9 +26,9 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           filled: true,
           fillColor: Palette.brightUi,
           suffixIcon: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.search,
-              color: Colors.grey,
+              color: Palette.green,
             ),
             onPressed: (){
               homePageController.search(searchController.text, context);

@@ -176,10 +176,17 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       onTap: (){
                         buildDialog();
                       },
-                      child: Icon(
-                        Icons.close,
-                        size: 30.sp,
-                        color: Colors.black,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.white54,
+                        ),
+                        margin: EdgeInsets.all(4.w),
+                        child: Icon(
+                          Icons.close,
+                          size: 25.sp,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
