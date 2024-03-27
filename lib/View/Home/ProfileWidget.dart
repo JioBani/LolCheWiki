@@ -204,10 +204,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ),
                         SizedBox(height: 10.h,),
                         Text(
-                          "${rankEntry?.rank ?? ''} ${rankEntry?.tier ?? ''}",
+                          "${rankEntry?.tier ?? ''} ${rankEntry?.rank ?? ''}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 10.sp,
+                              fontSize: 12.sp,
                               color: Colors.white
                           ),
                         )
