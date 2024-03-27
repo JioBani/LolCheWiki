@@ -1,7 +1,9 @@
 import 'package:app/Controller/MatchHistoryController.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
 import 'package:app/Style/Palette.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -26,14 +28,16 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-
     Get.put<MatchHistoryController>(
       MatchHistoryController(widget.puuid),
       tag : widget.puuid,
     );
 
-    Get.find<MatchHistoryController>(tag: widget.puuid).initData(20);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Get.find<MatchHistoryController>(tag: widget.puuid).initData(20);
+    },);
+
+    super.initState();
   }
 
   @override
@@ -80,10 +84,10 @@ class _MatchCategoryTabViewWidgetState extends State<MatchCategoryTabViewWidget>
                             tag: widget.puuid,
                             builder: (controller) {
                               if(!controller.isInitiated.value){
-                                return const Text("로딩중");
+                                return const Center(child: CupertinoActivityIndicator());
                               }
                               else if(controller.allMatches.isEmpty){
-                                return const Text("데이터 없음");
+                                return const Center(child: Text("데이터 없음"));
                               }
                               else{
                                 if(index == 0){
