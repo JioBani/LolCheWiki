@@ -9,15 +9,15 @@ class AccountDto {
     this.tagLine,
   });
 
-  factory AccountDto.fromJson(Map<String, dynamic> json) {
+  factory AccountDto.fromMap(Map<String, dynamic> json) {
     return AccountDto(
-      puuid: json['puuid'],
+      puuid: json['puuid'] ?? '',
       gameName: json['gameName'],
       tagLine: json['tagLine'],
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'puuid': puuid,
       'gameName': gameName,

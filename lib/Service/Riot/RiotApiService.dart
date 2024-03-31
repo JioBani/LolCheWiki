@@ -152,7 +152,7 @@ class RiotApiService {
         throw accountRes.statusCode;
       }
 
-      AccountDto accountDto = AccountDto.fromJson(jsonDecode(accountRes.body));
+      AccountDto accountDto = AccountDto.fromMap(jsonDecode(accountRes.body));
 
       //#3. 리그 엔트리 가져오기
       final leagueRes = await http
