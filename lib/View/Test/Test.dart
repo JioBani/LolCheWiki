@@ -1,20 +1,14 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:app/Controller/SearchHistoryController.dart';
-import 'package:app/Model/RiotApi/MatchDto.dart';
 import 'package:app/Service/Admin.dart';
-import 'package:app/Service/DataStoreService.dart';
 import 'package:app/Service/MatchDataService.dart';
-import 'package:app/Service/Riot/RiotApiResponse.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Service/StaticLogger.dart';
-import 'package:app/Style/Palette.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'package:logger/logger.dart';
@@ -22,7 +16,7 @@ import 'package:logger/logger.dart';
 class TestPage extends StatelessWidget {
   TestPage({super.key});
 
-  final MatchDataService matchDataService = MatchDataService(puuid: RiotApiService.puuid);
+  //final MatchDataService matchDataService = MatchDataService(puuid: RiotApiService.puuid);
   final Logger logger = Logger();
 
   Future<int> fetchData()async {
@@ -155,7 +149,7 @@ class TestPage extends StatelessWidget {
       ),
     );
   }
-
+/*
   Future<void> saveMatchIdList()async {
     RiotApiResponse<List<String>> matchIdListRes = await RiotApiService.getMatchIds(RiotApiService.puuid, 20);
     if(!matchIdListRes.isSuccess){
@@ -198,5 +192,5 @@ class TestPage extends StatelessWidget {
         Logger().e("데이터 읽기 실패");
       }
     }
-  }
+  }*/
 }
