@@ -135,7 +135,7 @@ class DataStoreService{
 
   static Future<bool> saveMatchDto(String puuid, MatchDto matchDto) async{
     String matchDtoPath = getMatchDtoPath(puuid);
-    final jsonString = jsonEncode(matchDto);
+    final jsonString = jsonEncode(matchDto.toMap());
     return await _save("$matchDtoPath/${matchDto.matchId}.json", jsonString);
   }
 

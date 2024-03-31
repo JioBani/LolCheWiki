@@ -12,15 +12,11 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 import 'RiotApiCounter.dart';
+import 'package:app/api_key.dart';
 
 
-///"id": "QQMFARSaAmOJn6rIY8C2IKFIcfo96zGUozn8B93jhqEcqu4",
 class RiotApiService {
-  static String key = "RGAPI-350d51cf-0618-4d02-8c72-efbc03657f39";
-  static String matchUrl =
-      "https://asia.api.riotgames.com/tft/match/v1/matches/KR_6862430937?api_key=RGAPI-350d51cf-0618-4d02-8c72-efbc03657f39";
-  static String puuid = "CrSVcTKsGOhgdKlq8ZMNGg78aTCSmKWjVAhFUS9n631VjkCEweGg7H5YxzrvV66wt0cj2gXnCDWMAA";
-
+  static String key = apikey;
   static int startDay = 1703376000;
 
   static List<String> matchIdList = [];
@@ -41,7 +37,6 @@ class RiotApiService {
       riotApiCounter.matchId++;
 
       if (response.statusCode == 200) {
-        //Logger().i(jsonDecode(response.body));
         return RiotApiResponse(
           isSuccess: true,
           response: List<String>.from(jsonDecode(response.body))
@@ -64,19 +59,6 @@ class RiotApiService {
           isSuccess: true,
           response: MatchDto.fromMap(jsonDecode(response.body), matchId)
         );
-
-        /*await Future.wait(
-          riotApiResponse.response!.info.participants.map((element)async
-            {
-              RiotApiResponse<SummonerDTO> summonerRes = await getSummonerDtoByPuuid(element.puuid);
-              if(!summonerRes.isSuccess){
-                StaticLogger.logger.e("[RiotApiService.getMatch()] SummonerDTO 가져오기 실패 : id = ${element.puuid} , msg = ${summonerRes.exception!}");
-              }
-              element.summonerDTO = summonerRes.response;
-            }
-          )
-        );*/
-
         return riotApiResponse;
 
       } else {
@@ -119,12 +101,6 @@ class RiotApiService {
   }
 
   static Future<RiotApiResponse<SummonerProfile>> getSummonerProfileByPuuid(String puuid) async {
-    /// 1. id를 알아낸다
-    /// 2. AccountDto를 가져온다
-    /// 2. id로 리그 앤트리를 가져온다
-    /// 3. 프로필 이미지를 가져온다
-    /// 4. 합쳐서 객체를 만들어서 반환한다.
-
     return RiotApiResponse.handleExceptions(()async{
       //#1. 소환사 id 가져오기
       final summonerRes = await http

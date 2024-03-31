@@ -26,7 +26,7 @@ class MatchDataService{
         logger.i("[MatchDataService.setMatchIdList()] 전적이 없음");
       }
       else{
-        await DataStoreService.saveMatchIdList(RiotApiService.puuid  ,matchIdList);
+        await DataStoreService.saveMatchIdList(_puuid  ,matchIdList);
       }
     }
   }
@@ -76,7 +76,7 @@ class MatchDataService{
   }
 
   Future<MatchDto?> _getMatchDto(String matchId) async{
-    MatchDto? matchDto = await DataStoreService.readMatchDto(RiotApiService.puuid  , matchId);
+    MatchDto? matchDto = await DataStoreService.readMatchDto(_puuid, matchId);
     if(matchDto != null){
         logger.i("[MatchDataService._getMatchDto()] 로컬에서 로드함 ($matchId)");
     }
@@ -88,7 +88,7 @@ class MatchDataService{
           logger.i("[MatchDataService._getMatchDto()] 네트워크에서 로드함 ($matchId)");
 
           try{
-            await DataStoreService.saveMatchDto(RiotApiService.puuid ,matchDto);
+            await DataStoreService.saveMatchDto(_puuid ,matchDto);
 
             logger.i("[MatchDataService._getMatchDto()] 매치 데이터 저장 ($matchId)");
 
@@ -136,8 +136,8 @@ class MatchDataService{
 
     matchIdList = apiResponse.response!;
 
-    await DataStoreService.resetMatchData(RiotApiService.puuid );
-    await DataStoreService.saveMatchIdList(RiotApiService.puuid ,matchIdList);
+    await DataStoreService.resetMatchData(_puuid);
+    await DataStoreService.saveMatchIdList(_puuid ,matchIdList);
 
     logger.i("[MatchDataService.refresh()] 데이터 초기화 완료 : first = ${matchIdList.first} , last = ${matchIdList.last}");
   }
