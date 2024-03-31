@@ -1,5 +1,5 @@
 import 'package:app/Controller/LoadingState.dart';
-import 'package:app/Controller/TraitInfoPageController.dart';
+import 'package:app/UnUsed/TraitInfoPageController.dart';
 import 'package:app/Model/Trait.dart';
 import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Palette.dart';
@@ -20,14 +20,11 @@ class TraitListPage extends StatefulWidget {
 class _TraitListPageState extends State<TraitListPage> with TickerProviderStateMixin{
 
   late TabController traitTypeTabController;
-  late TraitInfoPageController traitInfoPageController;
 
   @override
   void initState() {
     // TODO: implement initState
     traitTypeTabController = TabController(length: 2, vsync: this);
-    traitInfoPageController = Get.put(TraitInfoPageController());
-    traitInfoPageController.fetchTraitList();
     super.initState();
   }
 
