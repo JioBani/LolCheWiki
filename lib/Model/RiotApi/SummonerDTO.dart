@@ -29,18 +29,6 @@ class SummonerDTO {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'accountId': accountId,
-      'profileIconId': profileIconId,
-      'revisionDate': revisionDate,
-      'name': name,
-      'id': id,
-      'puuid': puuid,
-      'summonerLevel': summonerLevel,
-    };
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'accountId': accountId,

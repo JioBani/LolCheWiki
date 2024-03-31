@@ -19,7 +19,7 @@ class TraitDto {
     required this.trait
   });
 
-  factory TraitDto.fromJson(Map<String, dynamic> json) {
+  factory TraitDto.fromMap(Map<String, dynamic> json) {
     return TraitDto(
       name: json['name'],
       numUnits: json['num_units'],
@@ -30,7 +30,7 @@ class TraitDto {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
       'num_units': numUnits,

@@ -62,7 +62,7 @@ class RiotApiService {
       if (response.statusCode == 200) {
         RiotApiResponse<MatchDto> riotApiResponse = RiotApiResponse<MatchDto>(
           isSuccess: true,
-          response: MatchDto.fromJson(jsonDecode(response.body), matchId)
+          response: MatchDto.fromMap(jsonDecode(response.body), matchId)
         );
 
         /*await Future.wait(

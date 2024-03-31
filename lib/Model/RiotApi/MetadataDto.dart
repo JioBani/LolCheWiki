@@ -9,7 +9,7 @@ class MetadataDto {
     required this.participants,
   });
 
-  factory MetadataDto.fromJson(Map<String, dynamic> json) {
+  factory MetadataDto.fromMap(Map<String, dynamic> json) {
     return MetadataDto(
       dataVersion: json['data_version'],
       matchId: json['match_id'],
@@ -52,7 +52,7 @@ class MetadataDto {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'data_version': dataVersion,
       'match_id': matchId,

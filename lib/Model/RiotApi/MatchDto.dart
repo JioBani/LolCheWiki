@@ -14,10 +14,10 @@ class MatchDto {
     required this.matchId,
   });
 
-  factory MatchDto.fromJson(Map<String, dynamic> json , String matchId) {
+  factory MatchDto.fromMap(Map<String, dynamic> json , String matchId) {
     return MatchDto(
       matchId: matchId,
-      metadata: MetadataDto.fromJson(json['metadata']),
+      metadata: MetadataDto.fromMap(json['metadata']),
       info: InfoDto.fromJson(json['info']),
     );
   }
@@ -31,9 +31,9 @@ class MatchDto {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
-      'metadata': metadata.toJson(),
+      'metadata': metadata.toMap(),
       'info': info.toJson(),
     };
   }

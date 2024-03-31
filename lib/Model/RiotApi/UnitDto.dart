@@ -15,7 +15,7 @@ class UnitDto {
     required this.tier,
   });
 
-  factory UnitDto.fromJson(Map<String, dynamic> json) {
+  factory UnitDto.fromMap(Map<String, dynamic> json) {
     return UnitDto(
       itemNames: (json['itemNames']  as List).map((i) => i as String).toList(),
       characterId: json['character_id'],
@@ -41,7 +41,7 @@ class UnitDto {
   }
 
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'itemNames': itemNames,
       'character_id': characterId,

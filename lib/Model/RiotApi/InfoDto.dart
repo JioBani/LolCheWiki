@@ -29,7 +29,7 @@ class InfoDto {
         gameVariation: json['game_variation'] ?? "null",
         gameVersion: json['game_version'] ?? "null",
         participants: (json['participants'] as List)
-            .map((i) => ParticipantDto.fromJson(i))
+            .map((i) => ParticipantDto.fromMap(i))
             .toList(),
         queueId: json['queue_id'],
         tftSetNumber: json['tft_set_number'],
@@ -74,7 +74,7 @@ class InfoDto {
       'game_length': gameLength,
       'game_variation': gameVariation,
       'game_version': gameVersion,
-      'participants': participants.map((e) => e.toJson()).toList(),
+      'participants': participants.map((e) => e.toMap()).toList(),
       'queue_id': queueId,
       'tft_set_number': tftSetNumber,
     };

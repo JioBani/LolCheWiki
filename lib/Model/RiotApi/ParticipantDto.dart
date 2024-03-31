@@ -31,9 +31,9 @@ class ParticipantDto {
     required this.units,
   });
 
-  factory ParticipantDto.fromJson(Map<String, dynamic> json) {
+  factory ParticipantDto.fromMap(Map<String, dynamic> json) {
     List<TraitDto> traitDtoList = (json['traits'] as List)
-        .map((i) => TraitDto.fromJson(i))
+        .map((i) => TraitDto.fromMap(i))
         .toList();
 
     traitDtoList.sort(TraitDto.compare);
@@ -50,12 +50,12 @@ class ParticipantDto {
       totalDamageToPlayers: json['total_damage_to_players'],
       traits: traitDtoList,
       units: (json['units'] as List)
-          .map((i) => UnitDto.fromJson(i))
+          .map((i) => UnitDto.fromMap(i))
           .toList(),
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'companion': companion.toMap(),
       'gold_left': goldLeft,
@@ -66,8 +66,8 @@ class ParticipantDto {
       'puuid': puuid,
       'time_eliminated': timeEliminated,
       'total_damage_to_players': totalDamageToPlayers,
-      'traits': traits.map((e) => e.toJson()).toList(),
-      'units': units.map((e) => e.toJson()).toList(),
+      'traits': traits.map((e) => e.toMap()).toList(),
+      'units': units.map((e) => e.toMap()).toList(),
     };
   }
 

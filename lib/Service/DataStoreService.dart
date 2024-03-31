@@ -149,7 +149,7 @@ class DataStoreService{
     else{
       try {
         final decode = jsonDecode(content);
-        return MatchDto.fromJson(decode, matchId);
+        return MatchDto.fromMap(decode, matchId);
       } catch (e) {
         // 파일을 읽을 수 없는 경우 빈 리스트를 반환하거나 예외 처리를 수행할 수 있습니다.
         logger.e("[DataStoreService.readMatchDto()] json 파싱 오류 : ${e}");
