@@ -39,7 +39,7 @@ class ParticipantDto {
     traitDtoList.sort(TraitDto.compare);
 
     return ParticipantDto(
-      companion: CompanionDto.fromJson(json['companion']),
+      companion: CompanionDto.fromMap(json['companion']),
       goldLeft: json['gold_left'],
       lastRound: json['last_round'],
       level: json['level'],
@@ -52,35 +52,6 @@ class ParticipantDto {
       units: (json['units'] as List)
           .map((i) => UnitDto.fromJson(i))
           .toList(),
-    );
-  }
-
-  factory ParticipantDto.test() {
-    return ParticipantDto(
-      companion: CompanionDto.test(),
-      goldLeft: 0,
-      lastRound: 0,
-      level: 0,
-      placement: 0,
-      playersEliminated: 0,
-      puuid: "puuid_test",
-      timeEliminated: 0,
-      totalDamageToPlayers: 0,
-      traits: [
-        TraitDto.test(),
-        TraitDto.test(),
-        TraitDto.test(),
-        TraitDto.test(),
-        TraitDto.test(),
-        TraitDto.test(),
-      ],
-      units: [
-        UnitDto.test(),
-        UnitDto.test(),
-        UnitDto.test(),
-        UnitDto.test(),
-        UnitDto.test(),
-      ],
     );
   }
 
@@ -106,7 +77,7 @@ class ParticipantDto {
 
   Map<String, dynamic> toJson() {
     return {
-      'companion': companion.toJson(),
+      'companion': companion.toMap(),
       'gold_left': goldLeft,
       'last_round': lastRound,
       'level': level,

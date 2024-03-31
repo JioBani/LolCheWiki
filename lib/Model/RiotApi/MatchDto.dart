@@ -22,14 +22,6 @@ class MatchDto {
     );
   }
 
-  factory MatchDto.test() {
-    return MatchDto(
-      matchId: "text",
-      metadata: MetadataDto.test(),
-      info: InfoDto.test(),
-    );
-  }
-
   factory MatchDto.none(){
     StaticLogger.logger.e("[MatchDto.none]");
     return MatchDto(

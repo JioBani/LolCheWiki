@@ -33,27 +33,6 @@ class InfoDto {
     );
   }
 
-  factory InfoDto.test() {
-    return InfoDto(
-      gameDatetime: 0,
-      gameLength: 0,
-      gameVariation: "gameVariation_test",
-      gameVersion: "gameVersion_test",
-      participants: [
-        ParticipantDto.test(),
-        ParticipantDto.test(),
-        ParticipantDto.test(),
-        ParticipantDto.test(),
-        ParticipantDto.test(),
-        ParticipantDto.test(),
-        ParticipantDto.test(),
-        ParticipantDto.test(),
-      ],
-      queueId: 0,
-      tftSetNumber: 10,
-    );
-  }
-
   factory InfoDto.none() {
     return InfoDto(
       gameDatetime: 0,

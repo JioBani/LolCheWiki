@@ -11,7 +11,7 @@ class CompanionDto {
     required this.species,
   });
 
-  factory CompanionDto.fromJson(Map<String, dynamic> json) {
+  factory CompanionDto.fromMap(Map<String, dynamic> json) {
     return CompanionDto(
       contentId: json['content_ID'],
       itemId: json['item_ID'],
@@ -19,16 +19,7 @@ class CompanionDto {
       species: json['species'],
     );
   }
-
-  factory CompanionDto.test() {
-    return CompanionDto(
-      contentId: "contentId_test",
-      itemId: 0,
-      skinId: 0,
-      species:"species_test",
-    );
-  }
-
+  
   factory CompanionDto.none() {
     return CompanionDto(
       contentId: "none",
@@ -38,7 +29,7 @@ class CompanionDto {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'content_ID': contentId,
       'item_ID': itemId,
