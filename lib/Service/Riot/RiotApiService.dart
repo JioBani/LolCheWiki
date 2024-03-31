@@ -72,7 +72,7 @@ class RiotApiService {
     return RiotApiResponse.handleExceptions(()async{
       final response = await http
           .get(Uri.parse("https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/$name/$tag?api_key=$key"))
-          .timeout(Duration(seconds: 10));
+          .timeout(const Duration(seconds: 10));
 
       riotApiCounter.account++;
 
@@ -105,7 +105,7 @@ class RiotApiService {
       //#1. 소환사 id 가져오기
       final summonerRes = await http
           .get(Uri.parse("https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/$puuid?api_key=$key"))
-          .timeout(Duration(seconds: 10));
+          .timeout(const Duration(seconds: 10));
 
       riotApiCounter.puuid++;
 
@@ -120,7 +120,7 @@ class RiotApiService {
       final accountRes = await http
           .get(Uri.parse(
           "https://asia.api.riotgames.com/riot/account/v1/accounts/by-puuid/$puuid?api_key=$key"
-      )).timeout(Duration(seconds: 10));
+      )).timeout(const Duration(seconds: 10));
 
       riotApiCounter.account++;
 
@@ -134,7 +134,7 @@ class RiotApiService {
       final leagueRes = await http
           .get(Uri.parse(
           "https://kr.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerDTO.id}?api_key=$key" //id가 여러개여서 확인
-      )).timeout(Duration(seconds: 10));
+      )).timeout(const Duration(seconds: 10));
 
       riotApiCounter.leagueEntry++;
 
