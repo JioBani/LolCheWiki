@@ -191,7 +191,14 @@ class Champion {
   }
 
   static int sortByTrait(Champion a , Champion b){
-    return a.traitNames[0].compareTo(b.traitNames[0]);
+    int result = 0;
+    int i = 0;
+    while(result == 0){
+      if(a.traitNames.length <= i || b.traitNames.length <= i) return result;
+      result = a.traitNames[i].compareTo(b.traitNames[i]);
+      i++;
+    }
+    return result;
   }
 
   void addTrait(Trait trait){
