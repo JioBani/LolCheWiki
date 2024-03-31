@@ -19,15 +19,6 @@ class CompanionDto {
       species: json['species'],
     );
   }
-  
-  factory CompanionDto.none() {
-    return CompanionDto(
-      contentId: "none",
-      itemId: 0,
-      skinId: 0,
-      species:"none",
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
