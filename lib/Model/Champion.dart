@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:app/Model/Trait.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 
 class Ability {
@@ -37,8 +34,8 @@ class Ability {
     );
   }
 
-  String completeDescription() {
-    String completeDesc = desc.replaceAll(RegExp('<[^>]*>'), ''); // Remove HTML style text
+  String getCompleteDescription() {
+    String completeDesc = desc.replaceAll(RegExp('<[^>]*>'), '');
     for (Map<String, dynamic> variable in variables) {
       String variableName = variable['name'];
       List<dynamic> variableValues = variable['value'];
@@ -47,7 +44,7 @@ class Ability {
         for (int i = 1; i <= 3; i++) {
           valuesString += '${variableValues[i]} / ';
         }
-        valuesString = valuesString.substring(0, valuesString.length - 3); // Remove the last ' / '
+        valuesString = valuesString.substring(0, valuesString.length - 3);
         valuesString += ']';
         completeDesc = completeDesc.replaceAll('@$variableName@', valuesString);
       }
@@ -202,28 +199,3 @@ class Champion {
   }
 
 }
-
-Future<List<Champion>> createChampionsFromJsonFile(String filePath) async {
-  try {
-    // Read the JSON file
-    File file = File(filePath);
-    String content = await rootBundle.loadString(filePath);
-
-    // Parse the JSON
-    Map<String, dynamic> jsonData = json.decode(content);
-
-    // Extract champions data from setData
-    List<dynamic> championsData = jsonData['setData'][0]['champions'];
-
-    // Create Champion objects from championsData
-    List<Champion> champions = championsData.map((championData) {
-      return Champion.fromJson(championData);
-    }).toList();
-
-    return champions;
-  } catch (e , stacktrace) {
-    print('Error creating Champions from JSON file: $e : $stacktrace');
-    return [];
-  }
-}
-
