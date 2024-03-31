@@ -1,4 +1,5 @@
 import 'package:app/Model/RiotApi/MiniSeriesDTO.dart';
+import 'package:flutter/cupertino.dart';
 
 class LeagueEntryDTO {
   String puuid;
@@ -21,22 +22,22 @@ class LeagueEntryDTO {
 
   LeagueEntryDTO({
     required this.puuid,
-    required this.leagueId,
+    this.leagueId,
     required this.summonerId,
     required this.summonerName,
     required this.queueType,
-    required this.ratedTier,
-    required this.ratedRating,
-    required this.tier,
-    required this.rank,
-    required this.leaguePoints,
-    required this.wins,
-    required this.losses,
-    required this.hotStreak,
-    required this.veteran,
-    required this.freshBlood,
-    required this.inactive,
-    required this.miniSeries,
+    this.ratedTier,
+    this.ratedRating,
+    this.tier,
+    this.rank,
+    this.leaguePoints,
+    this.wins,
+    this.losses,
+    this.hotStreak,
+    this.veteran,
+    this.freshBlood,
+    this.inactive,
+    this.miniSeries,
   });
 
   static List<LeagueEntryDTO> fromJsonList(List<dynamic> jsonList) {
@@ -44,26 +45,38 @@ class LeagueEntryDTO {
   }
 
   factory LeagueEntryDTO.fromMap(Map<String, dynamic> map) {
+    try{
+      return LeagueEntryDTO(
+          puuid: map['puuid'],
+          leagueId: map['leagueId'],
+          summonerId: map['summonerId'],
+          summonerName: map['summonerName'],
+          queueType: map['queueType'],
+          ratedTier: map['ratedTier'],
+          ratedRating: map['ratedRating'],
+          tier: map['tier'],
+          rank: map['rank'],
+          leaguePoints: map['leaguePoints'],
+          wins: map['wins'],
+          losses: map['losses'],
+          hotStreak: map['hotStreak'],
+          veteran: map['veteran'],
+          freshBlood: map['freshBlood'],
+          inactive: map['inactive'],
+          miniSeries: (map['miniSeries'] == null) ? null : MiniSeriesDTO.fromMap(map['miniSeries'])
+      );
+    }catch(e , s){
+      debugPrint("$e\n$s");
+      return LeagueEntryDTO.error();
+    }
+  }
+
+  factory LeagueEntryDTO.error(){
     return LeagueEntryDTO(
-        puuid: map['puuid'],
-        leagueId: map['leagueId'],
-        summonerId: map['summonerId'],
-        summonerName: map['summonerName'],
-        queueType: map['queueType'],
-        ratedTier: map['ratedTier'],
-        ratedRating: map['ratedRating'],
-        tier: map['tier'],
-        rank: map['rank'],
-        leaguePoints: map['leaguePoints'],
-        wins: map['wins'],
-        losses: map['losses'],
-        hotStreak: map['hotStreak'],
-        veteran: map['veteran'],
-        freshBlood: map['freshBlood'],
-        inactive: map['inactive'],
-        miniSeries: (map['miniSeries'] == null) ? null : MiniSeriesDTO.fromMap(map['miniSeries'])
+        puuid: 'error', summonerId: 'error', summonerName: 'error', queueType: 'error',
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {
