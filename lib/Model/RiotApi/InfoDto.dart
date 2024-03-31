@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import 'ParticipantDto.dart';
 
 class InfoDto {
@@ -20,17 +22,22 @@ class InfoDto {
   });
 
   factory InfoDto.fromJson(Map<String, dynamic> json) {
-    return InfoDto(
-      gameDatetime: json['game_datetime'],
-      gameLength: json['game_length'],
-      gameVariation: json['game_variation'] ?? "null",
-      gameVersion: json['game_version'] ?? "null",
-      participants: (json['participants'] as List)
-          .map((i) => ParticipantDto.fromJson(i))
-          .toList(),
-      queueId: json['queue_id'],
-      tftSetNumber: json['tft_set_number'],
-    );
+    try{
+      return InfoDto(
+        gameDatetime: json['game_datetime'],
+        gameLength: json['game_length'],
+        gameVariation: json['game_variation'] ?? "null",
+        gameVersion: json['game_version'] ?? "null",
+        participants: (json['participants'] as List)
+            .map((i) => ParticipantDto.fromJson(i))
+            .toList(),
+        queueId: json['queue_id'],
+        tftSetNumber: json['tft_set_number'],
+      );
+    }catch(e,s){
+      debugPrint('$e\n$s');
+      return InfoDto.error();
+    }
   }
 
   factory InfoDto.none() {
@@ -39,6 +46,20 @@ class InfoDto {
       gameLength: 0,
       gameVariation: "none",
       gameVersion: "none",
+      participants: [
+
+      ],
+      queueId: 0,
+      tftSetNumber: 0,
+    );
+  }
+
+  factory InfoDto.error() {
+    return InfoDto(
+      gameDatetime: 0,
+      gameLength: 0,
+      gameVariation: "error",
+      gameVersion: "error",
       participants: [
 
       ],
