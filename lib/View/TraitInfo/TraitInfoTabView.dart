@@ -86,7 +86,7 @@ class TraitInfoTabView extends StatelessWidget {
                 SizedBox(height: 30.w,),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                  child: HtmlWidget(trait?.formatDescription() ?? ''),
+                  child: HtmlWidget(trait?.getFormatDescription() ?? ''),
                 ),
                 SizedBox(height: 10.w,),
                 Padding(

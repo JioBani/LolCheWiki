@@ -56,25 +56,21 @@ class Trait {
     );
   }
 
-  String formatDescription() {
+  String getFormatDescription() {
     var formattedDesc = desc;
     Map<String, List<String>> variablesMap = {};
 
-    // 변수별로 모든 값의 리스트를 만들기
     for (final effect in effects) {
       effect.variables.forEach((key, value) {
         var variableName = key.replaceAll(RegExp(r'{|}'), '');
         variablesMap.putIfAbsent(variableName, () => []).add(value.toString());
       });
-      // MinUnits도 변수 리스트에 추가
       variablesMap.putIfAbsent('MinUnits', () => []).add(effect.minUnits.toString());
     }
 
-    // 모든 변수 대체
     RegExp variablePattern = RegExp(r'@(\w+)@');
     formattedDesc = formattedDesc.replaceAllMapped(variablePattern, (match) {
       var variableName = match.group(1)!;
-      // 해당 변수에 대한 값을 순차적으로 사용, 없으면 '?'로 대체
       if (variablesMap[variableName] != null && variablesMap[variableName]!.isNotEmpty) {
         return variablesMap[variableName]!.removeAt(0);
       } else {
