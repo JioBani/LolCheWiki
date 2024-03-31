@@ -12,7 +12,6 @@ class LoadableListView extends StatefulWidget {
     required this.loadingFooter,
     required this.loadButton,
     required this.itemList,
-    //this.footerHeight = 75
   });
 
   final LoadableListViewController controller;
@@ -21,7 +20,6 @@ class LoadableListView extends StatefulWidget {
   final Widget loadingFooter;
   final Widget loadButton;
   final List<Widget> itemList;
-  //final double footerHeight;
 
   @override
   State<LoadableListView> createState() => LoadableListViewState();
@@ -32,9 +30,8 @@ class LoadableListViewState extends State<LoadableListView> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     widget.controller._bindState(this);
+    super.initState();
   }
 
   void startLoading(){

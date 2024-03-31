@@ -77,7 +77,7 @@ class SearchTextWidget extends StatelessWidget {
           Flexible(
             child: InkWell(
               onTap: (){
-                homePageController.search(text, context);
+                homePageController.searchByName(text, context);
               },
               child: AutoSizeText(
                 text,

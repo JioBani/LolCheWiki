@@ -31,7 +31,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               color: Palette.green,
             ),
             onPressed: (){
-              homePageController.search(searchController.text, context);
+              homePageController.searchByName(searchController.text, context);
             },
           ),
           border: OutlineInputBorder(

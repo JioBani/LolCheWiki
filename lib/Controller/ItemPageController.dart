@@ -49,9 +49,7 @@ class ItemPageController extends GetxController{
   void onTabTableItem(int index){
     if(index == 2){
       if(items[index] != null){
-        items[index] = null;
-        items[0] = null;
-        items[1] = null;
+        items.assignAll([null, null, null]);
       }
     }
     else{
@@ -66,16 +64,13 @@ class ItemPageController extends GetxController{
   Future<bool> fetchData()  async {
     try{
       if(isLoaded == LoadingState.beforeLoading || isLoaded == LoadingState.fail){
-        StaticLogger.logger.i('데이터 없음');
 
         var service = Get.find<GameDataService>();
         bool success = await service.fetchData();
 
-        StaticLogger.logger.i('데이터 가져오기 시작 : $success');
         if(success){
           _setData(service.itemListByType);
           isLoaded = LoadingState.success;
-          StaticLogger.logger.i('데이터 가져오기 성공');
           return true;
         }
         else{

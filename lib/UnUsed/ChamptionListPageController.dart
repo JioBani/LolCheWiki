@@ -1,3 +1,4 @@
+/*
 import 'package:app/Controller/LoadingState.dart';
 import 'package:app/Model/Champion.dart';
 import 'package:app/Service/FirestoreService.dart';
@@ -47,4 +48,4 @@ class ChampionListPageController extends GetxController{
       return championListSortByTrait;
     }
   }
-}
+}*/

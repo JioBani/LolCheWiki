@@ -1,4 +1,4 @@
-import 'package:app/Common/LoadableListView/LoadableListView2.dart';
+import 'package:app/Common/LoadableListView/LoadableListView.dart';
 import 'package:app/Controller/MatchHistoryController.dart';
 import 'package:app/Model/RiotApi/QueueType.dart';
 import 'package:app/View/MatchHistory/Match/MatchWidget.dart';

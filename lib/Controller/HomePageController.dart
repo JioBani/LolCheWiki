@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class HomePageController{
 
-  Future<void> search(String text , BuildContext context) async {
+  Future<void> searchByName(String text , BuildContext context) async {
     int hashIndex = text.indexOf('#');
 
     String name;
