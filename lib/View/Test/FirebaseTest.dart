@@ -1,3 +1,4 @@
+/*
 import 'package:app/Model/Champion.dart';
 import 'package:app/Service/StaticLogger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,3 +98,4 @@ class FirebaseTestPage extends StatelessWidget {
     );
   }
 }
+*/
