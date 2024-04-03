@@ -3,7 +3,6 @@ import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:app/View/MatchHistory/Match/OpenIconWidget.dart';
 import 'package:app/View/TraitInfo/TraitListPage.dart';
-import 'package:app/View/TraitInfo/TraitListTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -46,7 +45,6 @@ class _ChampionInfoPageState extends State<ChampionInfoPage> with TickerProvider
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.cover,
-            //fit: BoxFit.fitWidth,
           ),
           Align(
             alignment: Alignment.topRight,
@@ -159,7 +157,7 @@ class _ChampionInfoPageState extends State<ChampionInfoPage> with TickerProvider
                                           widget.champion.ability.desc
                                         ),
                                         SizedBox(height: 80.h,),
-                                        Text(
+                                        const Text(
                                             "추천아이템"
                                         ),
                                         SizedBox(height: 100.h,),

@@ -32,7 +32,6 @@ class MatchDataService{
   }
 
   Future<List<MatchDto>?> getNextMatchDtoList(int count) async{
-    //TODO
     int index = _nextMatchIndex;
     int increase = 0;
 
@@ -64,7 +63,7 @@ class MatchDataService{
       return null;
     }
     else{
-      _matchDtoList.sort(MatchDto.compare); // 정렬하는거 부터
+      _matchDtoList.sort(MatchDto.compare);
 
       _nextMatchIndex += increase;
 

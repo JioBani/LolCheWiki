@@ -1,6 +1,5 @@
 import 'package:app/Controller/ItemPageController.dart';
 import 'package:app/Model/Item.dart';
-import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Images.dart';
 import 'package:app/Style/Palette.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -180,7 +179,7 @@ class ItemListTileWidget extends StatelessWidget {
                     Item? item1 = controller.findItemByApiName(item.composition[1]);
 
                     if(item0 == null || item1 == null){
-                      return SizedBox();
+                      return const SizedBox();
                     }
                     else{
                       return Row(
@@ -216,7 +215,7 @@ class ItemListTileWidget extends StatelessWidget {
                     }
                   }
                   else{
-                    return SizedBox();
+                    return const SizedBox();
                   }
                 }
               )

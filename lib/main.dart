@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           //useMaterial3: false,
         ),
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: const HomePage(),
       ),
     );
   }

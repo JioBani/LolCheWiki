@@ -211,16 +211,14 @@ class SortTabBar extends StatefulWidget {
 class _SortTabBarState extends State<SortTabBar> {
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     widget.controller.addListener(onTabChanged);
+    super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     widget.controller.removeListener(onTabChanged);
+    super.dispose();
   }
 
   void onTabChanged(){

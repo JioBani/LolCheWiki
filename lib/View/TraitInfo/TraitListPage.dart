@@ -1,5 +1,4 @@
 import 'package:app/Controller/LoadingState.dart';
-import 'package:app/UnUsed/TraitInfoPageController.dart';
 import 'package:app/Model/Trait.dart';
 import 'package:app/Service/GameDataService.dart';
 import 'package:app/Style/Palette.dart';
@@ -23,7 +22,6 @@ class _TraitListPageState extends State<TraitListPage> with TickerProviderStateM
 
   @override
   void initState() {
-    // TODO: implement initState
     traitTypeTabController = TabController(length: 2, vsync: this);
     super.initState();
   }

@@ -79,8 +79,6 @@ class _TraitListTabViewState extends State<TraitListTabView> with TickerProvider
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.horizontal,
       child: Row(
-        //controller: tabController,
-        //controller: pageController,
         children: [
           SizedBox(
             width: 360.w,

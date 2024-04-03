@@ -8,7 +8,6 @@ import 'package:app/View/Home/SearchHistoryWidget.dart';
 import 'package:app/View/ItemInfo/ItemInfoPage.dart';
 import 'package:app/View/TraitInfo/TraitListPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -76,7 +75,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      //bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

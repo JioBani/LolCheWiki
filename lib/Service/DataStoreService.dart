@@ -12,27 +12,21 @@ class DataStoreService{
 
   static Future<String> _getFilePath(String filePath)async{
     final directory = await getApplicationDocumentsDirectory();
-    // 파일 경로와 파일 이름을 합쳐서 전체 파일 경로를 만듬
     return '${directory.path}/$filePath';
   }
 
-  // 파일 경로를 생성하는 함수
   static Future<File> _getFile(String fileName) async {
-    // 앱의 디렉토리 경로를 가져옴
     final directory = await getApplicationDocumentsDirectory();
-    // 파일 경로와 파일 이름을 합쳐서 전체 파일 경로를 만듬
     return File('${directory.path}/$fileName');
   }
 
   static Future<bool> _isPathExist(String filePath)async{
     final path = await _getFilePath(filePath);
-    // 파일 경로와 파일 이름을 합쳐서 전체 파일 경로를 만듬
     return await Directory(path).exists();
   }
 
   static Future<bool> _isFileExist(String filePath)async{
     final path = await _getFilePath(filePath);
-    // 파일 경로와 파일 이름을 합쳐서 전체 파일 경로를 만듬
     return await File(path).exists();
   }
 
@@ -45,7 +39,6 @@ class DataStoreService{
       return true;
     } catch (e) {
       logger.e("[DataStoreService.save()] $e");
-      // 파일을 읽을 수 없는 경우 빈 맵을 반환하거나 예외 처리를 수행할 수 있습니다.
       return false;
     }
   }
@@ -107,7 +100,6 @@ class DataStoreService{
         final decodedList = jsonDecode(content);
         return List<String>.from(decodedList);
       } catch (e) {
-        // 파일을 읽을 수 없는 경우 빈 리스트를 반환하거나 예외 처리를 수행할 수 있습니다.
         logger.e("[DataStoreService.readMatchIdList()] json 파싱 오류");
         return null;
       }
@@ -151,7 +143,6 @@ class DataStoreService{
         final decode = jsonDecode(content);
         return MatchDto.fromMap(decode, matchId);
       } catch (e) {
-        // 파일을 읽을 수 없는 경우 빈 리스트를 반환하거나 예외 처리를 수행할 수 있습니다.
         logger.e("[DataStoreService.readMatchDto()] json 파싱 오류 : ${e}");
         return null;
       }

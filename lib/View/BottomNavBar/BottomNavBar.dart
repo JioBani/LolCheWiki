@@ -19,8 +19,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
       height: 65.h,
       width: double.infinity,
       decoration: BoxDecoration(
-        //borderRadius: BorderRadius.only(topLeft: Radius.circular(30.r), topRight: Radius.circular(30.r)),
-        //borderRadius: BorderRadius.circular(20.r), // 모든 모서리를 둥글게
         color: Colors.white,
         boxShadow: [
           BoxShadow(
@@ -28,7 +26,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             blurRadius: 4,
             color: Colors.black.withOpacity(0.1)
           )
-        ]// : const Color(0xffBBE6F3)
+        ]
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -37,7 +35,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             padding: EdgeInsets.zero,
             onPressed: (){
               Get.offAll(
-                HomePage(),
+                const HomePage(),
                 transition: Transition.cupertino
               );
             },

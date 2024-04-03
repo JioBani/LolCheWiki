@@ -3,11 +3,10 @@ import 'package:app/Style/Palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'ChampionListPage.dart';
 
 class ChampionSearchPage extends StatefulWidget {
-  ChampionSearchPage({super.key, required this.championList});
+  const ChampionSearchPage({super.key, required this.championList});
 
   final List<Champion> championList;
 

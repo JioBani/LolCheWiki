@@ -3,7 +3,6 @@ import 'package:app/Model/RiotApi/QueueType.dart';
 import 'package:app/Style/Images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:logger/logger.dart';
 
 class RankTabViewWidget extends StatefulWidget {
   const RankTabViewWidget({super.key, required this.leagueEntryDTOMap});
@@ -110,7 +109,7 @@ class RankImageWidget extends StatelessWidget {
         Text(
           queueType.getGameName(),
           style: TextStyle(
-            color: Color(0xff949494),
+            color: const Color(0xff949494),
             fontSize: 13.sp,
           ),
         ),
@@ -125,7 +124,7 @@ class RankImageWidget extends StatelessWidget {
           child: Text(
             rankString,
             style: TextStyle(
-              color: Color(0xff949494),
+              color: const Color(0xff949494),
               fontSize: 13.sp,
             ),
           ),
@@ -133,7 +132,7 @@ class RankImageWidget extends StatelessWidget {
         Text(
           lpString,
           style: TextStyle(
-            color: Color(0xff949494),
+            color: const Color(0xff949494),
             fontSize: 13.sp,
           ),
         ),

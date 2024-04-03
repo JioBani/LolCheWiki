@@ -21,16 +21,16 @@ class TraitTextWidget extends StatelessWidget {
             height: 15.sp,
             color: Colors.black,
           ),
-          Expanded( // 텍스트가 가능한 모든 공간을 차지하도록 Expanded 사용
+          Expanded(
             child: AutoSizeText(
               trait,
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
               ),
-              minFontSize: 6, // 최소 텍스트 크기를 설정
-              maxLines: 1, // 최대 행 수를 1로 설정하여 텍스트가 한 줄을 넘지 않도록 함
-              overflow: TextOverflow.ellipsis, // 여전히 넘칠 경우 말줄임표 처리
+              minFontSize: 6,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

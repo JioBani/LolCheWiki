@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:app/Controller/SearchHistoryController.dart';
-import 'package:app/Service/Admin.dart';
+import 'package:app/UnUsed/Admin.dart';
 import 'package:app/Service/MatchDataService.dart';
 import 'package:app/Service/Riot/RiotApiService.dart';
 import 'package:app/Service/StaticLogger.dart';

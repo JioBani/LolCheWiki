@@ -114,7 +114,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   Text(
                     "LV. ${widget.summonerProfile.summonerDTO.summonerLevel}",
                     style: TextStyle(
-                      color: Color(0xff949494),
+                      color: const Color(0xff949494),
                       fontSize: 13.sp,
                     ),
                   ),

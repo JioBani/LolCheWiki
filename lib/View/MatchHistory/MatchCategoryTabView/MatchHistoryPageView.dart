@@ -24,16 +24,14 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> with Automa
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     matchHistoryController = Get.find<MatchHistoryController>(tag: widget.puuid);
     loadableListViewController = LoadableListViewController(
-        onLoading: _onLoading,
+      onLoading: _onLoading,
     );
+    super.initState();
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
   Future<LoadableListViewResult> _onLoading(LoadableListViewController controller) async{
@@ -68,14 +66,6 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> with Automa
         }
 
         return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
-
-        if(matchDto.info.tftSetNumber != 10){
-          return NoTargetSetMatchWidget(matchDto: matchDto);
-        }
-
-        else{
-          return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
-        }
       }).toList();
     }
     else{
@@ -89,14 +79,6 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> with Automa
         }
 
         return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
-
-        if(matchDto.info.tftSetNumber != 10){
-          return NoTargetSetMatchWidget(matchDto: matchDto);
-        }
-
-        else{
-          return MatchWidget(matchDto: matchDto , ownerIndex: ownerIndex,);
-        }
       }).toList() ?? [];
     }
 
@@ -140,6 +122,4 @@ class _MatchHistoryPageViewState extends State<MatchHistoryPageView> with Automa
         itemList: elements,
     );
   }
-
-
 }

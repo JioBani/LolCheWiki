@@ -76,7 +76,7 @@ class NoTargetSetMatchWidget extends StatelessWidget {
                   SizedBox(width: 23.w,),
                 ],
               ),
-              Divider(color: Color(0xffD4D4D4),thickness: 2,),
+              const Divider(color: Color(0xffD4D4D4),thickness: 2,),
             ],
           ),
         ),

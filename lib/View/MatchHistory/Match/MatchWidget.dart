@@ -109,7 +109,7 @@ class _MatchWidgetState extends State<MatchWidget> with TickerProviderStateMixin
                   )
                 ],
               ),
-              Divider(color: Color(0xffD4D4D4),thickness: 2,),
+              const Divider(color: Color(0xffD4D4D4),thickness: 2,),
               Builder(
                 builder: (context){
                   if(!isOpen){
